@@ -31,7 +31,6 @@ public class GloveListener : MonoBehaviour
         string[] tmp = msg.Split(',');
         string[] fingersFlexing = tmp[0].Split(' ');
         string[] rotation = tmp[1].Split(' ');
-        //Debug.Log(index + " " + float.Parse(fingersFlexing[1]) / 100);
 
         _animator.SetLayerWeight(_index, float.Parse(fingersFlexing[1]) / 100);
         _animator.SetLayerWeight(_middle, float.Parse(fingersFlexing[2]) / 100);
@@ -44,30 +43,20 @@ public class GloveListener : MonoBehaviour
         //    float.Parse(rotation[2], CultureInfo.InvariantCulture),
         //    float.Parse(rotation[3], CultureInfo.InvariantCulture),
         //    float.Parse(rotation[0], CultureInfo.InvariantCulture));
-        _handTransform.eulerAngles = new Vector3(
-            float.Parse(rotation[1], CultureInfo.InvariantCulture),
-            float.Parse(rotation[0], CultureInfo.InvariantCulture),
-            float.Parse(rotation[2], CultureInfo.InvariantCulture));
-        //double yaw = float.Parse(rotation[0], CultureInfo.InvariantCulture);
-        //double pitch = float.Parse(rotation[1], CultureInfo.InvariantCulture);
-        //double roll = float.Parse(rotation[2], CultureInfo.InvariantCulture);
-        //_handTransform.eulerAngles = new Vector3(
-        //      (float)(Math.Cos(yaw)*Math.Cos(pitch)),
-        //      (float)(Math.Sin(yaw) * Math.Cos(pitch)),
-        //      (float)(Math.Sin(pitch)));
-
         //_handTransform.rotation.Set(
         //    float.Parse(rotation[1], CultureInfo.InvariantCulture),
         //    float.Parse(rotation[2], CultureInfo.InvariantCulture),
         //    float.Parse(rotation[3], CultureInfo.InvariantCulture),
         //    float.Parse(rotation[0], CultureInfo.InvariantCulture));
 
-        //_handTransform.rotation = Quaternion.Euler(
-        //    float.Parse(rotation[0], CultureInfo.InvariantCulture),
-        //    float.Parse(rotation[1], CultureInfo.InvariantCulture),
-        //    float.Parse(rotation[2], CultureInfo.InvariantCulture));
-
-        //_handTransform.Rotate(90f, 0f, 90f);
+        _handTransform.eulerAngles = new Vector3(
+            float.Parse(rotation[1], CultureInfo.InvariantCulture),
+            float.Parse(rotation[0], CultureInfo.InvariantCulture),
+            float.Parse(rotation[2], CultureInfo.InvariantCulture));
+        state.deviceRotation = Quaternion.Euler(
+           float.Parse(rotation[1], CultureInfo.InvariantCulture),
+           float.Parse(rotation[0], CultureInfo.InvariantCulture),
+           float.Parse(rotation[2], CultureInfo.InvariantCulture));
 
         state.index = float.Parse(fingersFlexing[1]) / 100;
         state.middle = float.Parse(fingersFlexing[2]) / 100;

@@ -6,20 +6,15 @@ using UnityEngine.InputSystem.Controls;
 using UnityEngine.InputSystem.Layouts;
 using UnityEngine.InputSystem.LowLevel;
 using UnityEngine.InputSystem.Utilities;
+using UnityEngine.InputSystem.XR;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
 
 public struct GloveDeviceState : IInputStateTypeInfo
 {
-    public FourCC format => new FourCC('C', 'U', 'S', 'T');
+    public FourCC format => new FourCC('G', 'L', 'O', 'V');
 
-    //[InputControl(name = "index", layout = "Axis")]
-    //[InputControl(name = "middle", layout = "Axis")]
-    //[InputControl(name = "pinky", layout = "Axis")]
-    //[InputControl(name = "ring", layout = "Axis")]
-    //[InputControl(name = "thumb", layout = "Axis")]
-    //public short fingersAxis;
     [InputControl(layout = "Axis")]
     public float index;
     [InputControl(layout = "Axis")]
@@ -30,19 +25,12 @@ public struct GloveDeviceState : IInputStateTypeInfo
     public float ring;
     [InputControl(layout = "Axis")]
     public float thumb;
-    //[InputControl(name = "quatX", layout = "Axis")]
-    //[InputControl(name = "quatY", layout = "Axis")]
-    //[InputControl(name = "quatZ", layout = "Axis")]
-    //[InputControl(name = "quatW", layout = "Axis")]
-    //public Quaternion rotation;
-    //[InputControl(layout = "Axis")]
-    //public Quaternion quatX;
-    //[InputControl(layout = "Axis")]
-    //public float quatY;
-    //[InputControl(layout = "Axis")]
-    //public float quatZ;
-    //[InputControl(layout = "Axis")]
-    //public float quatW;
+    [InputControl]
+    public Quaternion deviceRotation;
+    //[InputControl(layout = "Button")]
+    //public bool isTracked;
+    //[InputControl]
+    //public int trackingState;
 }
 
 #if UNITY_EDITOR
@@ -71,26 +59,18 @@ public class GloveDevice : InputDevice, IInputUpdateCallbackReceiver
     public AxisControl pinky { get; private set; }
     public AxisControl ring { get; private set; }
     public AxisControl thumb { get; private set; }
-    //public QuaternionControl quatX { get; private set; }
-    //public QuaternionControl quatY { get; private set; }
-    //public QuaternionControl quatZ { get; private set; }
-    //public QuaternionControl quatW { get; private set; }
     //public QuaternionControl rotation { get; private set; }
+    public QuaternionControl deviceRotation { get; private set; }
 
     protected override void FinishSetup()
     {
         base.FinishSetup();
-
         index = GetChildControl<AxisControl>("index");
         middle = GetChildControl<AxisControl>("middle");
         pinky = GetChildControl<AxisControl>("pinky");
         ring = GetChildControl<AxisControl>("ring");
         thumb = GetChildControl<AxisControl>("thumb");
-        //quatX = GetChildControl<QuaternionControl>("quatX");
-        //quatY = GetChildControl<QuaternionControl>("quatY");
-        //quatZ = GetChildControl<QuaternionControl>("quatZ");
-        //quatW = GetChildControl<QuaternionControl>("quatW");
-        //rotation = GetChildControl<QuaternionControl>("rotation");
+        deviceRotation = GetChildControl<QuaternionControl>("deviceRotation");
     }
 
     public static GloveDevice current { get; private set; }
