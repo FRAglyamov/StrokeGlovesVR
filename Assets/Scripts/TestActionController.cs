@@ -6,6 +6,7 @@ using UnityEngine.XR.Interaction.Toolkit;
 public class TestActionController : MonoBehaviour
 {
     private ActionBasedController _controller;
+
     void Start()
     {
         _controller = GetComponent<ActionBasedController>();

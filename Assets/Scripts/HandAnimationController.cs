@@ -4,11 +4,13 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.XR.Interaction.Toolkit;
 
-public class HandController : MonoBehaviour
+public class HandAnimationController : MonoBehaviour
 {
     private ActionBasedController _controller;
+
     [SerializeField]
     private Animator _animator;
+
     void Start()
     {
         _controller = GetComponent<ActionBasedController>();

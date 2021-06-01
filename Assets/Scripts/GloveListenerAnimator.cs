@@ -1,17 +1,15 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Globalization;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.XR.Interaction.Toolkit;
 
-public class GloveListener : MonoBehaviour
+public class GloveListenerAnimator : MonoBehaviour
 {
     [SerializeField]
     private Animator _animator;
-    [SerializeField]
-    private Transform _handTransform;
+
+    //[SerializeField]
+    //private Transform _handTransform;
     int _index, _middle, _pinky, _ring, _thumb;
     private ActionBasedController _controller;
     private void Start()
@@ -49,10 +47,10 @@ public class GloveListener : MonoBehaviour
         //    float.Parse(rotation[3], CultureInfo.InvariantCulture),
         //    float.Parse(rotation[0], CultureInfo.InvariantCulture));
 
-        _handTransform.eulerAngles = new Vector3(
-            float.Parse(rotation[1], CultureInfo.InvariantCulture),
-            float.Parse(rotation[0], CultureInfo.InvariantCulture),
-            float.Parse(rotation[2], CultureInfo.InvariantCulture));
+        //_handTransform.eulerAngles = new Vector3(
+        //    float.Parse(rotation[1], CultureInfo.InvariantCulture),
+        //    float.Parse(rotation[0], CultureInfo.InvariantCulture),
+        //    float.Parse(rotation[2], CultureInfo.InvariantCulture));
         state.deviceRotation = Quaternion.Euler(
            float.Parse(rotation[1], CultureInfo.InvariantCulture),
            float.Parse(rotation[0], CultureInfo.InvariantCulture),
