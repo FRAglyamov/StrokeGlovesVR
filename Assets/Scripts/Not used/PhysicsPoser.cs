@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.XR;
 using UnityEngine.XR.Interaction.Toolkit;
 
 [RequireComponent(typeof(Rigidbody))]
@@ -17,7 +16,7 @@ public class PhysicsPoser : MonoBehaviour
     [Range(0, 100)] public float maxRotationChange = 75f;
 
     // References
-    private Rigidbody rigidbody;
+    private Rigidbody rb;
     //private XRController controller;
     private XRBaseInteractor interactor;
     private ActionBasedController _controller;
@@ -28,7 +27,7 @@ public class PhysicsPoser : MonoBehaviour
     private void Awake()
     {
         // Get the stuff
-        rigidbody = GetComponent<Rigidbody>();
+        rb = GetComponent<Rigidbody>();
         //controller = GetComponent<XRController>();
         _controller = GetComponent<ActionBasedController>();
         interactor = GetComponent<XRBaseInteractor>();
@@ -84,7 +83,7 @@ public class PhysicsPoser : MonoBehaviour
     private void MoveUsingPhysics()
     {
         // Prevents overshooting
-        rigidbody.velocity *= slowDownVelocity;
+        rb.velocity *= slowDownVelocity;
 
         // Get target velocity
         Vector3 velocity = FindNewVelocity();
@@ -94,20 +93,20 @@ public class PhysicsPoser : MonoBehaviour
         {
             // Figure out the max we can move, then move via velocity
             float maxChange = maxPositionChange * Time.deltaTime;
-            rigidbody.velocity = Vector3.MoveTowards(rigidbody.velocity, velocity, maxChange);
+            rb.velocity = Vector3.MoveTowards(rb.velocity, velocity, maxChange);
         }
     }
 
     private Vector3 FindNewVelocity()
     {
-        Vector3 difference = targetPosition - rigidbody.position;
+        Vector3 difference = targetPosition - rb.position;
         return difference / Time.deltaTime;
     }
 
     private void RotateUsingPhysics()
     {
         // Prevents overshooting
-        rigidbody.angularVelocity *= slowDownAngularVelocity;
+        rb.angularVelocity *= slowDownAngularVelocity;
 
         // Get target velocity
         Vector3 angularVelocity = FindNewAngularVelocity();
@@ -117,7 +116,7 @@ public class PhysicsPoser : MonoBehaviour
         {
             // Figure out the max we can rotate, then move via velocity
             float maxChange = maxRotationChange * Time.deltaTime;
-            rigidbody.angularVelocity = Vector3.MoveTowards(rigidbody.angularVelocity, angularVelocity, maxChange);
+            rb.angularVelocity = Vector3.MoveTowards(rb.angularVelocity, angularVelocity, maxChange);
         }
 
     }
@@ -125,7 +124,7 @@ public class PhysicsPoser : MonoBehaviour
     private Vector3 FindNewAngularVelocity()
     {
         // Figure out the difference in rotation
-        Quaternion difference = targetRotation * Quaternion.Inverse(rigidbody.rotation);
+        Quaternion difference = targetRotation * Quaternion.Inverse(rb.rotation);
         difference.ToAngleAxis(out float angleInDegrees, out Vector3 rotationAxis);
 
         // Do the weird thing to account for have a range of -180 to 180
@@ -144,14 +143,14 @@ public class PhysicsPoser : MonoBehaviour
     private void MoveUsingTransform()
     {
         // Prevents jitter
-        rigidbody.velocity = Vector3.zero;
+        rb.velocity = Vector3.zero;
         transform.localPosition = targetPosition;
     }
 
     private void RotateUsingTransform()
     {
         // Prevents jitter
-        rigidbody.angularVelocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
         transform.localRotation = targetRotation;
     }
 

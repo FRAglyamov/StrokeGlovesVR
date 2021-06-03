@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Globalization;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -93,31 +90,17 @@ public class GloveListenerArticulation : MonoBehaviour
             }
         }
 
-        //_handTransform.rotation = new Quaternion(
-        //    float.Parse(rotation[1], CultureInfo.InvariantCulture),
-        //    float.Parse(rotation[2], CultureInfo.InvariantCulture),
-        //    float.Parse(rotation[3], CultureInfo.InvariantCulture),
-        //    float.Parse(rotation[0], CultureInfo.InvariantCulture));
-        //_handTransform.rotation.Set(
-        //    float.Parse(rotation[1], CultureInfo.InvariantCulture),
-        //    float.Parse(rotation[2], CultureInfo.InvariantCulture),
-        //    float.Parse(rotation[3], CultureInfo.InvariantCulture),
-        //    float.Parse(rotation[0], CultureInfo.InvariantCulture));
-
-        //_handTransform.eulerAngles = new Vector3(
-        //    float.Parse(rotation[1], CultureInfo.InvariantCulture),
-        //    float.Parse(rotation[0], CultureInfo.InvariantCulture),
-        //    float.Parse(rotation[2], CultureInfo.InvariantCulture));
         state.deviceRotation = Quaternion.Euler(
            float.Parse(rotation[1], CultureInfo.InvariantCulture),
            float.Parse(rotation[0], CultureInfo.InvariantCulture),
            float.Parse(rotation[2], CultureInfo.InvariantCulture));
 
+        state.thumb = float.Parse(fingersFlexing[0]) / 100;
         state.index = float.Parse(fingersFlexing[1]) / 100;
         state.middle = float.Parse(fingersFlexing[2]) / 100;
-        state.pinky = float.Parse(fingersFlexing[4]) / 100;
         state.ring = float.Parse(fingersFlexing[3]) / 100;
-        state.thumb = float.Parse(fingersFlexing[0]) / 100;
+        state.pinky = float.Parse(fingersFlexing[4]) / 100;
+
         InputSystem.QueueStateEvent(GloveDevice.current, state);
     }
     // Invoked when a connect/disconnect event occurs. The parameter 'success'
