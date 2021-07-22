@@ -41,7 +41,7 @@ public class GloveListenerArticulation : MonoBehaviour
 
     }
 
-    private void FlexFingers(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    private void FlexFingers(InputAction.CallbackContext obj)
     {
         for (int i = 0; i < articulations.GetLength(0); i++)
         {
@@ -57,7 +57,8 @@ public class GloveListenerArticulation : MonoBehaviour
             }
         }
     }
-    private void UnFlexFingers(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+
+    private void UnFlexFingers(InputAction.CallbackContext obj)
     {
         for (int i = 0; i < articulations.GetLength(0); i++)
         {
@@ -70,6 +71,7 @@ public class GloveListenerArticulation : MonoBehaviour
             }
         }
     }
+
     // Invoked when a line of data is received from the serial device.
     void OnMessageArrived(string msg)
     {
@@ -80,6 +82,7 @@ public class GloveListenerArticulation : MonoBehaviour
         string[] fingersFlexing = tmp[0].Split(' ');
         string[] rotation = tmp[1].Split(' ');
 
+        // Set target (rotation) for articulation bodies of all phalanges
         for (int i = 0; i < articulations.GetLength(0); i++)
         {
             for (int j = 0; j < articulations.GetLength(1); j++)
@@ -103,14 +106,15 @@ public class GloveListenerArticulation : MonoBehaviour
 
         InputSystem.QueueStateEvent(GloveDevice.current, state);
     }
+
     // Invoked when a connect/disconnect event occurs. The parameter 'success'
     // will be 'true' upon connection, and 'false' upon disconnection or
     // failure to connect.
     void OnConnectionEvent(bool success)
     {
-        Debug.Log(success ? "Device connected" : "Device disconnected");
+        //Debug.Log(success ? "Device connected" : "Device disconnected");
     }
-    public float Remap(float value, float from1, float to1, float from2, float to2)
+    private float Remap(float value, float from1, float to1, float from2, float to2)
     {
         return (value - from1) / (to1 - from1) * (to2 - from2) + from2;
     }
