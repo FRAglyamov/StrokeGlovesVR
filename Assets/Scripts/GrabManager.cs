@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
-public class GrabPhysics : MonoBehaviour
+public class GrabManager : MonoBehaviour
 {
     [SerializeField]
     private ActionBasedController _controller;
@@ -12,8 +12,7 @@ public class GrabPhysics : MonoBehaviour
 
     public GameObject grabbedObject = null;
 
-    private FixedJoint _joint;
-    private List<GameObject> items = new List<GameObject>();
+    private List<GameObject> _items = new List<GameObject>();
 
     private bool _isGrab = false;
     public bool[,] detectorsFirstGroup = new bool[4, 3]; // phalanges of index, middle, ring, pinky
@@ -26,6 +25,11 @@ public class GrabPhysics : MonoBehaviour
     {
         detectorsSecondGroup[0] = new bool[1]; // palm
         detectorsSecondGroup[1] = new bool[2]; // phalanges of thumb
+
+        if (grabTrigger == null)
+        {
+            grabTrigger = GetComponent<Collider>();
+        }
     }
 
     private void Update()
@@ -91,8 +95,8 @@ public class GrabPhysics : MonoBehaviour
 
         if (grabbedObject.GetComponent<Joint>() == null)
         {
-            _joint = grabbedObject.AddComponent<FixedJoint>();
-            _joint.connectedArticulationBody = this.gameObject.GetComponent<ArticulationBody>();
+            var joint = grabbedObject.AddComponent<FixedJoint>();
+            joint.connectedArticulationBody = this.gameObject.GetComponent<ArticulationBody>();
         }
         _isGrab = true;
     }
@@ -107,20 +111,20 @@ public class GrabPhysics : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!items.Contains(other.gameObject))
+        if (!_items.Contains(other.gameObject))
         {
-            items.Add(other.gameObject);
+            _items.Add(other.gameObject);
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        items.Remove(other.gameObject);
+        _items.Remove(other.gameObject);
     }
 
     private GameObject GetClosestObject()
     {
-        if (items.Count == 0)
+        if (_items.Count == 0)
         {
             return null;
         }
@@ -128,7 +132,7 @@ public class GrabPhysics : MonoBehaviour
         float minDistance = 10f;
         GameObject closestObject = null;
 
-        foreach (var item in items)
+        foreach (var item in _items)
         {
             var distance = Vector3.Distance(item.transform.position, grabTrigger.bounds.center);
             if (distance < minDistance)

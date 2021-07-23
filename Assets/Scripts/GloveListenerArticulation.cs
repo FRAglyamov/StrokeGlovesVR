@@ -21,7 +21,7 @@ public class GloveListenerArticulation : MonoBehaviour
     {
         for (int i = 0; i < fingers1.Length; i++)
         {
-            Debug.Log(fingers1[i].name);
+            //Debug.Log(fingers1[i].name);
             ArticulationBody[] tmpArticulations = new ArticulationBody[3];
             tmpArticulations[0] = fingers1[i].GetComponent<ArticulationBody>();
             var tmpJointsChildren = fingers1[i].GetComponentsInChildren<ArticulationBody>();

@@ -5,7 +5,7 @@ public class GrabDetector : MonoBehaviour
     //public bool isTouching = false;
 
     [SerializeField]
-    private GrabPhysics grabPhysics;
+    private GrabManager grabManager;
 
     [SerializeField, Range(1, 2)]
     private short detectorsGroup = 1;
@@ -25,18 +25,18 @@ public class GrabDetector : MonoBehaviour
         {
             if (contact.thisCollider.name == gameObject.name)
             {
-                if (grabPhysics.grabbedObject != null && collision.gameObject == grabPhysics.grabbedObject
-                        || grabPhysics.grabbedObject == null)
+                if (grabManager.grabbedObject != null && collision.gameObject == grabManager.grabbedObject
+                        || grabManager.grabbedObject == null)
                 {
                     //isTouching = true;
                     //Debug.Log($"{gameObject.name} is touching = true");
                     if (detectorsGroup == 1)
                     {
-                        grabPhysics.detectorsFirstGroup[arrayIndex1, arrayIndex2] = true;
+                        grabManager.detectorsFirstGroup[arrayIndex1, arrayIndex2] = true;
                     }
                     else
                     {
-                        grabPhysics.detectorsSecondGroup[arrayIndex1][arrayIndex2] = true;
+                        grabManager.detectorsSecondGroup[arrayIndex1][arrayIndex2] = true;
                     }
                 }
             }
@@ -50,17 +50,17 @@ public class GrabDetector : MonoBehaviour
         //{
         //    return;
         //}
-        if (collision.gameObject == grabPhysics.grabbedObject || grabPhysics.grabbedObject == null)
+        if (collision.gameObject == grabManager.grabbedObject || grabManager.grabbedObject == null)
         {
             //isTouching = false;
             //Debug.Log($"{gameObject.name} is touching = false");
             if (detectorsGroup == 1)
             {
-                grabPhysics.detectorsFirstGroup[arrayIndex1, arrayIndex2] = false;
+                grabManager.detectorsFirstGroup[arrayIndex1, arrayIndex2] = false;
             }
             else
             {
-                grabPhysics.detectorsSecondGroup[arrayIndex1][arrayIndex2] = false;
+                grabManager.detectorsSecondGroup[arrayIndex1][arrayIndex2] = false;
             }
         }
     }
