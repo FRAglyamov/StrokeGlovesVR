@@ -8,7 +8,7 @@ public class GrabPhysics : MonoBehaviour
     private ActionBasedController _controller;
 
     [SerializeField]
-    private Transform _palmTransform;
+    private Collider grabTrigger;
 
     public GameObject grabbedObject = null;
 
@@ -55,17 +55,16 @@ public class GrabPhysics : MonoBehaviour
 
         if (!_isGrab && isFirstGroupDetect && isSecondGroupDetect)
         {
-
-            for (int i = 0; i < detectorsFirstGroup.GetLength(0); i++)
-            {
-                for (int j = 0; j < detectorsFirstGroup.GetLength(1); j++)
-                {
-                    if (detectorsFirstGroup[i, j])
-                    {
-                        Debug.Log($"Finger collision is true: i={i}, j={j}");
-                    }
-                }
-            }
+            //for (int i = 0; i < detectorsFirstGroup.GetLength(0); i++)
+            //{
+            //    for (int j = 0; j < detectorsFirstGroup.GetLength(1); j++)
+            //    {
+            //        if (detectorsFirstGroup[i, j])
+            //        {
+            //            Debug.Log($"Finger collision is true: i={i}, j={j}");
+            //        }
+            //    }
+            //}
 
             Grab();
         }
@@ -81,9 +80,15 @@ public class GrabPhysics : MonoBehaviour
         grabbedObject = GetClosestObject();
         if (grabbedObject == null)
         {
-            //Debug.LogError("grabbedObject reference is null!");
             return;
         }
+
+        // Find a parent of object with rigidbody (if it is only a part of complex object)
+        if (grabbedObject.GetComponent<Rigidbody>() == null && grabbedObject.GetComponentInParent<Rigidbody>()!=null)
+        {
+            grabbedObject = grabbedObject.GetComponentInParent<Rigidbody>().gameObject;
+        }
+
         if (grabbedObject.GetComponent<Joint>() == null)
         {
             _joint = grabbedObject.AddComponent<FixedJoint>();
@@ -97,26 +102,8 @@ public class GrabPhysics : MonoBehaviour
         Destroy(grabbedObject.GetComponent<Joint>());
         grabbedObject = null;
         _isGrab = false;
-        // TODO: Add force for grabbed object based on hand velocity
+        // TODO: Add force for grabbed object based on hand velocity?
     }
-
-    //private void Grab(UnityEngine.InputSystem.InputAction.CallbackContext obj)
-    //{
-    //    grabbedObject = GetClosestObject();
-    //    if (grabbedObject.GetComponent<Joint>() == null)
-    //    {
-    //        _joint = grabbedObject.AddComponent<FixedJoint>();
-    //        _joint.connectedArticulationBody = this.gameObject.GetComponent<ArticulationBody>();
-    //    }
-    //}
-
-    //private void UnGrab(UnityEngine.InputSystem.InputAction.CallbackContext obj)
-    //{
-    //    Destroy(grabbedObject.GetComponent<Joint>());
-    //    grabbedObject = null;
-    //    //_controller.selectAction.action.performed -= Grab;
-    //    //_controller.selectAction.action.canceled -= UnGrab;
-    //}
 
     private void OnTriggerEnter(Collider other)
     {
@@ -124,9 +111,6 @@ public class GrabPhysics : MonoBehaviour
         {
             items.Add(other.gameObject);
         }
-
-        //_controller.selectAction.action.performed += Grab;
-        //_controller.selectAction.action.canceled += UnGrab;
     }
 
     private void OnTriggerExit(Collider other)
@@ -138,7 +122,6 @@ public class GrabPhysics : MonoBehaviour
     {
         if (items.Count == 0)
         {
-            //Debug.LogError("0 items in triggers' collider array");
             return null;
         }
 
@@ -147,7 +130,7 @@ public class GrabPhysics : MonoBehaviour
 
         foreach (var item in items)
         {
-            var distance = Vector3.Distance(item.transform.position, _palmTransform.position);
+            var distance = Vector3.Distance(item.transform.position, grabTrigger.bounds.center);
             if (distance < minDistance)
             {
                 closestObject = item;

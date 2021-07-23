@@ -223,7 +223,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _controller: {fileID: 2120748608530793257}
-  _palmTransform: {fileID: 2096737867}
+  grabTrigger: {fileID: 10330174}
   grabbedObject: {fileID: 0}
   isFirstGroupDetect: 0
   isSecondGroupDetect: 0
@@ -1406,7 +1406,6 @@ GameObject:
   - component: {fileID: 295672527}
   - component: {fileID: 295672530}
   - component: {fileID: 295672529}
-  - component: {fileID: 295672528}
   m_Layer: 6
   m_Name: hands:b_r_pinky1
   m_TagString: Untagged
@@ -1429,22 +1428,6 @@ Transform:
   m_Father: {fileID: 1687194155}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &295672528
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 295672526}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1139ab75194d7194c9f0911af4f6c05f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  grabPhysics: {fileID: 10330173}
-  detectorsGroup: 1
-  arrayIndex1: 2
-  arrayIndex2: 0
 --- !u!171741748 &295672529
 ArticulationBody:
   m_ObjectHideFlags: 0
@@ -1792,7 +1775,6 @@ GameObject:
   - component: {fileID: 423523604}
   - component: {fileID: 423523607}
   - component: {fileID: 423523606}
-  - component: {fileID: 423523605}
   m_Layer: 6
   m_Name: hands:b_r_index1
   m_TagString: Untagged
@@ -1815,22 +1797,6 @@ Transform:
   m_Father: {fileID: 2096737867}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &423523605
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 423523603}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1139ab75194d7194c9f0911af4f6c05f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  grabPhysics: {fileID: 10330173}
-  detectorsGroup: 1
-  arrayIndex1: 0
-  arrayIndex2: 0
 --- !u!171741748 &423523606
 ArticulationBody:
   m_ObjectHideFlags: 0
@@ -2032,7 +1998,6 @@ GameObject:
   - component: {fileID: 452418693}
   - component: {fileID: 452418696}
   - component: {fileID: 452418695}
-  - component: {fileID: 452418694}
   m_Layer: 6
   m_Name: hands:b_r_ring1
   m_TagString: Untagged
@@ -2055,22 +2020,6 @@ Transform:
   m_Father: {fileID: 2096737867}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &452418694
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 452418692}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1139ab75194d7194c9f0911af4f6c05f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  grabPhysics: {fileID: 10330173}
-  detectorsGroup: 1
-  arrayIndex1: 3
-  arrayIndex2: 0
 --- !u!171741748 &452418695
 ArticulationBody:
   m_ObjectHideFlags: 0
@@ -3461,7 +3410,7 @@ Rigidbody:
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 2
   m_Constraints: 0
   m_CollisionDetection: 1
 --- !u!1 &572638112
@@ -13303,7 +13252,6 @@ GameObject:
   - component: {fileID: 2034859016}
   - component: {fileID: 2034859019}
   - component: {fileID: 2034859018}
-  - component: {fileID: 2034859017}
   m_Layer: 6
   m_Name: hands:b_r_middle1
   m_TagString: Untagged
@@ -13326,22 +13274,6 @@ Transform:
   m_Father: {fileID: 2096737867}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2034859017
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2034859015}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1139ab75194d7194c9f0911af4f6c05f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  grabPhysics: {fileID: 10330173}
-  detectorsGroup: 1
-  arrayIndex1: 1
-  arrayIndex2: 0
 --- !u!171741748 &2034859018
 ArticulationBody:
   m_ObjectHideFlags: 0

@@ -29,7 +29,7 @@ public class GrabDetector : MonoBehaviour
                         || grabPhysics.grabbedObject == null)
                 {
                     //isTouching = true;
-                    Debug.Log($"{gameObject.name} is touching = true");
+                    //Debug.Log($"{gameObject.name} is touching = true");
                     if (detectorsGroup == 1)
                     {
                         grabPhysics.detectorsFirstGroup[arrayIndex1, arrayIndex2] = true;
@@ -53,7 +53,7 @@ public class GrabDetector : MonoBehaviour
         if (collision.gameObject == grabPhysics.grabbedObject || grabPhysics.grabbedObject == null)
         {
             //isTouching = false;
-            Debug.Log($"{gameObject.name} is touching = false");
+            //Debug.Log($"{gameObject.name} is touching = false");
             if (detectorsGroup == 1)
             {
                 grabPhysics.detectorsFirstGroup[arrayIndex1, arrayIndex2] = false;
