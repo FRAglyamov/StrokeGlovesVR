@@ -4,8 +4,6 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class GrabManager : MonoBehaviour
 {
-    [SerializeField]
-    private ActionBasedController _controller;
 
     [SerializeField]
     private Collider grabTrigger;

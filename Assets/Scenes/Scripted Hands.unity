@@ -222,7 +222,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14f95b73ca9916b46801acbfddc93838, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _controller: {fileID: 2120748608530793257}
   grabTrigger: {fileID: 10330174}
   grabbedObject: {fileID: 0}
   isFirstGroupDetect: 0
@@ -13205,7 +13204,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2351f4a64510a7c43abf70581238c3aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _controller: {fileID: 2120748608530793257}
   grabbedObject: {fileID: 0}
   lastPhalanges:
   - {fileID: 1622022863}
@@ -13225,6 +13223,7 @@ MonoBehaviour:
   excludingHandsMask:
     serializedVersion: 2
     m_Bits: 55
+  gloveListener: {fileID: 1624246047}
 --- !u!114 &1932347645
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,17 +1,13 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.XR.Interaction.Toolkit;
 
 public class GrabManagerAveragePoint : MonoBehaviour
 {
-    [SerializeField]
-    private ActionBasedController _controller;
-
     public GameObject grabbedObject = null;
 
     private bool _isGrab = false;
     [SerializeField]
-    private GrabDetectorAveragePoint[] lastPhalanges = new GrabDetectorAveragePoint[4];
+    private GrabDetectorAveragePoint[] lastPhalanges = new GrabDetectorAveragePoint[4]; // index, middle, ring, pinky
     [SerializeField]
     private GrabDetectorAveragePoint[] midPhalanges = new GrabDetectorAveragePoint[4];
     [SerializeField]
@@ -22,7 +18,25 @@ public class GrabManagerAveragePoint : MonoBehaviour
     [SerializeField]
     private LayerMask excludingHandsMask;
 
+    [SerializeField]
+    private GloveListenerArticulation gloveListener;
+
     private void Update()
+    {
+        UpdateGroupsDetection();
+
+        if (!_isGrab && isFirstGroupDetect && isSecondGroupDetect && gloveListener.IsHaveRequiredFlex(5f))
+        {
+            Grab();
+        }
+        else if (_isGrab && (!isFirstGroupDetect || !isSecondGroupDetect || !gloveListener.IsHaveRequiredFlex(5f)))
+        {
+            UnGrab();
+        }
+
+    }
+
+    private void UpdateGroupsDetection()
     {
         isFirstGroupDetect = false;
         isSecondGroupDetect = false;
@@ -56,16 +70,6 @@ public class GrabManagerAveragePoint : MonoBehaviour
                 break;
             }
         }
-
-        if (!_isGrab && isFirstGroupDetect && isSecondGroupDetect)
-        {
-            Grab();
-        }
-        else if (_isGrab && (!isFirstGroupDetect || !isSecondGroupDetect))
-        {
-            UnGrab();
-        }
-
     }
 
     private GameObject GetObjectOnAveragePoint()
@@ -75,21 +79,21 @@ public class GrabManagerAveragePoint : MonoBehaviour
         {
             if (d1.isTouching == true)
             {
-                touchPoints.Add(d1.transform.position);
+                touchPoints.Add(d1.GetComponent<Collider>().bounds.center); // may be better to store?
             }
         }
         foreach (var d1 in midPhalanges)
         {
             if (d1.isTouching == true)
             {
-                touchPoints.Add(d1.transform.position);
+                touchPoints.Add(d1.GetComponent<Collider>().bounds.center);
             }
         }
         foreach (var d2 in thumbPhalanges)
         {
             if (d2.isTouching == true)
             {
-                touchPoints.Add(d2.transform.position);
+                touchPoints.Add(d2.GetComponent<Collider>().bounds.center);
             }
         }
 
@@ -99,14 +103,14 @@ public class GrabManagerAveragePoint : MonoBehaviour
             averagePoint += touchPoints[i];
         }
         averagePoint /= (float)touchPoints.Count;
-        //Debug.Log($"Average point: x={averagePoint.x}, y={averagePoint.y}, z={averagePoint.z}");
+        //Destroy(Instantiate(averagePointPrefabTest, averagePoint, Quaternion.identity), 3f);
 
-        Collider[] intersecting = Physics.OverlapSphere(averagePoint, 0.03f, excludingHandsMask);
+        Collider[] intersecting = Physics.OverlapSphere(averagePoint, 0f, excludingHandsMask);
         if (intersecting.Length > 0)
         {
-            
             GameObject closestObject = intersecting[0].gameObject;
             float minDistance = Vector3.Distance(intersecting[0].transform.position, averagePoint);
+
             for (int i = 1; i < intersecting.Length; i++)
             {
                 var distance = Vector3.Distance(intersecting[i].transform.position, averagePoint);
@@ -117,13 +121,9 @@ public class GrabManagerAveragePoint : MonoBehaviour
                 }
             }
             return closestObject;
-
-            //Debug.Log($"Intersect with {intersecting[0].gameObject.name}");
-            //return intersecting[0].gameObject;
         }
         else
         {
-            //Debug.Log($"Zero intersections");
             if (grabbedObject != null)
             {
                 UnGrab();
@@ -162,6 +162,5 @@ public class GrabManagerAveragePoint : MonoBehaviour
         Destroy(grabbedObject.GetComponent<Joint>());
         grabbedObject = null;
         _isGrab = false;
-        // TODO: Add force for grabbed object based on hand velocity?
     }
 }

@@ -8,14 +8,13 @@ public class GloveListenerArticulation : MonoBehaviour
     [SerializeField]
     private ActionBasedController _controller;
 
-    [SerializeField]
-    private GameObject[] fingers1 = new GameObject[5]; // from thumb to pinky
+    [SerializeField, Tooltip("From thumb to pinky")]
+    private GameObject[] fingers1 = new GameObject[5];
 
-    [SerializeField]
-    private ArticulationBody[,] articulations = new ArticulationBody[5, 3];
+    private ArticulationBody[,] _articulations = new ArticulationBody[5, 3];
 
-    [SerializeField]
-    private float targetFlex = 40f; // works only without gloves, with controllers
+    [SerializeField, Tooltip("Works only without gloves, with controllers")]
+    private float targetFlex = 40f; 
 
     private void Start()
     {
@@ -27,9 +26,9 @@ public class GloveListenerArticulation : MonoBehaviour
             var tmpJointsChildren = fingers1[i].GetComponentsInChildren<ArticulationBody>();
             tmpArticulations[1] = tmpJointsChildren[0];
             tmpArticulations[2] = tmpJointsChildren[1];
-            for (int j = 0; j < articulations.GetLength(1); j++)
+            for (int j = 0; j < _articulations.GetLength(1); j++)
             {
-                articulations[i, j] = tmpArticulations[j];
+                _articulations[i, j] = tmpArticulations[j];
             }
 
             if (GloveDevice.current == null)
@@ -43,31 +42,46 @@ public class GloveListenerArticulation : MonoBehaviour
 
     private void FlexFingers(InputAction.CallbackContext obj)
     {
-        for (int i = 0; i < articulations.GetLength(0); i++)
+        for (int i = 0; i < _articulations.GetLength(0); i++)
         {
-            for (int j = 0; j < articulations.GetLength(1); j++)
+            for (int j = 0; j < _articulations.GetLength(1); j++)
             {
                 //if (articulations[i, j].GetComponent<GrabDetector>().isTouching)
                 //{
                 //    continue;
                 //}
-                var tmpXDrive = articulations[i, j].xDrive;
+                var tmpXDrive = _articulations[i, j].xDrive;
                 tmpXDrive.target = Mathf.Lerp(tmpXDrive.target, targetFlex, 0.1f);
-                articulations[i, j].xDrive = tmpXDrive;
+                _articulations[i, j].xDrive = tmpXDrive;
             }
+        }
+    }
+    public bool IsHaveRequiredFlex(float requiredFlex)
+    {
+        if (_articulations[0, 0].xDrive.target >= requiredFlex
+            || _articulations[0, 0].xDrive.target >= requiredFlex
+            || _articulations[0, 0].xDrive.target >= requiredFlex
+            || _articulations[0, 0].xDrive.target >= requiredFlex
+            || _articulations[0, 0].xDrive.target >= requiredFlex)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
         }
     }
 
     private void UnFlexFingers(InputAction.CallbackContext obj)
     {
-        for (int i = 0; i < articulations.GetLength(0); i++)
+        for (int i = 0; i < _articulations.GetLength(0); i++)
         {
-            for (int j = 0; j < articulations.GetLength(1); j++)
+            for (int j = 0; j < _articulations.GetLength(1); j++)
             {
                 //articulations[i, j].GetComponent<GrabDetector>().isTouching = false;
-                var tmpXDrive = articulations[i, j].xDrive;
+                var tmpXDrive = _articulations[i, j].xDrive;
                 tmpXDrive.target = -10f;
-                articulations[i, j].xDrive = tmpXDrive;
+                _articulations[i, j].xDrive = tmpXDrive;
             }
         }
     }
@@ -83,13 +97,13 @@ public class GloveListenerArticulation : MonoBehaviour
         string[] rotation = tmp[1].Split(' ');
 
         // Set target (rotation) for articulation bodies of all phalanges
-        for (int i = 0; i < articulations.GetLength(0); i++)
+        for (int i = 0; i < _articulations.GetLength(0); i++)
         {
-            for (int j = 0; j < articulations.GetLength(1); j++)
+            for (int j = 0; j < _articulations.GetLength(1); j++)
             {
-                var tmpXDrive = articulations[i, j].xDrive;
+                var tmpXDrive = _articulations[i, j].xDrive;
                 tmpXDrive.target = Remap(float.Parse(fingersFlexing[i]), 0f, 100f, -10f, 80f);
-                articulations[i, j].xDrive = tmpXDrive;
+                _articulations[i, j].xDrive = tmpXDrive;
             }
         }
 
