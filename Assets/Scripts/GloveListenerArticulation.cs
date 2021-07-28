@@ -46,10 +46,6 @@ public class GloveListenerArticulation : MonoBehaviour
         {
             for (int j = 0; j < _articulations.GetLength(1); j++)
             {
-                //if (articulations[i, j].GetComponent<GrabDetector>().isTouching)
-                //{
-                //    continue;
-                //}
                 var tmpXDrive = _articulations[i, j].xDrive;
                 tmpXDrive.target = Mathf.Lerp(tmpXDrive.target, targetFlex, 0.1f);
                 _articulations[i, j].xDrive = tmpXDrive;
@@ -78,7 +74,6 @@ public class GloveListenerArticulation : MonoBehaviour
         {
             for (int j = 0; j < _articulations.GetLength(1); j++)
             {
-                //articulations[i, j].GetComponent<GrabDetector>().isTouching = false;
                 var tmpXDrive = _articulations[i, j].xDrive;
                 tmpXDrive.target = -10f;
                 _articulations[i, j].xDrive = tmpXDrive;

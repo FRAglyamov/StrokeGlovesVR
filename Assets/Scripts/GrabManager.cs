@@ -57,17 +57,6 @@ public class GrabManager : MonoBehaviour
 
         if (!_isGrab && isFirstGroupDetect && isSecondGroupDetect)
         {
-            //for (int i = 0; i < detectorsFirstGroup.GetLength(0); i++)
-            //{
-            //    for (int j = 0; j < detectorsFirstGroup.GetLength(1); j++)
-            //    {
-            //        if (detectorsFirstGroup[i, j])
-            //        {
-            //            Debug.Log($"Finger collision is true: i={i}, j={j}");
-            //        }
-            //    }
-            //}
-
             Grab();
         }
         else if(_isGrab && (!isFirstGroupDetect || !isSecondGroupDetect))
@@ -104,7 +93,6 @@ public class GrabManager : MonoBehaviour
         Destroy(grabbedObject.GetComponent<Joint>());
         grabbedObject = null;
         _isGrab = false;
-        // TODO: Add force for grabbed object based on hand velocity?
     }
 
     private void OnTriggerEnter(Collider other)

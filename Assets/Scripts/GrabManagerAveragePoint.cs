@@ -46,7 +46,6 @@ public class GrabManagerAveragePoint : MonoBehaviour
             if (d1.isTouching == true)
             {
                 isFirstGroupDetect = true;
-                Debug.Log($"Last phalanges isTouching: {d1.gameObject.name}");
                 break;
             }
         }
@@ -57,7 +56,6 @@ public class GrabManagerAveragePoint : MonoBehaviour
                 if (d1.isTouching == true)
                 {
                     isFirstGroupDetect = true;
-                    Debug.Log($"Mid phalanges isTouching: {d1.gameObject.name}");
                     break;
                 }
             }
@@ -103,7 +101,6 @@ public class GrabManagerAveragePoint : MonoBehaviour
             averagePoint += touchPoints[i];
         }
         averagePoint /= (float)touchPoints.Count;
-        //Destroy(Instantiate(averagePointPrefabTest, averagePoint, Quaternion.identity), 3f);
 
         Collider[] intersecting = Physics.OverlapSphere(averagePoint, 0f, excludingHandsMask);
         if (intersecting.Length > 0)
@@ -143,7 +140,7 @@ public class GrabManagerAveragePoint : MonoBehaviour
             return;
         }
 
-        // Find a parent of object with rigidbody (if it is just a part of complex object)
+        // Find a parent of object with rigidbody (if it is just a part of complex object).
         if (grabbedObject.GetComponent<Rigidbody>() == null && grabbedObject.GetComponentInParent<Rigidbody>() != null)
         {
             grabbedObject = grabbedObject.GetComponentInParent<Rigidbody>().gameObject;

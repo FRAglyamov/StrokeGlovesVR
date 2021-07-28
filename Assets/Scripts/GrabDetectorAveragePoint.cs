@@ -39,10 +39,6 @@ public class GrabDetectorAveragePoint : MonoBehaviour
 
     private void OnCollisionExit(Collision collision)
     {
-        //if (collision.gameObject == grabManager.grabbedObject || grabManager.grabbedObject == null)
-        //{
-        //    isTouching = false;
-        //}
         isTouching = false;
     }
 }
