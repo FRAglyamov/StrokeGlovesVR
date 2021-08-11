@@ -12,6 +12,8 @@ public class GrabManagerAveragePoint : MonoBehaviour
     private GrabDetectorAveragePoint[] midPhalanges = new GrabDetectorAveragePoint[4];
     [SerializeField]
     private GrabDetectorAveragePoint[] thumbPhalanges = new GrabDetectorAveragePoint[2];
+    [SerializeField]
+    private GrabDetectorAveragePoint palm;
 
     [SerializeField]
     private bool isFirstGroupDetect = false, isSecondGroupDetect = false;
@@ -68,6 +70,10 @@ public class GrabManagerAveragePoint : MonoBehaviour
                 break;
             }
         }
+        //if (palm.isTouching)
+        //{
+        //    isSecondGroupDetect = true;
+        //}
     }
 
     private GameObject GetObjectOnAveragePoint()
@@ -94,6 +100,10 @@ public class GrabManagerAveragePoint : MonoBehaviour
                 touchPoints.Add(d2.GetComponent<Collider>().bounds.center);
             }
         }
+        //if (palm.isTouching)
+        //{
+        //    touchPoints.Add(palm.GetComponent<Collider>().bounds.center);
+        //}
 
         Vector3 averagePoint = touchPoints[0];
         for (int i = 1; i < touchPoints.Count; i++)
