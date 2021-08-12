@@ -6,7 +6,7 @@ public class ArticulationPhysicsHand : MonoBehaviour
     [SerializeField]
     private GameObject handGhostModel;
 
-    [SerializeField]
+    [SerializeField, Tooltip("On which distance show ghost hand")]
     private float showDistance = 0.05f;
 
     [SerializeField]
@@ -23,7 +23,8 @@ public class ArticulationPhysicsHand : MonoBehaviour
 
     private float _distance;
     private GrabManagerAveragePoint _grabManager;
-
+    private float _grabbedMass = 1f;
+    private Vector3 _velocity;
     private void Awake()
     {
         body = GetComponent<ArticulationBody>();
@@ -60,38 +61,32 @@ public class ArticulationPhysicsHand : MonoBehaviour
     private void FixedUpdate()
     {
         //body.TeleportRoot(transform.position, trackedTransform.rotation * Quaternion.AngleAxis(-90f, Vector3.forward));
-        //body.TeleportRoot(transform.position, trackedTransform.rotation);
+
+        _grabbedMass = 1f;
+        if (_grabManager != null && _grabManager.grabbedObject != null) // TODO: remove "_grabManager != null" later. Now this need, because left hand can't grab
+        {
+            _grabbedMass = _grabManager.grabbedObject.GetComponent<Rigidbody>().mass;
+            if (_grabbedMass < 1f)
+            {
+                _grabbedMass = 1f;
+            }
+        }
 
         Quaternion rotation = trackedTransform.rotation * Quaternion.Inverse(transform.rotation);
         Vector3 angularVelocity = Vector3.ClampMagnitude((new Vector3(
           Mathf.DeltaAngle(0, rotation.eulerAngles.x),
           Mathf.DeltaAngle(0, rotation.eulerAngles.y),
           Mathf.DeltaAngle(0, rotation.eulerAngles.z))
-            / Time.fixedDeltaTime) * Mathf.Deg2Rad, 10f);
+            / Time.fixedDeltaTime / _grabbedMass) * Mathf.Deg2Rad, 10f);
         body.angularVelocity = angularVelocity;
         body.angularDamping = 5f;
 
-        if (_grabManager == null) // TODO: remove later. Now this need for left hand, because left hand can't grab for the moment
-        {
-            body.velocity = Vector3.ClampMagnitude((trackedTransform.position - transform.position).normalized * positionStrength * _distance, maxVelocity);
-            return;
-        }
-
-        float grabbedMass = 1f;
-        if (_grabManager.grabbedObject != null)
-        {
-            grabbedMass = _grabManager.grabbedObject.GetComponent<Rigidbody>().mass;
-            if (grabbedMass < 1f)
-            {
-                grabbedMass = 1f;
-            }
-        }
-        var velocity = Vector3.ClampMagnitude((trackedTransform.position - transform.position).normalized * positionStrength * _distance / grabbedMass, maxVelocity);
+        _velocity = Vector3.ClampMagnitude((trackedTransform.position - transform.position).normalized * positionStrength * _distance / _grabbedMass, maxVelocity);
         //if (_grabManager.grabbedObject != null && body.velocity.magnitude > 3f / grabbedMass)
         //{
         //    _grabManager.UnGrab();
         //}
 
-        body.velocity = velocity;
+        body.velocity = _velocity;
     }
 }
