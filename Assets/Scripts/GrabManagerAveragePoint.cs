@@ -6,14 +6,18 @@ public class GrabManagerAveragePoint : MonoBehaviour
     public GameObject grabbedObject = null;
 
     private bool _isGrab = false;
-    [SerializeField]
-    private GrabDetectorAveragePoint[] lastPhalanges = new GrabDetectorAveragePoint[4]; // index, middle, ring, pinky
-    [SerializeField]
+    [SerializeField, Tooltip("Index, middle, ring, pinky")]
+    private GrabDetectorAveragePoint[] lastPhalanges = new GrabDetectorAveragePoint[4];
+    [SerializeField, Tooltip("Index, middle, ring, pinky")]
     private GrabDetectorAveragePoint[] midPhalanges = new GrabDetectorAveragePoint[4];
     [SerializeField]
     private GrabDetectorAveragePoint[] thumbPhalanges = new GrabDetectorAveragePoint[2];
-    [SerializeField]
-    private GrabDetectorAveragePoint palm;
+    //[SerializeField]
+    //private GrabDetectorAveragePoint palm; // use or not?
+
+    private Collider[] _lastPhalangesColliders = new Collider[4];
+    private Collider[] _midPhalangesColliders = new Collider[4];
+    private Collider[] _thumbPhalangesColliders = new Collider[2];
 
     [SerializeField]
     private bool isFirstGroupDetect = false, isSecondGroupDetect = false;
@@ -22,6 +26,19 @@ public class GrabManagerAveragePoint : MonoBehaviour
 
     [SerializeField]
     private GloveListenerArticulation gloveListener;
+
+    private void Start()
+    {
+        for (int i = 0; i < lastPhalanges.Length; i++)
+        {
+            _lastPhalangesColliders[i] = lastPhalanges[i].GetComponent<Collider>();
+            _midPhalangesColliders[i] = midPhalanges[i].GetComponent<Collider>();
+        }
+        for (int i = 0; i < thumbPhalanges.Length; i++)
+        {
+            _thumbPhalangesColliders[i] = thumbPhalanges[i].GetComponent<Collider>();
+        }
+    }
 
     private void Update()
     {
@@ -43,9 +60,9 @@ public class GrabManagerAveragePoint : MonoBehaviour
         isFirstGroupDetect = false;
         isSecondGroupDetect = false;
 
-        foreach (var d1 in lastPhalanges)
+        foreach (var lastPhalange in lastPhalanges)
         {
-            if (d1.isTouching == true)
+            if (lastPhalange.isTouching == true)
             {
                 isFirstGroupDetect = true;
                 break;
@@ -53,57 +70,44 @@ public class GrabManagerAveragePoint : MonoBehaviour
         }
         if (!isFirstGroupDetect)
         {
-            foreach (var d1 in midPhalanges)
+            foreach (var midPhalange in midPhalanges)
             {
-                if (d1.isTouching == true)
+                if (midPhalange.isTouching == true)
                 {
                     isFirstGroupDetect = true;
                     break;
                 }
             }
         }
-        foreach (var d2 in thumbPhalanges)
+        foreach (var thumbPhalange in thumbPhalanges)
         {
-            if (d2.isTouching == true)
+            if (thumbPhalange.isTouching == true)
             {
                 isSecondGroupDetect = true;
                 break;
             }
         }
-        //if (palm.isTouching)
-        //{
-        //    isSecondGroupDetect = true;
-        //}
     }
 
     private GameObject GetObjectOnAveragePoint()
     {
         List<Vector3> touchPoints = new List<Vector3>();
-        foreach (var d1 in lastPhalanges)
+
+        for (int i = 0; i < lastPhalanges.Length; i++)
         {
-            if (d1.isTouching == true)
+            if (lastPhalanges[i].isTouching == true)
             {
-                touchPoints.Add(d1.GetComponent<Collider>().bounds.center); // may be better to store?
+                touchPoints.Add(_lastPhalangesColliders[i].bounds.center);
+            }
+            if (midPhalanges[i].isTouching == true)
+            {
+                touchPoints.Add(_midPhalangesColliders[i].bounds.center);
             }
         }
-        foreach (var d1 in midPhalanges)
+        for (int i = 0; i < thumbPhalanges.Length; i++)
         {
-            if (d1.isTouching == true)
-            {
-                touchPoints.Add(d1.GetComponent<Collider>().bounds.center);
-            }
+            touchPoints.Add(_thumbPhalangesColliders[i].bounds.center);
         }
-        foreach (var d2 in thumbPhalanges)
-        {
-            if (d2.isTouching == true)
-            {
-                touchPoints.Add(d2.GetComponent<Collider>().bounds.center);
-            }
-        }
-        //if (palm.isTouching)
-        //{
-        //    touchPoints.Add(palm.GetComponent<Collider>().bounds.center);
-        //}
 
         Vector3 averagePoint = touchPoints[0];
         for (int i = 1; i < touchPoints.Count; i++)
