@@ -25,14 +25,12 @@ public class ArticulationPhysicsHand : MonoBehaviour
     private GrabManagerAveragePoint _grabManager;
     private float _grabbedMass = 1f;
     private Vector3 _velocity;
-    private void Awake()
-    {
-        body = GetComponent<ArticulationBody>();
-        _grabManager = GetComponent<GrabManagerAveragePoint>();
-    }
 
     private void Start()
     {
+        body = GetComponent<ArticulationBody>();
+        _grabManager = GetComponent<GrabManagerAveragePoint>();
+
         transform.position = trackedTransform.position;
         transform.rotation = trackedTransform.rotation;
     }
