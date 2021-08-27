@@ -1751,6 +1751,7 @@ GameObject:
   - component: {fileID: 587996429}
   - component: {fileID: 587996428}
   - component: {fileID: 587996427}
+  - component: {fileID: 587996430}
   m_Layer: 5
   m_Name: Button (1)
   m_TagString: Untagged
@@ -1872,6 +1873,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 587996425}
   m_CullTransparentMesh: 1
+--- !u!65 &587996430
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 587996425}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 300, y: 50, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &709490499
 GameObject:
   m_ObjectHideFlags: 0
@@ -2164,6 +2178,7 @@ GameObject:
   - component: {fileID: 739852694}
   - component: {fileID: 739852693}
   - component: {fileID: 739852692}
+  - component: {fileID: 739852695}
   m_Layer: 5
   m_Name: Button (2)
   m_TagString: Untagged
@@ -2285,6 +2300,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 739852690}
   m_CullTransparentMesh: 1
+--- !u!65 &739852695
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 739852690}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 300, y: 50, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &775643940
 GameObject:
   m_ObjectHideFlags: 0
@@ -2297,6 +2325,7 @@ GameObject:
   - component: {fileID: 775643944}
   - component: {fileID: 775643943}
   - component: {fileID: 775643942}
+  - component: {fileID: 775643945}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -2418,6 +2447,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 775643940}
   m_CullTransparentMesh: 1
+--- !u!65 &775643945
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 775643940}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 300, y: 50, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &786603481
 GameObject:
   m_ObjectHideFlags: 0
@@ -3812,7 +3854,7 @@ MonoBehaviour:
   UIMask:
     serializedVersion: 2
     m_Bits: 32
-  loadingImage: {fileID: 0}
+  loadingPrefab: {fileID: 4808463145205232435, guid: a23bb0f54d0fa934c9e651f3ab9d7703, type: 3}
 --- !u!1 &1254389541
 GameObject:
   m_ObjectHideFlags: 0
@@ -4517,6 +4559,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1375299520}
   m_CullTransparentMesh: 1
+--- !u!1 &1399795137
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1399795139}
+  - component: {fileID: 1399795138}
+  m_Layer: 0
+  m_Name: ProgressSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1399795138
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1399795137}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 940bd37a7a54d5c4cb0efd266a9196db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  exerciseName: none
+--- !u!4 &1399795139
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1399795137}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1428571623
 GameObject:
   m_ObjectHideFlags: 0

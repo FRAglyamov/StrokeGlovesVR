@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -13,7 +14,33 @@ public class ProgressSystem : MonoBehaviour
 
     private void Awake()
     {
-        savePath = Application.persistentDataPath + "/progress_saves/" + exerciseName;
+        // Application.persistentDataPath = C:\Users\дмл\AppData\LocalLow\DML\StrokeVR
+        savePath = Path.Combine(Application.persistentDataPath, "progress_saves", exerciseName);
+        if (!Directory.Exists(savePath))
+        {
+            Directory.CreateDirectory(savePath);
+        }
+    }
+
+    private void Start()
+    {
+        StartCoroutine(ProgressSystemTest(2f));
+    }
+
+    IEnumerator ProgressSystemTest(float time)
+    {
+        StartTimer();
+
+        yield return new WaitForSeconds(time);
+
+        EndTimer();
+        SaveResultIntoJSON();
+
+        var results = GetPreviousResults(5);
+        foreach (var r in results)
+        {
+            Debug.Log($"Result date = {r.date}, time = {r.time}");
+        }
     }
 
     public void StartTimer()
@@ -40,10 +67,10 @@ public class ProgressSystem : MonoBehaviour
             return;
         }
 
-        ExerciseResult result = new ExerciseResult { date = System.DateTime.Now, time = _timer };
+        ExerciseResult result = new ExerciseResult { date = System.DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss"), time = _timer.ToString("f4") };
         string json = JsonUtility.ToJson(result);
         Debug.Log($"JSON: {json}");
-        File.WriteAllText($"{savePath}/{result.date}.json", json);
+        File.WriteAllText(Path.Combine(savePath, result.date + ".json"), json);
     }
 
     public ExerciseResult LoadResultFromJSON(string filePath)

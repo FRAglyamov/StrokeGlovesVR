@@ -15,14 +15,23 @@ public class HoverUISelection : MonoBehaviour
     private GameObject _hittedObject;
     private float _maxHitDistance = 20f;
 
+    private Camera _cam;
+
+    private void Start()
+    {
+        _cam = GetComponent<Camera>();
+    }
+
     private void FixedUpdate()
     {
+        Ray ray = _cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, _maxHitDistance, UIMask) 
-            && hit.transform.TryGetComponent(out Button button))
+
+        //if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, _maxHitDistance, UIMask))
+        if (Physics.Raycast(ray, out hit, _maxHitDistance, UIMask))
         {
-            Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hit.distance, Color.yellow);
-            Debug.Log("Did Hit");
+            //Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hit.distance, Color.blue);
+            Debug.DrawRay(ray.origin, ray.direction * hit.distance, Color.blue);
 
             if (_hittedObject == null || _hittedObject != hit.transform.gameObject)
             {
@@ -31,26 +40,27 @@ public class HoverUISelection : MonoBehaviour
 
                 _loadingImage = Instantiate(loadingPrefab, hit.transform.position, hit.transform.rotation, hit.transform).GetComponent<Image>();
             }
-            if(_hitTime + _requiredTime >= Time.time)
+
+            if (hit.transform.TryGetComponent(out Button button) && _hitTime <= Time.time - _requiredTime)
             {
-                // Select/Activate UI element
                 button.onClick.Invoke();
             }
-            // Draw line (or not?) and progress of timer
             _loadingImage.fillAmount = (Time.time - _hitTime) / _requiredTime;
 
         }
         else
         {
-
-            Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * _maxHitDistance, Color.white);
-            Debug.Log("Did not Hit");
+            //Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * _maxHitDistance, Color.white);
+            Debug.DrawRay(ray.origin, ray.direction * _maxHitDistance, Color.white);
 
             _hittedObject = null;
             _hitTime = 0f;
 
-            Destroy(_loadingImage.gameObject);
-            _loadingImage = null;
+            if (_loadingImage != null)
+            {
+                Destroy(_loadingImage.gameObject);
+                _loadingImage = null;
+            }
         }
     }
 }
