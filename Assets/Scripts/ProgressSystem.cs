@@ -10,37 +10,24 @@ public class ProgressSystem : MonoBehaviour
     private string exerciseName = "none";
     private float _startTime = -1f;
     private float _timer = -1f;
-    private string savePath = "";
+    public string SavePath { get; private set; } = "";
+    private DirectoryInfo _dir;
+    public FileInfo[] Files { get; private set; }
 
     private void Awake()
     {
         // Application.persistentDataPath = C:\Users\дмл\AppData\LocalLow\DML\StrokeVR
-        savePath = Path.Combine(Application.persistentDataPath, "progress_saves", exerciseName);
-        if (!Directory.Exists(savePath))
+        SavePath = Path.Combine(Application.persistentDataPath, "progress_saves", exerciseName);
+        if (!Directory.Exists(SavePath))
         {
-            Directory.CreateDirectory(savePath);
+            Directory.CreateDirectory(SavePath);
         }
     }
 
-    private void Start()
+    public void FilesInfoUpdate()
     {
-        StartCoroutine(ProgressSystemTest(2f));
-    }
-
-    IEnumerator ProgressSystemTest(float time)
-    {
-        StartTimer();
-
-        yield return new WaitForSeconds(time);
-
-        EndTimer();
-        SaveResultIntoJSON();
-
-        var results = GetPreviousResults(5);
-        foreach (var r in results)
-        {
-            Debug.Log($"Result date = {r.date}, time = {r.time}");
-        }
+        _dir = new DirectoryInfo(SavePath);
+        Files = _dir.GetFiles("*.json").OrderByDescending(f => f.LastWriteTime).ToArray();
     }
 
     public void StartTimer()
@@ -70,7 +57,7 @@ public class ProgressSystem : MonoBehaviour
         ExerciseResult result = new ExerciseResult { date = System.DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss"), time = _timer.ToString("f4") };
         string json = JsonUtility.ToJson(result);
         Debug.Log($"JSON: {json}");
-        File.WriteAllText(Path.Combine(savePath, result.date + ".json"), json);
+        File.WriteAllText(Path.Combine(SavePath, result.date + ".json"), json);
     }
 
     public ExerciseResult LoadResultFromJSON(string filePath)
@@ -80,28 +67,27 @@ public class ProgressSystem : MonoBehaviour
             string fileContents = File.ReadAllText(filePath);
             return JsonUtility.FromJson<ExerciseResult>(fileContents);
         }
-        Debug.LogError("Can't load. File don't exist! File path: " + filePath);
-        return null;
+        else
+        {
+            Debug.LogError("Can't load. File don't exist! File path: " + filePath);
+            return null;
+        }
     }
 
-    public List<ExerciseResult> GetPreviousResults(int resultAmount)
-    {
-        List<ExerciseResult> results = new List<ExerciseResult>();
+    //private void Start()
+    //{
+    //    StartCoroutine(ProgressSystemTest(2f));
+    //}
 
-        DirectoryInfo dir = new DirectoryInfo(savePath);
-        FileInfo[] info = dir.GetFiles("*.json").OrderByDescending(f => f.LastWriteTime).ToArray();
+    //IEnumerator ProgressSystemTest(float time)
+    //{
+    //    StartTimer();
 
-        if (info.Length < resultAmount)
-        {
-            resultAmount = info.Length;
-        }
-        for (int i = 0; i < resultAmount; i++)
-        {
-            results.Add(LoadResultFromJSON(info[i].FullName));
-        }
+    //    yield return new WaitForSeconds(time);
 
-        return results;
-    }
+    //    EndTimer();
+    //    SaveResultIntoJSON();
+    //}
 
 }
 
