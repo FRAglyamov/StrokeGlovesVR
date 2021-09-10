@@ -4477,6 +4477,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 11442534, guid: a65acf0cbf56b80419f74ebf0bc845f4, type: 3}
+      propertyPath: portName
+      value: COM1
+      objectReference: {fileID: 0}
     - target: {fileID: 1624246047, guid: a65acf0cbf56b80419f74ebf0bc845f4, type: 3}
       propertyPath: _animator
       value: 

@@ -103,6 +103,14 @@ public abstract class AbstractSerialThread
         return inputQueue.Dequeue();
     }
 
+    public object PeekInInputQueue()
+    {
+        if (inputQueue.Count == 0)
+            return null;
+
+        return inputQueue.Peek();
+    }
+
     // ------------------------------------------------------------------------
     // Schedules a message to be sent. It writes the message to the
     // output queue, later the method 'RunOnce' reads this queue and sends

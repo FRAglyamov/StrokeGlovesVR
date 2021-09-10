@@ -1,6 +1,7 @@
 using System.Globalization;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Layouts;
 using UnityEngine.XR.Interaction.Toolkit;
 
 public class GloveListenerArticulation : MonoBehaviour
@@ -14,7 +15,9 @@ public class GloveListenerArticulation : MonoBehaviour
     private ArticulationBody[,] _articulations = new ArticulationBody[5, 3];
 
     [SerializeField, Tooltip("Works only without gloves, with controllers")]
-    private float targetFlex = 40f; 
+    private float targetFlex = 40f;
+
+    private SerialController _serialController;
 
     private void Start()
     {
@@ -37,7 +40,7 @@ public class GloveListenerArticulation : MonoBehaviour
                 _controller.selectAction.action.canceled += UnFlexFingers;
             }
         }
-
+        _serialController = GetComponent<SerialController>();
     }
 
     private void FlexFingers(InputAction.CallbackContext obj)
@@ -84,6 +87,8 @@ public class GloveListenerArticulation : MonoBehaviour
     // Invoked when a line of data is received from the serial device.
     void OnMessageArrived(string msg)
     {
+        InitGloveDeviceOnFirstMessage();
+
         var state = new GloveDeviceState();
 
         Debug.Log("Arrived: " + msg);
@@ -114,6 +119,19 @@ public class GloveListenerArticulation : MonoBehaviour
         state.pinky = float.Parse(fingersFlexing[4]) / 100;
 
         InputSystem.QueueStateEvent(GloveDevice.current, state);
+    }
+
+    private void InitGloveDeviceOnFirstMessage()
+    {
+        if (!_serialController.isConnected)
+        {
+            InputSystem.AddDevice(new InputDeviceDescription
+            {
+                interfaceName = "Glove",
+                product = "Glove Product"
+            });
+            _serialController.isConnected = true;
+        }
     }
 
     // Invoked when a connect/disconnect event occurs. The parameter 'success'

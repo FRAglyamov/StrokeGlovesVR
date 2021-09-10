@@ -8,6 +8,7 @@
 
 using UnityEngine;
 using System.Threading;
+using System.Collections;
 
 /**
  * This class allows a Unity program to continually check for messages from a
@@ -63,13 +64,65 @@ public class SerialController : MonoBehaviour
     // ------------------------------------------------------------------------
     void OnEnable()
     {
-        serialThread = new SerialThreadLines(portName, 
-                                             baudRate, 
+        serialThread = new SerialThreadLines(portName,
+                                             baudRate,
                                              reconnectionDelay,
                                              maxUnreadMessages);
         thread = new Thread(new ThreadStart(serialThread.RunForever));
         thread.Start();
     }
+
+
+    private void Start()
+    {
+        StartCoroutine(TryConnectToCOMs());
+    }
+
+    public void StartCalibration()
+    {
+        GetComponent<SerialController>().SendSerialMessage("Calibation");
+    }
+
+    #region FindingCOM
+
+    private int _curCOM = 1;
+    public int CurCOM
+    {
+        get => _curCOM;
+        private set
+        {
+            if ((value > 9) || (value < 1))
+            {
+                _curCOM = 1;
+            }
+            else
+            {
+                _curCOM = value;
+            }
+        }
+    }
+    public bool isConnected = false;
+
+    private IEnumerator TryConnectToCOMs()
+    {
+        while (!isConnected)
+        {
+            Debug.Log($"Change COM to COM{CurCOM}");
+            ChangeCOM("COM" + CurCOM.ToString());
+            CurCOM++;
+
+            yield return new WaitForSeconds(1f);
+        }
+    }
+
+    public void ChangeCOM(string COM)
+    {
+        OnDisable();
+        portName = COM;
+        OnEnable();
+    }
+
+    #endregion
 
     // ------------------------------------------------------------------------
     // Invoked whenever the SerialController gameobject is deactivated.

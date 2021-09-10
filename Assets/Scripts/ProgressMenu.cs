@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -30,23 +31,18 @@ public class ProgressMenu : MonoBehaviour
     public void ChangeResultsPage(int pageChange)
     {
         PageChange pageChangeState = (PageChange)pageChange;
-        switch (pageChangeState)
-        {
-            case PageChange.Recent:
-                _curFromResult = 0;
-                break;
-            case PageChange.Left:
-                _curFromResult -= _resultAmount;
-                break;
-            case PageChange.Right:
-                _curFromResult += _resultAmount;
-                break;
-            default:
-                Debug.LogError("Wrong pageChange parameter! Select from 0-2.");
-                break;
-        }
+        _curFromResult = CalculateCurFromResult(pageChangeState);
         ShowResultsInMenu(_curFromResult, _curFromResult + _resultAmount);
     }
+
+    private int CalculateCurFromResult(PageChange pageChangeState) =>
+        pageChangeState switch
+        {
+            PageChange.Recent => 0,
+            PageChange.Left => _curFromResult - _resultAmount,
+            PageChange.Right => _curFromResult + _resultAmount,
+            _ => throw new ArgumentException(message: "invalid enum value", paramName: nameof(pageChangeState)),
+        };
 
     private void ShowResultsInMenu(int fromResult, int toResult)
     {
