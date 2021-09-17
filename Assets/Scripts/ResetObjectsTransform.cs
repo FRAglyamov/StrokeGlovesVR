@@ -10,7 +10,7 @@ public class ResetObjectsTransform : MonoBehaviour
     private List<Vector3> _localScales = new List<Vector3>();
     void Start()
     {
-        foreach (var t in objectTransforms)
+        foreach (Transform t in objectTransforms)
         {
             _positions.Add(t.position);
             _rotations.Add(t.rotation);

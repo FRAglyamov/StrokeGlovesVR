@@ -10,7 +10,7 @@ public class GrabDetectorAveragePoint : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        foreach (var contact in collision.contacts)
+        foreach (ContactPoint contact in collision.contacts)
         {
             if (contact.thisCollider.name == gameObject.name)
             {
@@ -25,7 +25,7 @@ public class GrabDetectorAveragePoint : MonoBehaviour
 
     private void OnCollisionStay(Collision collision)
     {
-        foreach (var contact in collision.contacts)
+        foreach (ContactPoint contact in collision.contacts)
         {
             if (contact.thisCollider.name == gameObject.name)
             {

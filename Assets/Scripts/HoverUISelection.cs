@@ -1,8 +1,6 @@
-using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using UnityEngine.XR.Interaction.Toolkit;
 
 public class HoverUISelection : MonoBehaviour
 {
@@ -41,8 +39,6 @@ public class HoverUISelection : MonoBehaviour
 
             if ((_hitTime + _requiredTime < Time.time ) && hit.transform.TryGetComponent(out Button button))
             {
-                Debug.Log("HoverUI clicked");
-                //button.onClick.Invoke();
                 IPointerClickHandler clickHandler = button.gameObject.GetComponent<IPointerClickHandler>();
                 PointerEventData pointerEventData = new PointerEventData(EventSystem.current);
                 clickHandler.OnPointerClick(pointerEventData);

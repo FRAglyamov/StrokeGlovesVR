@@ -12,8 +12,6 @@ public class GrabManagerAveragePoint : MonoBehaviour
     private GrabDetectorAveragePoint[] midPhalanges = new GrabDetectorAveragePoint[4];
     [SerializeField]
     private GrabDetectorAveragePoint[] thumbPhalanges = new GrabDetectorAveragePoint[2];
-    //[SerializeField]
-    //private GrabDetectorAveragePoint palm; // use or not?
 
     private Collider[] _lastPhalangesColliders = new Collider[4];
     private Collider[] _midPhalangesColliders = new Collider[4];
@@ -60,7 +58,7 @@ public class GrabManagerAveragePoint : MonoBehaviour
         isFirstGroupDetect = false;
         isSecondGroupDetect = false;
 
-        foreach (var lastPhalange in lastPhalanges)
+        foreach (GrabDetectorAveragePoint lastPhalange in lastPhalanges)
         {
             if (lastPhalange.isTouching == true)
             {
@@ -70,7 +68,7 @@ public class GrabManagerAveragePoint : MonoBehaviour
         }
         if (!isFirstGroupDetect)
         {
-            foreach (var midPhalange in midPhalanges)
+            foreach (GrabDetectorAveragePoint midPhalange in midPhalanges)
             {
                 if (midPhalange.isTouching == true)
                 {
@@ -79,7 +77,7 @@ public class GrabManagerAveragePoint : MonoBehaviour
                 }
             }
         }
-        foreach (var thumbPhalange in thumbPhalanges)
+        foreach (GrabDetectorAveragePoint thumbPhalange in thumbPhalanges)
         {
             if (thumbPhalange.isTouching == true)
             {

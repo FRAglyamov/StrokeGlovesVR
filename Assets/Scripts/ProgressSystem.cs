@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using UnityEngine;
@@ -82,9 +81,7 @@ public class ProgressSystem : MonoBehaviour
     //IEnumerator ProgressSystemTest(float time)
     //{
     //    StartTimer();
-
     //    yield return new WaitForSeconds(time);
-
     //    EndTimer();
     //    SaveResultIntoJSON();
     //}

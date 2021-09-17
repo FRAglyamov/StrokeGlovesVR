@@ -80,10 +80,6 @@ public class ArticulationPhysicsHand : MonoBehaviour
         body.angularDamping = 5f;
 
         _velocity = Vector3.ClampMagnitude((trackedTransform.position - transform.position).normalized * positionStrength * _distance / _grabbedMass, maxVelocity);
-        //if (_grabManager.grabbedObject != null && body.velocity.magnitude > 3f / grabbedMass)
-        //{
-        //    _grabManager.UnGrab();
-        //}
 
         body.velocity = _velocity;
     }

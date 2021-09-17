@@ -21,9 +21,20 @@ public class GloveListenerArticulation : MonoBehaviour
 
     private void Start()
     {
+        AssignAriculationBodyReferences();
+
+        if (GloveDevice.current == null)
+        {
+            SetFlexByControllers();
+        }
+
+        _serialController = GetComponent<SerialController>();
+    }
+
+    private void AssignAriculationBodyReferences()
+    {
         for (int i = 0; i < fingers1.Length; i++)
         {
-            //Debug.Log(fingers1[i].name);
             ArticulationBody[] tmpArticulations = new ArticulationBody[3];
             tmpArticulations[0] = fingers1[i].GetComponent<ArticulationBody>();
             var tmpJointsChildren = fingers1[i].GetComponentsInChildren<ArticulationBody>();
@@ -33,14 +44,12 @@ public class GloveListenerArticulation : MonoBehaviour
             {
                 _articulations[i, j] = tmpArticulations[j];
             }
-
-            if (GloveDevice.current == null)
-            {
-                _controller.selectAction.action.performed += FlexFingers;
-                _controller.selectAction.action.canceled += UnFlexFingers;
-            }
         }
-        _serialController = GetComponent<SerialController>();
+    }
+    private void SetFlexByControllers()
+    {
+        _controller.selectAction.action.performed += FlexFingers;
+        _controller.selectAction.action.canceled += UnFlexFingers;
     }
 
     private void FlexFingers(InputAction.CallbackContext obj)
@@ -55,13 +64,14 @@ public class GloveListenerArticulation : MonoBehaviour
             }
         }
     }
+
     public bool IsHaveRequiredFlex(float requiredFlex)
     {
         if (_articulations[0, 0].xDrive.target >= requiredFlex
-            || _articulations[0, 0].xDrive.target >= requiredFlex
-            || _articulations[0, 0].xDrive.target >= requiredFlex
-            || _articulations[0, 0].xDrive.target >= requiredFlex
-            || _articulations[0, 0].xDrive.target >= requiredFlex)
+            || _articulations[1, 0].xDrive.target >= requiredFlex
+            || _articulations[2, 0].xDrive.target >= requiredFlex
+            || _articulations[3, 0].xDrive.target >= requiredFlex
+            || _articulations[4, 0].xDrive.target >= requiredFlex)
         {
             return true;
         }
