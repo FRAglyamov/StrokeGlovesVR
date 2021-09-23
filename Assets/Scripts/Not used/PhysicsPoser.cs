@@ -1,11 +1,10 @@
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
-[RequireComponent(typeof(Rigidbody))]
-[RequireComponent(typeof(ActionBasedController))]
+[RequireComponent(typeof(ArticulationBody))]
+//[RequireComponent(typeof(ActionBasedController))]
 public class PhysicsPoser : MonoBehaviour
 {
-    // Values
     public float physicsRange = 0.1f;
     public LayerMask physicsMask = 0;
 
@@ -15,28 +14,22 @@ public class PhysicsPoser : MonoBehaviour
     [Range(0, 100)] public float maxPositionChange = 75f;
     [Range(0, 100)] public float maxRotationChange = 75f;
 
-    // References
-    private Rigidbody rb;
-    //private XRController controller;
-    private XRBaseInteractor interactor;
-    private ActionBasedController _controller;
+    private ArticulationBody ab;
+    [SerializeField]
+    private ActionBasedController controller;
 
-    // Runtime
     private Vector3 targetPosition = Vector3.zero;
     private Quaternion targetRotation = Quaternion.identity;
     private void Awake()
     {
-        // Get the stuff
-        rb = GetComponent<Rigidbody>();
-        //controller = GetComponent<XRController>();
-        _controller = GetComponent<ActionBasedController>();
-        interactor = GetComponent<XRBaseInteractor>();
+        ab = GetComponent<ArticulationBody>();
+        //controller = GetComponent<ActionBasedController>();
     }
 
     private void Start()
     {
         // As soon as we start, move to the hand
-        UpdateTracking(_controller);
+        UpdateTracking(controller);
         MoveUsingTransform();
         RotateUsingTransform();
     }
@@ -44,7 +37,7 @@ public class PhysicsPoser : MonoBehaviour
     private void Update()
     {
         // Update our target location
-        UpdateTracking(_controller);
+        UpdateTracking(controller);
     }
 
     private void UpdateTracking(ActionBasedController controller)
@@ -56,8 +49,8 @@ public class PhysicsPoser : MonoBehaviour
 
     private void FixedUpdate()
     {
-        // Move via transform if we're holding an object, or not within physics range
-        if (IsHoldingObject() || !WithinPhysicsRange())
+        // Move via transform if we're not within physics range
+        if (!WithinPhysicsRange())
         {
             MoveUsingTransform();
             RotateUsingTransform();
@@ -70,11 +63,6 @@ public class PhysicsPoser : MonoBehaviour
         }
     }
 
-    public bool IsHoldingObject()
-    {
-        return interactor.selectTarget;
-    }
-
     public bool WithinPhysicsRange()
     {
         return Physics.CheckSphere(transform.position, physicsRange, physicsMask, QueryTriggerInteraction.Ignore);
@@ -83,7 +71,7 @@ public class PhysicsPoser : MonoBehaviour
     private void MoveUsingPhysics()
     {
         // Prevents overshooting
-        rb.velocity *= slowDownVelocity;
+        ab.velocity *= slowDownVelocity;
 
         // Get target velocity
         Vector3 velocity = FindNewVelocity();
@@ -93,20 +81,20 @@ public class PhysicsPoser : MonoBehaviour
         {
             // Figure out the max we can move, then move via velocity
             float maxChange = maxPositionChange * Time.deltaTime;
-            rb.velocity = Vector3.MoveTowards(rb.velocity, velocity, maxChange);
+            ab.velocity = Vector3.MoveTowards(ab.velocity, velocity, maxChange);
         }
     }
 
     private Vector3 FindNewVelocity()
     {
-        Vector3 difference = targetPosition - rb.position;
+        Vector3 difference = targetPosition - ab.transform.position;
         return difference / Time.deltaTime;
     }
 
     private void RotateUsingPhysics()
     {
         // Prevents overshooting
-        rb.angularVelocity *= slowDownAngularVelocity;
+        ab.angularVelocity *= slowDownAngularVelocity;
 
         // Get target velocity
         Vector3 angularVelocity = FindNewAngularVelocity();
@@ -116,7 +104,7 @@ public class PhysicsPoser : MonoBehaviour
         {
             // Figure out the max we can rotate, then move via velocity
             float maxChange = maxRotationChange * Time.deltaTime;
-            rb.angularVelocity = Vector3.MoveTowards(rb.angularVelocity, angularVelocity, maxChange);
+            ab.angularVelocity = Vector3.MoveTowards(ab.angularVelocity, angularVelocity, maxChange);
         }
 
     }
@@ -124,7 +112,7 @@ public class PhysicsPoser : MonoBehaviour
     private Vector3 FindNewAngularVelocity()
     {
         // Figure out the difference in rotation
-        Quaternion difference = targetRotation * Quaternion.Inverse(rb.rotation);
+        Quaternion difference = targetRotation * Quaternion.Inverse(ab.transform.rotation);
         difference.ToAngleAxis(out float angleInDegrees, out Vector3 rotationAxis);
 
         // Do the weird thing to account for have a range of -180 to 180
@@ -143,14 +131,14 @@ public class PhysicsPoser : MonoBehaviour
     private void MoveUsingTransform()
     {
         // Prevents jitter
-        rb.velocity = Vector3.zero;
+        ab.velocity = Vector3.zero;
         transform.localPosition = targetPosition;
     }
 
     private void RotateUsingTransform()
     {
         // Prevents jitter
-        rb.angularVelocity = Vector3.zero;
+        ab.angularVelocity = Vector3.zero;
         transform.localRotation = targetRotation;
     }
 

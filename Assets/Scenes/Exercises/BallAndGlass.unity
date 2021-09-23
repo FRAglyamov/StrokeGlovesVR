@@ -1971,8 +1971,8 @@ GameObject:
   - component: {fileID: 823053128}
   - component: {fileID: 823053127}
   - component: {fileID: 823053129}
-  - component: {fileID: 823053130}
   - component: {fileID: 823053131}
+  - component: {fileID: 823053130}
   m_Layer: 0
   m_Name: ExerciseStepManager
   m_TagString: Untagged
@@ -2039,7 +2039,6 @@ MonoBehaviour:
   exerciseObjects:
   - {fileID: 963363043}
   - {fileID: 1427536221}
-  progressSystem: {fileID: 0}
 --- !u!114 &823053131
 MonoBehaviour:
   m_ObjectHideFlags: 0

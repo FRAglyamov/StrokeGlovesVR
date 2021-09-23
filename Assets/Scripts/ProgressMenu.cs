@@ -31,18 +31,16 @@ public class ProgressMenu : MonoBehaviour
     public void ChangeResultsPage(int pageChange)
     {
         PageChange pageChangeState = (PageChange)pageChange;
-        _curFromResult = CalculateCurFromResult(pageChangeState);
-        ShowResultsInMenu(_curFromResult, _curFromResult + _resultAmount);
-    }
-
-    private int CalculateCurFromResult(PageChange pageChangeState) =>
-        pageChangeState switch
+        _curFromResult = pageChangeState switch
         {
             PageChange.Recent => 0,
             PageChange.Left => _curFromResult - _resultAmount,
             PageChange.Right => _curFromResult + _resultAmount,
             _ => throw new ArgumentException(message: "invalid enum value", paramName: nameof(pageChangeState)),
         };
+
+        ShowResultsInMenu(_curFromResult, _curFromResult + _resultAmount);
+    }
 
     private void ShowResultsInMenu(int fromResult, int toResult)
     {
