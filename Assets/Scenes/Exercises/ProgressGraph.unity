@@ -475,6 +475,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 662174472}
+  - component: {fileID: 662174474}
   - component: {fileID: 662174473}
   m_Layer: 5
   m_Name: Window Graph
@@ -516,12 +517,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c9a736a7a17b2f4aaef57575d5e40c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dotTemplate: {fileID: 1656036309}
   graphContainer: {fileID: 761009266}
+  dotTemplate: {fileID: 1656036309}
   labelTemplateX: {fileID: 789029421}
   labelTemplateY: {fileID: 1164580954}
   dashTemplateX: {fileID: 1747898438}
   dashTemplateY: {fileID: 263427074}
+--- !u!114 &662174474
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 662174471}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 940bd37a7a54d5c4cb0efd266a9196db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  exerciseName: none
 --- !u!1 &739639782
 GameObject:
   m_ObjectHideFlags: 0

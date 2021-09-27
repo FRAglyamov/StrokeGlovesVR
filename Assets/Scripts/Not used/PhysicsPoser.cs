@@ -15,8 +15,10 @@ public class PhysicsPoser : MonoBehaviour
     [Range(0, 100)] public float maxRotationChange = 75f;
 
     private ArticulationBody ab;
+    //[SerializeField]
+    //private ActionBasedController controller;
     [SerializeField]
-    private ActionBasedController controller;
+    private Transform controllerTransfrom;
 
     private Vector3 targetPosition = Vector3.zero;
     private Quaternion targetRotation = Quaternion.identity;
@@ -29,7 +31,7 @@ public class PhysicsPoser : MonoBehaviour
     private void Start()
     {
         // As soon as we start, move to the hand
-        UpdateTracking(controller);
+        UpdateTracking();
         MoveUsingTransform();
         RotateUsingTransform();
     }
@@ -37,29 +39,31 @@ public class PhysicsPoser : MonoBehaviour
     private void Update()
     {
         // Update our target location
-        UpdateTracking(controller);
+        UpdateTracking();
     }
 
-    private void UpdateTracking(ActionBasedController controller)
+    private void UpdateTracking()
     {
         // Get the rotation and position from the device
-        targetPosition = controller.positionAction.action.ReadValue<Vector3>();
-        targetRotation = controller.rotationAction.action.ReadValue<Quaternion>();
+        //targetPosition = controller.positionAction.action.ReadValue<Vector3>();
+        //targetRotation = controller.rotationAction.action.ReadValue<Quaternion>();
+
+        // Or we can just get pos, rot of controller game object.
+        targetPosition = controllerTransfrom.position;
+        targetRotation = controllerTransfrom.rotation;
     }
 
     private void FixedUpdate()
     {
-        // Move via transform if we're not within physics range
-        if (!WithinPhysicsRange())
-        {
-            MoveUsingTransform();
-            RotateUsingTransform();
-        }
-        // Else move using physics
-        else
+        if (WithinPhysicsRange())
         {
             MoveUsingPhysics();
             RotateUsingPhysics();
+        }
+        else
+        {
+            MoveUsingTransform();
+            RotateUsingTransform();
         }
     }
 
@@ -73,10 +77,7 @@ public class PhysicsPoser : MonoBehaviour
         // Prevents overshooting
         ab.velocity *= slowDownVelocity;
 
-        // Get target velocity
         Vector3 velocity = FindNewVelocity();
-
-        // Check if it's valid
         if (IsValidVelocity(velocity.x))
         {
             // Figure out the max we can move, then move via velocity
@@ -85,6 +86,7 @@ public class PhysicsPoser : MonoBehaviour
         }
     }
 
+    // Get target velocity (with estimated time).
     private Vector3 FindNewVelocity()
     {
         Vector3 difference = targetPosition - ab.transform.position;
@@ -96,10 +98,7 @@ public class PhysicsPoser : MonoBehaviour
         // Prevents overshooting
         ab.angularVelocity *= slowDownAngularVelocity;
 
-        // Get target velocity
         Vector3 angularVelocity = FindNewAngularVelocity();
-
-        // Check if it's valid
         if (IsValidVelocity(angularVelocity.x))
         {
             // Figure out the max we can rotate, then move via velocity
@@ -109,22 +108,22 @@ public class PhysicsPoser : MonoBehaviour
 
     }
 
+    // Get target velocity  (with estimated time).
     private Vector3 FindNewAngularVelocity()
     {
-        // Figure out the difference in rotation
         Quaternion difference = targetRotation * Quaternion.Inverse(ab.transform.rotation);
         difference.ToAngleAxis(out float angleInDegrees, out Vector3 rotationAxis);
 
         // Do the weird thing to account for have a range of -180 to 180
         if (angleInDegrees > 180)
             angleInDegrees -= 360;
-        // Figure out the difference we can move this frame
+
         return (rotationAxis * angleInDegrees * Mathf.Deg2Rad) / Time.deltaTime;
     }
 
+    // Is it an actual number, or is a broken number?
     private bool IsValidVelocity(float value)
     {
-        // Is it an actual number, or is a broken number?
         return !float.IsNaN(value) && !float.IsInfinity(value);
     }
 
