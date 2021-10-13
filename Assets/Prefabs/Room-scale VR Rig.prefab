@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 2120748608681653143}
   - component: {fileID: 2120748608681653142}
   - component: {fileID: 603869899}
-  - component: {fileID: 603869904}
   m_Layer: 0
   m_Name: LeftHand Controller
   m_TagString: Untagged
@@ -469,19 +468,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ac998428bac5ae4b9564b65e7744a97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &603869904
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2120748608681653140}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f33686e53c81bd45b13afb1877e40b0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _animator: {fileID: 8035362603214667682}
 --- !u!1 &2120748609182987766
 GameObject:
   m_ObjectHideFlags: 0
@@ -494,7 +480,6 @@ GameObject:
   - component: {fileID: 2120748609182987723}
   - component: {fileID: 1466139875}
   - component: {fileID: 1466139874}
-  - component: {fileID: 1466139878}
   m_Layer: 0
   m_Name: RightHand Controller
   m_TagString: Untagged
@@ -714,19 +699,6 @@ MonoBehaviour:
   m_PlayHapticsOnHoverCanceled: 0
   m_HapticHoverCancelIntensity: 0
   m_HapticHoverCancelDuration: 0
---- !u!114 &1466139878
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2120748609182987766}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f33686e53c81bd45b13afb1877e40b0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _animator: {fileID: 7023670722763705944}
 --- !u!1 &2120748609802376832
 GameObject:
   m_ObjectHideFlags: 0
@@ -1087,11 +1059,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5686134208185136530, guid: 1fd3a7c43c8190f4d8c167ebde694364, type: 3}
   m_PrefabInstance: {fileID: 3427278489368187932}
   m_PrefabAsset: {fileID: 0}
---- !u!95 &7023670722763705944 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 5686134208192617028, guid: 1fd3a7c43c8190f4d8c167ebde694364, type: 3}
-  m_PrefabInstance: {fileID: 3427278489368187932}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7928479365137089545
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1152,10 +1119,5 @@ PrefabInstance:
 --- !u!4 &8035362603222405236 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 109434732395451517, guid: 65847589f926b734d9eaed6e25f0046b, type: 3}
-  m_PrefabInstance: {fileID: 7928479365137089545}
-  m_PrefabAsset: {fileID: 0}
---- !u!95 &8035362603214667682 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 109434732388006827, guid: 65847589f926b734d9eaed6e25f0046b, type: 3}
   m_PrefabInstance: {fileID: 7928479365137089545}
   m_PrefabAsset: {fileID: 0}

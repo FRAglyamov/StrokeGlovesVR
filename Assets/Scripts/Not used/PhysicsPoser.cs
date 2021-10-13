@@ -2,7 +2,6 @@ using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
 [RequireComponent(typeof(ArticulationBody))]
-//[RequireComponent(typeof(ActionBasedController))]
 public class PhysicsPoser : MonoBehaviour
 {
     public float physicsRange = 0.1f;
@@ -38,7 +37,6 @@ public class PhysicsPoser : MonoBehaviour
 
     private void Update()
     {
-        // Update our target location
         UpdateTracking();
     }
 
@@ -86,7 +84,6 @@ public class PhysicsPoser : MonoBehaviour
         }
     }
 
-    // Get target velocity (with estimated time).
     private Vector3 FindNewVelocity()
     {
         Vector3 difference = targetPosition - ab.transform.position;
