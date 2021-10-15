@@ -44,7 +44,7 @@ public class LineGraphVisual : IGraphVisual
 
     private void CreateDotConnection(Vector2 dotPositionA, Vector2 dotPositionB)
     {
-        _windowGraph.InsantiateGraphElement(_windowGraph.dotConnectionTemplate, out RectTransform dotConnection, false);
+        _windowGraph.InsantiateGraphElement(_windowGraph.dotConnectionTemplate, out RectTransform dotConnection);
         dotConnection.GetComponent<Image>().color = _dotConnectionColor;
 
         dotConnection.anchorMin = new Vector2(0, 0);

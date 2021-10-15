@@ -4,6 +4,9 @@ using System.Globalization;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Class for mapping/display progress data from exercises' results in the form of graph/plot
+/// </summary>
 [RequireComponent(typeof(ProgressSystem))]
 public class WindowGraph : MonoBehaviour
 {
@@ -53,7 +56,6 @@ public class WindowGraph : MonoBehaviour
             timeList.Add(float.Parse(tmpResult.time));
             dateList.Add(DateTime.ParseExact(tmpResult.date, "yyyy-MM-dd_HH-mm-ss", CultureInfo.InvariantCulture));
         }
-        // Remark: Remove later? How it work from perfomance view?
         timeList.Reverse();
         dateList.Reverse();
 
@@ -68,7 +70,6 @@ public class WindowGraph : MonoBehaviour
         //List<float> valueList = new List<float>() { 5, 12, 13, 29, 43, 45, 48, 76, 77, 88, 90, 98, 78, 58, 38, 18 };
 
         LineGraphVisual lineGraphVisual = new LineGraphVisual(this, Color.green, new Color(1, 1, 1, 0.5f));
-        //BarChartVisual barChartVisual = new BarChartVisual(this, Color.cyan, 0.9f);
         ShowGraph(timeList, lineGraphVisual, (int _i) => dateList[_i].ToString("dd\nMM\nyy"), (float _f) => $"{_f.ToString("f2")}");
     }
 
@@ -77,21 +78,14 @@ public class WindowGraph : MonoBehaviour
         if (_graphVisual is LineGraphVisual)
         {
             BarChartVisual barChartVisual = new BarChartVisual(this, Color.cyan, 0.9f);
-            //SetLineGraphVisual(barChartVisual);
             ShowGraph(_valueList, barChartVisual, _getAxisLabelX, _getAxisLabelY);
         }
         else
         {
             LineGraphVisual lineGraphVisual = new LineGraphVisual(this, Color.green, new Color(1, 1, 1, 0.5f));
-            //SetLineGraphVisual(lineGraphVisual);
             ShowGraph(_valueList, lineGraphVisual, _getAxisLabelX, _getAxisLabelY);
         }
     }
-
-    //private void SetLineGraphVisual(IGraphVisual graphVisual)
-    //{
-    //    ShowGraph(_valueList, graphVisual, _getAxisLabelX, _getAxisLabelY);
-    //}
 
     public void ChangeVisibleAmount(int change)
     {
@@ -177,10 +171,11 @@ public class WindowGraph : MonoBehaviour
 
     }
 
-    public void InsantiateGraphElement(RectTransform template, out RectTransform uiElement, bool isWorldPositionStays = true)
+    public void InsantiateGraphElement(RectTransform template, out RectTransform uiElement)
     {
         uiElement = Instantiate(template);
-        uiElement.SetParent(graphContainer, isWorldPositionStays);
+        uiElement.SetParent(graphContainer);
+        //uiElement.SetParent(graphContainer, isWorldPositionStays);
         uiElement.gameObject.SetActive(true);
         _gameObjectList.Add(uiElement.gameObject);
     }

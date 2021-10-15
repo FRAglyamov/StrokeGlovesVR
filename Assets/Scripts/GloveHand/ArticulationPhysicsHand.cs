@@ -1,5 +1,8 @@
 using UnityEngine;
 
+/// <summary>
+/// Class which move physical representation of hand to target position (controller)
+/// </summary>
 public class ArticulationPhysicsHand : MonoBehaviour
 {
 

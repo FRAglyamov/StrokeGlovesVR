@@ -10,6 +10,9 @@ using UnityEngine.InputSystem.XR;
 using UnityEditor;
 #endif
 
+/// <summary>
+/// Class of out glove device for Unity input system
+/// </summary>
 public struct GloveDeviceState : IInputStateTypeInfo
 {
     public FourCC format => new FourCC('G', 'L', 'O', 'V');

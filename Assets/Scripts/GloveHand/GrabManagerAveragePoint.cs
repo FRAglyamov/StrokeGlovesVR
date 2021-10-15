@@ -53,6 +53,9 @@ public class GrabManagerAveragePoint : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Update state of finger groups. Set true, if at least one phalange in group touching the enviroment's GameObject
+    /// </summary>
     private void UpdateGroupsDetection()
     {
         isFirstGroupDetect = false;
@@ -87,6 +90,10 @@ public class GrabManagerAveragePoint : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Return GameObject based on average point of fingers which touching the environment's GameObject
+    /// </summary>
+    /// <returns></returns>
     private GameObject GetObjectOnAveragePoint()
     {
         List<Vector3> touchPoints = new List<Vector3>();
@@ -142,6 +149,9 @@ public class GrabManagerAveragePoint : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Connect grabbed object to hand, if it is not null
+    /// </summary>
     private void Grab()
     {
         grabbedObject = GetObjectOnAveragePoint();

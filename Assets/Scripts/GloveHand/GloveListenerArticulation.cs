@@ -4,6 +4,10 @@ using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Layouts;
 using UnityEngine.XR.Interaction.Toolkit;
 
+/// <summary>
+/// Class responsible for fingers' flex and updating fingers' target flex based on values from GloveDevice
+/// (or on controller.selectAction in case of testing with standart controller)
+/// </summary>
 public class GloveListenerArticulation : MonoBehaviour
 {
     [SerializeField]
