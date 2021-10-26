@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -41,23 +42,9 @@ public class WindowGraph : MonoBehaviour
         _system = GetComponent<ProgressSystem>();
         _system.FilesInfoUpdate();
         _visibleElementsAmount = _system.Files.Length;
-        List<float> timeList = new List<float>();
-        List<DateTime> dateList = new List<DateTime>();
-
-        // TODO: Get only the best time result at the day from progress saves (or make several dots in one day; or save only the best result).
-        for (int i = 0; i < _visibleElementsAmount; i++)
-        {
-            ExerciseResult tmpResult = _system.LoadResultFromJSON(_system.Files[i].FullName);
-            if (tmpResult == null)
-            {
-                Debug.LogWarning("No ExersiceResult files to load");
-                break;
-            }
-            timeList.Add(float.Parse(tmpResult.time));
-            dateList.Add(DateTime.ParseExact(tmpResult.date, "yyyy-MM-dd_HH-mm-ss", CultureInfo.InvariantCulture));
-        }
-        timeList.Reverse();
-        dateList.Reverse();
+        List<float> timeList;
+        List<DateTime> dateList;
+        LoadExerciseData(out timeList, out dateList);
 
         //graphContainer ??= transform.Find("Graph Container").GetComponent<RectTransform>();
         //dotTemplate ??= graphContainer.Find("Dot Template").GetComponent<RectTransform>();
@@ -71,6 +58,43 @@ public class WindowGraph : MonoBehaviour
 
         LineGraphVisual lineGraphVisual = new LineGraphVisual(this, Color.green, new Color(1, 1, 1, 0.5f));
         ShowGraph(timeList, lineGraphVisual, (int _i) => dateList[_i].ToString("dd\nMM\nyy"), (float _f) => $"{_f.ToString("f2")}");
+    }
+
+    private void LoadExerciseData(out List<float> timeList, out List<DateTime> dateList)
+    {
+        timeList = new List<float>();
+        dateList = new List<DateTime>();
+
+        if (_visibleElementsAmount == 0)
+        {
+            Debug.LogWarning("0 files, nothing to load");
+        }
+        // TODO: Get only the best time result at the day from progress saves (or make several dots in one day; or save only the best result).
+        for (int i = 0; i < _visibleElementsAmount; i++)
+        {
+            ExerciseResult tmpResult = _system.LoadResultFromJSON(_system.Files[i].FullName);
+            if (tmpResult == null)
+            {
+                Debug.LogWarning("No ExersiceResult files to load");
+                break;
+            }
+            DateTime tmpDateTime = DateTime.ParseExact(tmpResult.date, "yyyy-MM-dd_HH-mm-ss", CultureInfo.InvariantCulture);
+            float tmpTime = float.Parse(tmpResult.time);
+            if (dateList.Count > 0 && tmpDateTime.Date == dateList.Last().Date)
+            {
+                if (timeList.Count > 0 && tmpTime < timeList.Last())
+                {
+                    timeList[-1] = tmpTime;
+                    dateList[-1] = tmpDateTime;
+                }
+                continue;
+            }
+            timeList.Add(tmpTime);
+            dateList.Add(tmpDateTime);
+        }
+        _visibleElementsAmount = timeList.Count;
+        timeList.Reverse();
+        dateList.Reverse();
     }
 
     public void ChangeVisual()
@@ -90,7 +114,6 @@ public class WindowGraph : MonoBehaviour
     public void ChangeVisibleAmount(int change)
     {
         _visibleElementsAmount += change;
-        _graphVisual.Reset();
         ShowGraph(_valueList, _graphVisual, _getAxisLabelX, _getAxisLabelY);
     }
 
@@ -103,6 +126,8 @@ public class WindowGraph : MonoBehaviour
 
         getAxisLabelX ??= delegate (int _i) { return _i.ToString(); };
         getAxisLabelY ??= delegate (float _f) { return Mathf.RoundToInt(_f).ToString(); };
+
+        graphVisual.Reset();
 
         foreach (var go in _gameObjectList)
         {
@@ -178,5 +203,14 @@ public class WindowGraph : MonoBehaviour
         //uiElement.SetParent(graphContainer, isWorldPositionStays);
         uiElement.gameObject.SetActive(true);
         _gameObjectList.Add(uiElement.gameObject);
+    }
+    public void ChangeExercise(string savePath)
+    {
+        _system.FilesInfoUpdate(savePath);
+        _visibleElementsAmount = _system.Files.Length;
+        List<float> timeList;
+        List<DateTime> dateList;
+        LoadExerciseData(out timeList, out dateList);
+        ShowGraph(timeList, _graphVisual, (int _i) => dateList[_i].ToString("dd\nMM\nyy"), _getAxisLabelY);
     }
 }

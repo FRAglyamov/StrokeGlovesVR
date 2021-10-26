@@ -23,9 +23,13 @@ public class ProgressSystem : MonoBehaviour
         }
     }
 
-    public void FilesInfoUpdate()
+    public void FilesInfoUpdate(string savePath = "none")
     {
-        _dir = new DirectoryInfo(SavePath);
+        if(savePath == "none")
+        {
+            savePath = SavePath;
+        }
+        _dir = new DirectoryInfo(savePath);
         Files = _dir.GetFiles("*.json").OrderByDescending(f => f.LastWriteTime).ToArray();
     }
 
