@@ -1,67 +1,103 @@
 using UnityEngine;
-using UnityEngine.XR.Interaction.Toolkit;
 
+/// <summary>
+/// Class which move physical representation of hand to target position (controller).
+/// </summary>
 [RequireComponent(typeof(ArticulationBody))]
 public class PhysicsPoser : MonoBehaviour
 {
-    public float physicsRange = 0.1f;
-    public LayerMask physicsMask = 0;
-
-    [Range(0, 1)] public float slowDownVelocity = 0.75f;
-    [Range(0, 1)] public float slowDownAngularVelocity = 0.75f;
-
-    [Range(0, 100)] public float maxPositionChange = 75f;
-    [Range(0, 100)] public float maxRotationChange = 75f;
-
-    private ArticulationBody ab;
-    //[SerializeField]
-    //private ActionBasedController controller;
     [SerializeField]
-    private Transform controllerTransfrom;
+    private float physicsRange = 0.2f;
+    [SerializeField]
+    private LayerMask physicsMask = 0;
 
-    private Vector3 targetPosition = Vector3.zero;
-    private Quaternion targetRotation = Quaternion.identity;
+    [SerializeField, Range(0, 1)]
+    private float slowDownVelocity = 0.75f;
+    [SerializeField, Range(0, 1)] 
+    private float slowDownAngularVelocity = 0.75f;
+
+    [SerializeField, Range(0, 100)]
+    private float maxPositionChange = 75f;
+    [SerializeField, Range(0, 100)]
+    private float maxRotationChange = 75f;
+
+    [SerializeField]
+    private Transform controllerTransform;
+
+    [SerializeField]
+    private GameObject handGhostModel;
+    [SerializeField, Tooltip("On which distance show ghost hand")]
+    private float showDistance = 0.1f;
+
+    private ArticulationBody _articulationBody;
+    private GrabManagerAveragePoint _grabManager;
+    private float _grabbedMass = 1f;
+
+    private Vector3 _targetPosition = Vector3.zero;
+    private Quaternion _targetRotation = Quaternion.identity;
+
     private void Awake()
     {
-        ab = GetComponent<ArticulationBody>();
-        //controller = GetComponent<ActionBasedController>();
+        _articulationBody = GetComponent<ArticulationBody>();
+        _grabManager = GetComponent<GrabManagerAveragePoint>();
     }
 
     private void Start()
     {
-        // As soon as we start, move to the hand
         UpdateTracking();
-        MoveUsingTransform();
-        RotateUsingTransform();
+        _articulationBody.TeleportRoot(_targetPosition, _targetRotation);
     }
 
     private void Update()
     {
         UpdateTracking();
+        CheckShowingGhostHand();
     }
 
     private void UpdateTracking()
     {
-        // Get the rotation and position from the device
+        // Get the rotation and position from the device (from ActionBasedController)
         //targetPosition = controller.positionAction.action.ReadValue<Vector3>();
         //targetRotation = controller.rotationAction.action.ReadValue<Quaternion>();
 
-        // Or we can just get pos, rot of controller game object.
-        targetPosition = controllerTransfrom.position;
-        targetRotation = controllerTransfrom.rotation;
+        // Or we can just get pos, rot of controller game object
+        _targetPosition = controllerTransform.position;
+        _targetRotation = controllerTransform.rotation;
+    }
+
+    private void CheckShowingGhostHand()
+    {
+        var distance = Vector3.Distance(_targetPosition, transform.position);
+        bool isShow = distance > showDistance ? true : false;
+        handGhostModel.SetActive(isShow);
     }
 
     private void FixedUpdate()
     {
-        if (WithinPhysicsRange())
+        if (WithinPhysicsRange() && IsCloseToController(1f))
         {
+            GrabbingAdjustment();
             MoveUsingPhysics();
             RotateUsingPhysics();
         }
         else
         {
-            MoveUsingTransform();
-            RotateUsingTransform();
+            _articulationBody.velocity = Vector3.zero;
+            _articulationBody.angularVelocity = Vector3.zero;
+            _articulationBody.TeleportRoot(_targetPosition, _targetRotation);
+        }
+    }
+
+    private void GrabbingAdjustment()
+    {
+        _grabbedMass = 1f;
+        if (_grabManager != null && _grabManager.grabbedObject != null) // TODO: remove "_grabManager != null" later. Now this need, because left hand can't grab
+        {
+            _grabbedMass = _grabManager.grabbedObject.GetComponent<Rigidbody>().mass;
+            if (_grabbedMass < 1f)
+            {
+                _grabbedMass = 1f;
+            }
         }
     }
 
@@ -70,84 +106,77 @@ public class PhysicsPoser : MonoBehaviour
         return Physics.CheckSphere(transform.position, physicsRange, physicsMask, QueryTriggerInteraction.Ignore);
     }
 
+    private bool IsCloseToController(float closeDistance)
+    {
+        return Vector3.Distance(_targetPosition, transform.position) < closeDistance ? true : false;
+    }
+
     private void MoveUsingPhysics()
     {
         // Prevents overshooting
-        ab.velocity *= slowDownVelocity;
+        _articulationBody.velocity *= slowDownVelocity;
 
         Vector3 velocity = FindNewVelocity();
         if (IsValidVelocity(velocity.x))
         {
             // Figure out the max we can move, then move via velocity
             float maxChange = maxPositionChange * Time.deltaTime;
-            ab.velocity = Vector3.MoveTowards(ab.velocity, velocity, maxChange);
+            _articulationBody.velocity = Vector3.MoveTowards(_articulationBody.velocity, velocity, maxChange);
         }
     }
 
     private Vector3 FindNewVelocity()
     {
-        Vector3 difference = targetPosition - ab.transform.position;
-        return difference / Time.deltaTime;
+        Vector3 difference = _targetPosition - transform.position;
+        return difference / Time.deltaTime / _grabbedMass;
     }
 
     private void RotateUsingPhysics()
     {
         // Prevents overshooting
-        ab.angularVelocity *= slowDownAngularVelocity;
+        _articulationBody.angularVelocity *= slowDownAngularVelocity;
 
         Vector3 angularVelocity = FindNewAngularVelocity();
         if (IsValidVelocity(angularVelocity.x))
         {
             // Figure out the max we can rotate, then move via velocity
             float maxChange = maxRotationChange * Time.deltaTime;
-            ab.angularVelocity = Vector3.MoveTowards(ab.angularVelocity, angularVelocity, maxChange);
+            _articulationBody.angularVelocity = Vector3.MoveTowards(_articulationBody.angularVelocity, angularVelocity, maxChange);
         }
 
     }
 
-    // Get target velocity  (with estimated time).
+    /// <summary>
+    /// Get target velocity  (with estimated time).
+    /// </summary>
+    /// <returns></returns>
     private Vector3 FindNewAngularVelocity()
     {
-        Quaternion difference = targetRotation * Quaternion.Inverse(ab.transform.rotation);
+        Quaternion difference = _targetRotation * Quaternion.Inverse(transform.rotation);
         difference.ToAngleAxis(out float angleInDegrees, out Vector3 rotationAxis);
 
         // Do the weird thing to account for have a range of -180 to 180
         if (angleInDegrees > 180)
+        {
             angleInDegrees -= 360;
+        }
 
-        return (rotationAxis * angleInDegrees * Mathf.Deg2Rad) / Time.deltaTime;
+        return (rotationAxis * angleInDegrees * Mathf.Deg2Rad) / Time.deltaTime / _grabbedMass;
     }
 
-    // Is it an actual number, or is a broken number?
+    /// <summary>
+    /// Is it an actual number, or is a broken number?
+    /// </summary>
+    /// <param name="value"></param>
+    /// <returns></returns>
     private bool IsValidVelocity(float value)
     {
         return !float.IsNaN(value) && !float.IsInfinity(value);
-    }
-
-    private void MoveUsingTransform()
-    {
-        // Prevents jitter
-        ab.velocity = Vector3.zero;
-        transform.localPosition = targetPosition;
-    }
-
-    private void RotateUsingTransform()
-    {
-        // Prevents jitter
-        ab.angularVelocity = Vector3.zero;
-        transform.localRotation = targetRotation;
     }
 
     private void OnDrawGizmos()
     {
         // Show the range at which the physics takeover
         Gizmos.DrawWireSphere(transform.position, physicsRange);
-    }
-
-    private void OnValidate()
-    {
-        // Just in case
-        if (TryGetComponent(out Rigidbody rigidbody))
-            rigidbody.useGravity = false;
     }
 }

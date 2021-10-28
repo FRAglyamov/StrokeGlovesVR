@@ -1,8 +1,9 @@
 using UnityEngine;
 
 /// <summary>
-/// Class which move physical representation of hand to target position (controller)
+/// Class which move physical representation of hand to target position (controller).
 /// </summary>
+[RequireComponent(typeof(ArticulationBody))]
 public class ArticulationPhysicsHand : MonoBehaviour
 {
 
@@ -27,7 +28,6 @@ public class ArticulationPhysicsHand : MonoBehaviour
     private float _distance;
     private GrabManagerAveragePoint _grabManager;
     private float _grabbedMass = 1f;
-    private Vector3 _velocity;
 
     private void Start()
     {
@@ -82,8 +82,9 @@ public class ArticulationPhysicsHand : MonoBehaviour
         body.angularVelocity = angularVelocity;
         body.angularDamping = 5f;
 
-        _velocity = Vector3.ClampMagnitude((trackedTransform.position - transform.position).normalized * positionStrength * _distance / _grabbedMass, maxVelocity);
-
-        body.velocity = _velocity;
+        body.velocity = 
+            Vector3.ClampMagnitude(
+                (trackedTransform.position - transform.position).normalized * positionStrength * _distance / _grabbedMass, 
+                maxVelocity);
     }
 }

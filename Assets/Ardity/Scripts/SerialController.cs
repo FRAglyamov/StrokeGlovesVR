@@ -73,47 +73,26 @@ public class SerialController : MonoBehaviour
     }
 
 
+    #region Custom
+
     private void Start()
     {
-        StartCoroutine(TryConnectToCOMs());
+        //StartCoroutine(TryConnectToCOMs());
     }
 
-    public void StartCalibration()
-    {
-        GetComponent<SerialController>().SendSerialMessage("Calibation");
-    }
-
-    #region FindingCOM
-
-    private int _curCOM = 1;
-    public int CurCOM
-    {
-        get => _curCOM;
-        private set
-        {
-            if ((value > 9) || (value < 1))
-            {
-                _curCOM = 1;
-            }
-            else
-            {
-                _curCOM = value;
-            }
-        }
-    }
     public bool isConnected = false;
 
-    private IEnumerator TryConnectToCOMs()
-    {
-        while (!isConnected)
-        {
-            Debug.Log($"Change COM to COM{CurCOM}");
-            ChangeCOM("COM" + CurCOM.ToString());
-            CurCOM++;
+    //private IEnumerator TryConnectToCOMs()
+    //{
+    //    while (!isConnected)
+    //    {
+    //        Debug.Log($"Change COM to COM{CurCOM}");
+    //        ChangeCOM("COM" + CurCOM.ToString());
+    //        CurCOM++;
 
-            yield return new WaitForSeconds(1f);
-        }
-    }
+    //        yield return new WaitForSeconds(1f);
+    //    }
+    //}
 
     public void ChangeCOM(string COM)
     {

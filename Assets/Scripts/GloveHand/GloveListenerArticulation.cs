@@ -8,6 +8,7 @@ using UnityEngine.XR.Interaction.Toolkit;
 /// Class responsible for fingers' flex and updating fingers' target flex based on values from GloveDevice
 /// (or on controller.selectAction in case of testing with standart controller)
 /// </summary>
+[RequireComponent(typeof(SerialController))]
 public class GloveListenerArticulation : MonoBehaviour
 {
     [SerializeField]
@@ -63,7 +64,7 @@ public class GloveListenerArticulation : MonoBehaviour
             for (int j = 0; j < _articulations.GetLength(1); j++)
             {
                 var tmpXDrive = _articulations[i, j].xDrive;
-                tmpXDrive.target = Mathf.Lerp(tmpXDrive.target, targetFlex, 0.1f);
+                tmpXDrive.target = Mathf.Lerp(tmpXDrive.target, targetFlex, 0.3f);
                 _articulations[i, j].xDrive = tmpXDrive;
             }
         }

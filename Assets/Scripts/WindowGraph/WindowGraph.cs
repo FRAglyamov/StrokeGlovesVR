@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
-/// Class for mapping/display progress data from exercises' results in the form of graph/plot
+/// Class for mapping/display progress data from exercises' results in the form of graph/plot.
 /// </summary>
 [RequireComponent(typeof(ProgressSystem))]
 public class WindowGraph : MonoBehaviour
