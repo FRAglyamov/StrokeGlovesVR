@@ -2733,7 +2733,7 @@ MonoBehaviour:
   - {fileID: 1359549453}
   - {fileID: 502174671}
   - {fileID: 119858671}
-  targetFlex: 40
+  targetFlex: 20
 --- !u!114 &620758339 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 11442534, guid: a65acf0cbf56b80419f74ebf0bc845f4, type: 3}
@@ -7384,7 +7384,7 @@ MonoBehaviour:
   - {fileID: 103719489}
   - {fileID: 127962643}
   - {fileID: 1290439508}
-  targetFlex: 40
+  targetFlex: 20
 --- !u!114 &1624246051 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 11442534, guid: a65acf0cbf56b80419f74ebf0bc845f4, type: 3}
@@ -9424,6 +9424,42 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1144941150627702683, guid: 40e8d320c69246c4f8dbf708f83382e4, type: 3}
+      propertyPath: m_XDrive.damping
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 1144941150803760639, guid: 40e8d320c69246c4f8dbf708f83382e4, type: 3}
+      propertyPath: m_XDrive.damping
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 1144941150829590953, guid: 40e8d320c69246c4f8dbf708f83382e4, type: 3}
+      propertyPath: m_XDrive.damping
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 1144941150851564221, guid: 40e8d320c69246c4f8dbf708f83382e4, type: 3}
+      propertyPath: m_XDrive.damping
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 1144941150954111069, guid: 40e8d320c69246c4f8dbf708f83382e4, type: 3}
+      propertyPath: m_XDrive.damping
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 1144941151152194332, guid: 40e8d320c69246c4f8dbf708f83382e4, type: 3}
+      propertyPath: m_XDrive.damping
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 1144941151532930445, guid: 40e8d320c69246c4f8dbf708f83382e4, type: 3}
+      propertyPath: m_XDrive.damping
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 1144941151948683304, guid: 40e8d320c69246c4f8dbf708f83382e4, type: 3}
+      propertyPath: m_XDrive.damping
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 1144941151982632170, guid: 40e8d320c69246c4f8dbf708f83382e4, type: 3}
+      propertyPath: m_XDrive.damping
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 1144941152095534780, guid: 40e8d320c69246c4f8dbf708f83382e4, type: 3}
       propertyPath: m_RootOrder
       value: 5
@@ -9488,6 +9524,26 @@ PrefabInstance:
       propertyPath: gloveListener
       value: 
       objectReference: {fileID: 1624246047}
+    - target: {fileID: 1144941152133336325, guid: 40e8d320c69246c4f8dbf708f83382e4, type: 3}
+      propertyPath: m_XDrive.damping
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 1144941152162045347, guid: 40e8d320c69246c4f8dbf708f83382e4, type: 3}
+      propertyPath: m_XDrive.damping
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 1144941152211208380, guid: 40e8d320c69246c4f8dbf708f83382e4, type: 3}
+      propertyPath: m_XDrive.damping
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 1144941152322071916, guid: 40e8d320c69246c4f8dbf708f83382e4, type: 3}
+      propertyPath: m_XDrive.damping
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 1144941152434766597, guid: 40e8d320c69246c4f8dbf708f83382e4, type: 3}
+      propertyPath: m_XDrive.damping
+      value: 100
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 40e8d320c69246c4f8dbf708f83382e4, type: 3}
 --- !u!1 &1144941150701631421 stripped

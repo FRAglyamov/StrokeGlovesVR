@@ -45,7 +45,7 @@ public class PhysicsPoser : MonoBehaviour
     private void Start()
     {
         UpdateTracking();
-        _articulationBody.TeleportRoot(_targetPosition, _targetRotation);
+        TeleportViaArticulationBody();
     }
 
     private void Update()
@@ -82,16 +82,19 @@ public class PhysicsPoser : MonoBehaviour
         }
         else
         {
-            _articulationBody.velocity = Vector3.zero;
-            _articulationBody.angularVelocity = Vector3.zero;
-            _articulationBody.TeleportRoot(_targetPosition, _targetRotation);
+            TeleportViaArticulationBody();
         }
     }
 
     private void GrabbingAdjustment()
     {
         _grabbedMass = 1f;
-        if (_grabManager != null && _grabManager.grabbedObject != null) // TODO: remove "_grabManager != null" later. Now this need, because left hand can't grab
+        if(_grabManager == null)
+        {
+            Debug.LogWarning("_grabManager is null. Can't adjust grabbed mass");
+            return;
+        }
+        if (_grabManager.grabbedObject != null)
         {
             _grabbedMass = _grabManager.grabbedObject.GetComponent<Rigidbody>().mass;
             if (_grabbedMass < 1f)
@@ -162,6 +165,13 @@ public class PhysicsPoser : MonoBehaviour
         }
 
         return (rotationAxis * angleInDegrees * Mathf.Deg2Rad) / Time.deltaTime / _grabbedMass;
+    }
+
+    private void TeleportViaArticulationBody()
+    {
+        _articulationBody.velocity = Vector3.zero;
+        _articulationBody.angularVelocity = Vector3.zero;
+        _articulationBody.TeleportRoot(_targetPosition, _targetRotation);
     }
 
     /// <summary>

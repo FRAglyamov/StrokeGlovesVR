@@ -20,7 +20,7 @@ public class GloveListenerArticulation : MonoBehaviour
     private ArticulationBody[,] _articulations = new ArticulationBody[5, 3];
 
     [SerializeField, Tooltip("Works only without gloves, with controllers")]
-    private float targetFlex = 40f;
+    private float targetFlex = 20f;
 
     private SerialController _serialController;
 
@@ -51,62 +51,62 @@ public class GloveListenerArticulation : MonoBehaviour
             }
         }
     }
+
     private void SetFlexByControllers()
     {
         _controller.selectAction.action.performed += FlexFingers;
         _controller.selectAction.action.canceled += UnFlexFingers;
     }
 
-    private void FlexFingers(InputAction.CallbackContext obj)
+    private void UnsetFlexByControllers()
+    {
+        _controller.selectAction.action.performed -= FlexFingers;
+        _controller.selectAction.action.canceled -= UnFlexFingers;
+    }
+
+    private void FlexFingers(InputAction.CallbackContext obj) => FlexFingers(targetFlex);
+    private void UnFlexFingers(InputAction.CallbackContext obj) => FlexFingers(-10f);
+
+    private void FlexFingers(float flexAngle)
     {
         for (int i = 0; i < _articulations.GetLength(0); i++)
         {
             for (int j = 0; j < _articulations.GetLength(1); j++)
             {
                 var tmpXDrive = _articulations[i, j].xDrive;
-                tmpXDrive.target = Mathf.Lerp(tmpXDrive.target, targetFlex, 0.3f);
+                tmpXDrive.target = flexAngle;
                 _articulations[i, j].xDrive = tmpXDrive;
             }
         }
     }
 
+    /// <summary>
+    /// True - if at least one of fingers flex for required angle.
+    /// Needed as threshold for grabbing.
+    /// </summary>
+    /// <param name="requiredFlex"></param>
+    /// <returns></returns>
     public bool IsHaveRequiredFlex(float requiredFlex)
     {
-        if (_articulations[0, 0].xDrive.target >= requiredFlex
-            || _articulations[1, 0].xDrive.target >= requiredFlex
-            || _articulations[2, 0].xDrive.target >= requiredFlex
-            || _articulations[3, 0].xDrive.target >= requiredFlex
-            || _articulations[4, 0].xDrive.target >= requiredFlex)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
-
-    private void UnFlexFingers(InputAction.CallbackContext obj)
-    {
         for (int i = 0; i < _articulations.GetLength(0); i++)
         {
-            for (int j = 0; j < _articulations.GetLength(1); j++)
+            if(_articulations[i, 0].xDrive.target >= requiredFlex)
             {
-                var tmpXDrive = _articulations[i, j].xDrive;
-                tmpXDrive.target = -10f;
-                _articulations[i, j].xDrive = tmpXDrive;
+                return true;
             }
         }
+        return false;
     }
 
     // Invoked when a line of data is received from the serial device.
     void OnMessageArrived(string msg)
     {
         InitGloveDeviceOnFirstMessage();
+        UnsetFlexByControllers();
 
         var state = new GloveDeviceState();
 
-        Debug.Log("Arrived: " + msg);
+        Debug.Log("Arrived message: " + msg);
         string[] tmp = msg.Split(',');
         string[] fingersFlexing = tmp[0].Split(' ');
         string[] rotation = tmp[1].Split(' ');

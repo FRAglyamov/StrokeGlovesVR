@@ -30,7 +30,7 @@ public class ProgressSystem : MonoBehaviour
             savePath = SavePath;
         }
         _dir = new DirectoryInfo(savePath);
-        Files = _dir.GetFiles("*.json").OrderByDescending(f => f.LastWriteTime).ToArray();
+        Files = _dir.GetFiles("*.json").OrderByDescending(f => f.Name).ToArray();
     }
 
     public void StartTimer()

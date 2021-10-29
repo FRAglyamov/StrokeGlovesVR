@@ -54,8 +54,6 @@ public class WindowGraph : MonoBehaviour
         //dashTemplateX ??= graphContainer.Find("Dash Template Y").GetComponent<RectTransform>();
         //dashTemplateY ??= graphContainer.Find("Dash Template Y").GetComponent<RectTransform>();
 
-        //List<float> valueList = new List<float>() { 5, 12, 13, 29, 43, 45, 48, 76, 77, 88, 90, 98, 78, 58, 38, 18 };
-
         LineGraphVisual lineGraphVisual = new LineGraphVisual(this, Color.green, new Color(1, 1, 1, 0.5f));
         ShowGraph(timeList, lineGraphVisual, (int _i) => dateList[_i].ToString("dd\nMM\nyy"), (float _f) => $"{_f.ToString("f2")}");
     }
@@ -69,7 +67,7 @@ public class WindowGraph : MonoBehaviour
         {
             Debug.LogWarning("0 files, nothing to load");
         }
-        // TODO: Get only the best time result at the day from progress saves (or make several dots in one day; or save only the best result).
+        // Remark: Make several dots in one day? Or leave only the best?
         for (int i = 0; i < _visibleElementsAmount; i++)
         {
             ExerciseResult tmpResult = _system.LoadResultFromJSON(_system.Files[i].FullName);
@@ -80,12 +78,12 @@ public class WindowGraph : MonoBehaviour
             }
             DateTime tmpDateTime = DateTime.ParseExact(tmpResult.date, "yyyy-MM-dd_HH-mm-ss", CultureInfo.InvariantCulture);
             float tmpTime = float.Parse(tmpResult.time);
-            if (dateList.Count > 0 && tmpDateTime.Date == dateList.Last().Date)
+            if (dateList.Count > 0 && tmpDateTime.Date == dateList[dateList.Count - 1].Date)
             {
-                if (timeList.Count > 0 && tmpTime < timeList.Last())
+                if (timeList.Count > 0 && tmpTime < timeList[timeList.Count - 1])
                 {
-                    timeList[-1] = tmpTime;
-                    dateList[-1] = tmpDateTime;
+                    timeList[timeList.Count - 1] = tmpTime;
+                    dateList[dateList.Count - 1] = tmpDateTime;
                 }
                 continue;
             }

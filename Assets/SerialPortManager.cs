@@ -18,6 +18,7 @@ public class SerialPortManager : MonoBehaviour
         }
 
     }
+
     private void TryConnectToCOMs()
     {
         /// Берём все порты.
@@ -33,11 +34,13 @@ public class SerialPortManager : MonoBehaviour
             //CreateSerialController(port);
         }
     }
+
     //private void CreateSerialController(string port)
     //{
     //    var controller = gameObject.AddComponent<SerialController>();
     //    controller.portName = port;
     //}
+
     //private void OnMessageArrived(string message)
     //{
     //    if (message == "GloveRight")
@@ -45,6 +48,19 @@ public class SerialPortManager : MonoBehaviour
 
     //    }
     //}
+
+    private void OnConnectionEvent(bool isConnect)
+    {
+        if (isConnect)
+        {
+            // Add GloveDevice
+        }
+        else
+        {
+            // Delete GloveDevice
+        }
+    }
+
     public void StartCalibration()
     {
         leftHandSerialController.SendSerialMessage("Calibation");

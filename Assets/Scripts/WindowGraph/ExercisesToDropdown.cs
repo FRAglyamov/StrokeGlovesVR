@@ -5,34 +5,32 @@ using UnityEngine.UI;
 
 public class ExercisesToDropdown : MonoBehaviour
 {
-
-    Dropdown dropdown = null;
     [SerializeField]
     private WindowGraph windowGraph = null;
-    Dictionary<string, string> nameFullPath = new Dictionary<string, string>();
+
+    private Dropdown _dropdown = null;
+    private Dictionary<string, string> _nameFullPath = new Dictionary<string, string>();
+
     private void Start()
     {
-        dropdown = GetComponent<Dropdown>();
+        _dropdown = GetComponent<Dropdown>();
         var SavePath = Path.Combine(Application.persistentDataPath, "progress_saves");
 
         DirectoryInfo dir = new DirectoryInfo(SavePath);
         DirectoryInfo[] info = dir.GetDirectories();
 
-        dropdown.ClearOptions();
+        _dropdown.ClearOptions();
         foreach (DirectoryInfo f in info)
         {
-            //Debug.Log(f.ToString());
-            //Debug.Log(f.Name);
-            dropdown.options.Add(new Dropdown.OptionData() { text = f.Name });
-            nameFullPath.Add(f.Name, f.FullName);
+            _dropdown.options.Add(new Dropdown.OptionData() { text = f.Name });
+            _nameFullPath.Add(f.Name, f.FullName);
         }
-        dropdown.onValueChanged.AddListener(delegate { DropdownItemSelected(); });
-
+        _dropdown.onValueChanged.AddListener(delegate { DropdownItemSelected(); });
     }
+
     void DropdownItemSelected()
     {
-        int value = dropdown.value;
-        Debug.Log(dropdown.options[value].text);
-        windowGraph.ChangeExercise(nameFullPath[dropdown.options[value].text]);
+        int value = _dropdown.value;
+        windowGraph.ChangeExercise(_nameFullPath[_dropdown.options[value].text]);
     }
 }
