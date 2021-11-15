@@ -81,8 +81,8 @@ public class GloveListenerArticulation : MonoBehaviour
     }
 
     /// <summary>
-    /// True - if at least one of fingers flex for required angle.
-    /// Needed as threshold for grabbing.
+    /// True - if at least one of the fingers flexes for the required angle.
+    /// Needed as a threshold for grabbing.
     /// </summary>
     /// <param name="requiredFlex"></param>
     /// <returns></returns>

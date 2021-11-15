@@ -3,7 +3,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 /// <summary>
-/// Class for selction/"clicking" UI elements when view/ray from camera hovering them for a certain time
+/// Class for selection/"clicking" UI elements when view/ray from camera hovering them for a certain time
 /// </summary>
 public class HoverUISelection : MonoBehaviour
 {

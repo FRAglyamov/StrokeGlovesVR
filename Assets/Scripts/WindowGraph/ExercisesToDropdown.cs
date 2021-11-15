@@ -3,6 +3,10 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Get names of exercises based on folder names from saves' directory.
+/// Change dropdown options to these names and add a call to change the graph's exercise to selected.
+/// </summary>
 public class ExercisesToDropdown : MonoBehaviour
 {
     [SerializeField]

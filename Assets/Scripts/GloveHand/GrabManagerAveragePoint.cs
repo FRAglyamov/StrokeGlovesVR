@@ -54,7 +54,7 @@ public class GrabManagerAveragePoint : MonoBehaviour
     }
 
     /// <summary>
-    /// Update state of finger groups. Set true, if at least one phalange in group touching the enviroment's GameObject
+    /// Update state of finger groups. Set true, if at least one phalange in group touching the enviroment's GameObject.
     /// </summary>
     private void UpdateGroupsDetection()
     {
@@ -91,7 +91,7 @@ public class GrabManagerAveragePoint : MonoBehaviour
     }
 
     /// <summary>
-    /// Return GameObject based on average point of fingers which touching the environment's GameObject
+    /// Return GameObject based on the average point of fingers which touch the environment's GameObject.
     /// </summary>
     /// <returns></returns>
     private GameObject GetObjectOnAveragePoint()
@@ -150,7 +150,7 @@ public class GrabManagerAveragePoint : MonoBehaviour
     }
 
     /// <summary>
-    /// Connect grabbed object to hand, if it is not null
+    /// Connect grabbed object to hand, if it is not null.
     /// </summary>
     private void Grab()
     {
@@ -162,7 +162,7 @@ public class GrabManagerAveragePoint : MonoBehaviour
             return;
         }
 
-        // Find a parent of object with rigidbody (if it is just a part of complex object).
+        // Find a parent of an object with a rigidbody (if it is just a part of a complex object).
         if (grabbedObject.GetComponent<Rigidbody>() == null && grabbedObject.GetComponentInParent<Rigidbody>() != null)
         {
             grabbedObject = grabbedObject.GetComponentInParent<Rigidbody>().gameObject;

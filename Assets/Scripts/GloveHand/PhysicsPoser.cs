@@ -1,7 +1,7 @@
 using UnityEngine;
 
 /// <summary>
-/// Class which move physical representation of hand to target position (controller).
+/// Class which moves the physical representation of the hand to the target position (controller).
 /// </summary>
 [RequireComponent(typeof(ArticulationBody))]
 public class PhysicsPoser : MonoBehaviour
