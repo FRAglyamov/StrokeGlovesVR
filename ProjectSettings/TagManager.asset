@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Ball
   - Hands
+  - Finger
   layers:
   - Default
   - TransparentFX

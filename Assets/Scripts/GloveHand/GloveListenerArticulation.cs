@@ -109,7 +109,7 @@ public class GloveListenerArticulation : MonoBehaviour
         Debug.Log("Arrived message: " + msg);
         string[] tmp = msg.Split(',');
         string[] fingersFlexing = tmp[0].Split(' ');
-        string[] rotation = tmp[1].Split(' ');
+        //string[] rotation = tmp[1].Split(' ');
 
         // Set target (rotation) for articulation bodies of all phalanges
         for (int i = 0; i < _articulations.GetLength(0); i++)
@@ -122,10 +122,10 @@ public class GloveListenerArticulation : MonoBehaviour
             }
         }
 
-        state.deviceRotation = Quaternion.Euler(
-           float.Parse(rotation[1], CultureInfo.InvariantCulture),
-           float.Parse(rotation[0], CultureInfo.InvariantCulture),
-           float.Parse(rotation[2], CultureInfo.InvariantCulture));
+        //state.deviceRotation = Quaternion.Euler(
+        //   float.Parse(rotation[1], CultureInfo.InvariantCulture),
+        //   float.Parse(rotation[0], CultureInfo.InvariantCulture),
+        //   float.Parse(rotation[2], CultureInfo.InvariantCulture));
 
         state.thumb = float.Parse(fingersFlexing[0]) / 100;
         state.index = float.Parse(fingersFlexing[1]) / 100;
@@ -138,7 +138,7 @@ public class GloveListenerArticulation : MonoBehaviour
 
     private void InitGloveDeviceOnFirstMessage()
     {
-        if (!_serialController.isConnected)
+        if (!_serialController.isConnected && InputSystem.GetDevice("GloveDevice") == null) // Later need to change for supporting 2 gloves (now for 1)
         {
             InputSystem.AddDevice(new InputDeviceDescription
             {

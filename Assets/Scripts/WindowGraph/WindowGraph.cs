@@ -95,6 +95,9 @@ public class WindowGraph : MonoBehaviour
         dateList.Reverse();
     }
 
+    /// <summary>
+    /// Change visual mode between LineGraph and BarChart.
+    /// </summary>
     public void ChangeVisual()
     {
         if (_graphVisual is LineGraphVisual)
@@ -109,12 +112,23 @@ public class WindowGraph : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Change amount of visible/showed elements in graph.
+    /// </summary>
+    /// <param name="change"></param>
     public void ChangeVisibleAmount(int change)
     {
         _visibleElementsAmount += change;
         ShowGraph(_valueList, _graphVisual, _getAxisLabelX, _getAxisLabelY);
     }
 
+    /// <summary>
+    /// Main method to render whole graph and elements.
+    /// </summary>
+    /// <param name="valueList"></param>
+    /// <param name="graphVisual"></param>
+    /// <param name="getAxisLabelX"></param>
+    /// <param name="getAxisLabelY"></param>
     private void ShowGraph(List<float> valueList, IGraphVisual graphVisual, Func<int, string> getAxisLabelX = null, Func<float, string> getAxisLabelY = null)
     {
         _valueList = valueList;
@@ -193,7 +207,11 @@ public class WindowGraph : MonoBehaviour
         }
 
     }
-
+    /// <summary>
+    /// Create  RectTransform element, put it under graphContainer and add reference to list (if we need to delete it, when rerendering).
+    /// </summary>
+    /// <param name="template"></param>
+    /// <param name="uiElement"></param>
     public void InsantiateGraphElement(RectTransform template, out RectTransform uiElement)
     {
         uiElement = Instantiate(template);
@@ -202,6 +220,11 @@ public class WindowGraph : MonoBehaviour
         uiElement.gameObject.SetActive(true);
         _gameObjectList.Add(uiElement.gameObject);
     }
+
+    /// <summary>
+    /// Load save data about new exercise and call ShowGraph with new data to rerender.
+    /// </summary>
+    /// <param name="savePath"></param>
     public void ChangeExercise(string savePath)
     {
         _system.FilesInfoUpdate(savePath);

@@ -1511,6 +1511,10 @@ PrefabInstance:
       value: -90
       objectReference: {fileID: 0}
     - target: {fileID: 1144941152095534913, guid: 40e8d320c69246c4f8dbf708f83382e4, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1144941152095534913, guid: 40e8d320c69246c4f8dbf708f83382e4, type: 3}
       propertyPath: handGhostModel
       value: 
       objectReference: {fileID: 7023670722066483980}
@@ -1553,6 +1557,34 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1144941150851564355, guid: 40e8d320c69246c4f8dbf708f83382e4, type: 3}
   m_PrefabInstance: {fileID: 615923707}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &615923713 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1144941152095534918, guid: 40e8d320c69246c4f8dbf708f83382e4, type: 3}
+  m_PrefabInstance: {fileID: 615923707}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &615923714
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 615923713}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c67505600ecc59489b6667f15083a34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  physicsRange: 0.5
+  physicsMask:
+    serializedVersion: 2
+    m_Bits: 1
+  slowDownVelocity: 0.8
+  slowDownAngularVelocity: 0.8
+  maxPositionChange: 75
+  maxRotationChange: 75
+  controllerTransform: {fileID: 2120748608530793237}
+  handGhostModel: {fileID: 7023670722066483980}
+  showDistance: 0.1
 --- !u!1 &672023778
 GameObject:
   m_ObjectHideFlags: 0
@@ -4435,7 +4467,7 @@ MonoBehaviour:
   - {fileID: 615923710}
   - {fileID: 615923708}
   - {fileID: 615923709}
-  targetFlex: 40
+  targetFlex: 20
 --- !u!114 &1624246048
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4455,7 +4487,7 @@ MonoBehaviour:
   - {fileID: 5686134209598043062}
   - {fileID: 5686134209598043096}
   - {fileID: 5686134209598043040}
-  targetFlex: 40
+  targetFlex: 20
 --- !u!114 &1624246049
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4475,7 +4507,7 @@ MonoBehaviour:
   - {fileID: 1359549453}
   - {fileID: 502174671}
   - {fileID: 119858671}
-  targetFlex: 40
+  targetFlex: 20
 --- !u!1 &1724671722
 GameObject:
   m_ObjectHideFlags: 0

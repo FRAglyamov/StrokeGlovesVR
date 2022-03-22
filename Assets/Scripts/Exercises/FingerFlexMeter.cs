@@ -33,6 +33,11 @@ public class FingerFlexMeter : MonoBehaviour
     private void Update()
     {
         var glove = GloveDevice.current;
+        if (glove == null)
+        {
+            Debug.LogWarning("Need to connect glove for this exercise!");
+            return;
+        }
         switch (_measurmentObject)
         {
             case MeasurmentObject.Thumb:
