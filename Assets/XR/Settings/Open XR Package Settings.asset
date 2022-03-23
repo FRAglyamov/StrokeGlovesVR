@@ -883,7 +883,7 @@ MonoBehaviour:
   - {fileID: -81166276777172153}
   - {fileID: -4791107721474673119}
   - {fileID: 5212633525050342973}
-  - {fileID: 8975358688033447361}
+  - {fileID: 0}
   - {fileID: -7144993656652590943}
   - {fileID: -7349868030180517880}
   - {fileID: -6881456365409509523}
@@ -1429,7 +1429,6 @@ MonoBehaviour:
   - {fileID: 4627670244188896127}
   - {fileID: 6247372779072043089}
   - {fileID: -6394806611843210572}
-  - {fileID: -7784446407046027770}
   - {fileID: 5987075140390497967}
   - {fileID: 6477377681282645354}
   - {fileID: -8805394622618386843}
@@ -1834,7 +1833,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71f0b45faf67b754da21fbf9791acbfa, type: 3}
   m_Name: HTCViveTrackerProfile Standalone
   m_EditorClassIdentifier: 
-  m_enabled: 1
+  m_enabled: 0
   nameUi: HTC Vive Tracker Profile
   version: 0.0.1
   featureIdInternal: com.massive.openxr.feature.input.htcvivetracker
