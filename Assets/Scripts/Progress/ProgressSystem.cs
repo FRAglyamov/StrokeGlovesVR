@@ -2,25 +2,61 @@ using System.Collections;
 using System.IO;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ProgressSystem : MonoBehaviour
 {
     [SerializeField]
     private string exerciseName = "none";
     private float _startTime = -1f;
-    private float _timer = -1f;
-    public string SavePath { get; private set; } = "";
     private DirectoryInfo _dir;
+    public string SavePath { get; private set; } = "";
     public FileInfo[] Files { get; private set; }
+    public float Timer { get; private set; } = 0f;
+    public string userID = "";
+
+    // Singleton
+    public static ProgressSystem Instance { get; private set; }
 
     private void Awake()
     {
+        // If there is an instance, and it's not me, delete myself.
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+
+        DontDestroyOnLoad(gameObject);
+        Initialize();
+    }
+
+    private void Initialize()
+    {
         // Application.persistentDataPath = C:\Users\дмл\AppData\LocalLow\DML\StrokeVR
         SavePath = Path.Combine(Application.persistentDataPath, "progress_saves", exerciseName);
+        //SavePath = Path.Combine(Application.persistentDataPath, "progress_saves", userID, exerciseName);
         if (!Directory.Exists(SavePath))
         {
             Directory.CreateDirectory(SavePath);
         }
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void Update()
+    {
+        if (_startTime > 0f)
+        {
+            Timer = Time.time - _startTime;
+        }
+    }
+
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        exerciseName = scene.name;
+        _startTime = -1f;
+        Timer = 0f;
     }
 
     public void FilesInfoUpdate(string savePath = "none")
@@ -38,26 +74,25 @@ public class ProgressSystem : MonoBehaviour
         _startTime = Time.time;
     }
 
-    public void EndTimer()
-    {
-        if (_startTime < 0f)
-        {
-            Debug.LogError("Timer didn't start!");
-            return;
-        }
-
-        _timer = Time.time - _startTime;
-    }
+    //public void EndTimer()
+    //{
+    //    if (_startTime < 0f)
+    //    {
+    //        Debug.LogError("Timer didn't start!");
+    //        return;
+    //    }
+    //    _timer = Time.time - _startTime;
+    //}
 
     public void SaveResultIntoJSON()
     {
-        if (_timer < 0f)
+        if (Timer <= 0f)
         {
             Debug.LogError("Timer didn't start or end!");
             return;
         }
 
-        ExerciseResult result = new ExerciseResult { date = System.DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss"), time = _timer.ToString("f4") };
+        ExerciseResult result = new ExerciseResult { date = System.DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss"), time = Timer.ToString("f4") };
         string json = JsonUtility.ToJson(result);
         Debug.Log($"JSON: {json}");
         File.WriteAllText(Path.Combine(SavePath, result.date + ".json"), json);

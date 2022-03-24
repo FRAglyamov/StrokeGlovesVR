@@ -8,15 +8,30 @@ public class SerialPortManager : MonoBehaviour
     [SerializeField]
     private SerialController leftHandSerialController;
 
+    // Singleton
+    //public static SerialPortManager Instance { get; private set; }
+    //private void Awake()
+    //{
+    //    // If there is an instance, and it's not me, delete myself.
+    //    if (Instance != null && Instance != this)
+    //    {
+    //        Destroy(gameObject);
+    //    }
+    //    else
+    //    {
+    //        Instance = this;
+    //    }
+
+    //    DontDestroyOnLoad(gameObject);
+    //}
     private void Start()
     {
-        string[] ports = SerialPort.GetPortNames();
-        Debug.Log("The following serial ports were found:");
-        foreach (string port in ports)
-        {
-            Debug.Log(port);
-        }
-
+        //string[] ports = SerialPort.GetPortNames();
+        //Debug.Log("The following serial ports were found:");
+        //foreach (string port in ports)
+        //{
+        //    Debug.Log(port);
+        //}
     }
 
     private void TryConnectToCOMs()
