@@ -8,14 +8,23 @@ public class Lever : MonoBehaviour
 
     private float _startAngle = 0f;
     private float _endAngle = -90f;
+    [SerializeField]
     private float _startDamp = 0f;
-    private float _endDamp = 15f; // TODO: Make 3 different levels?
+    [SerializeField]
+    private float _endDamp = 50f;
+    [SerializeField]
+    private float _startMass = 10f;
+    [SerializeField]
+    private float _endMass = 50f;
+    private Rigidbody _rb;
     private HingeJoint _joint;
+    // TODO: Make 3 different levels?
 
     private void Start()
     {
         _joint = GetComponent<HingeJoint>();
         _startAngle = _joint.angle;
+        _rb = GetComponent<Rigidbody>();
     }
 
     private void FixedUpdate()
@@ -23,6 +32,7 @@ public class Lever : MonoBehaviour
         var spring = _joint.spring;
         spring.damper = Remap(_joint.angle, _startAngle, _endAngle, _startDamp, _endDamp);
         _joint.spring = spring;
+        _rb.mass = Remap(_joint.angle, _startAngle, _endAngle, _startMass, _endMass);
 
         if (_joint.angle >= _endAngle)
         {

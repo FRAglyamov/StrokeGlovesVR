@@ -35,6 +35,7 @@ public class PhysicsPoser : MonoBehaviour
 
     private Vector3 _targetPosition = Vector3.zero;
     private Quaternion _targetRotation = Quaternion.identity;
+    private Vector3 _rotationAdjustment = new Vector3(90f, 0f, 0f);
 
     private void Awake()
     {
@@ -63,6 +64,7 @@ public class PhysicsPoser : MonoBehaviour
         // Or we can just get pos, rot of controller game object
         _targetPosition = controllerTransform.position;
         _targetRotation = controllerTransform.rotation;
+        _targetRotation *= Quaternion.Euler(_rotationAdjustment);
     }
 
     private void CheckShowingGhostHand()

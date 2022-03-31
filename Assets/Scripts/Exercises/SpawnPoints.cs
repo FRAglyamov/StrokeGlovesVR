@@ -29,6 +29,9 @@ public class SpawnPoints : MonoBehaviour
 
     private ExerciseMode _exerciseMode = ExerciseMode.Amount;
 
+    [SerializeField]
+    private FingerType _fingerType = FingerType.Index; // TODO: Make selection (in UI, and somehow in VR?)
+
     private void Start()
     {
         _areaCollider = GetComponent<Collider>();
@@ -95,5 +98,6 @@ public class SpawnPoints : MonoBehaviour
         var randomY = Random.Range(min.y, max.y);
         var randomZ = Random.Range(min.z, max.z);
         _spawnedPoint = Instantiate(pointPrefab, new Vector3(randomX, randomY, randomZ), Quaternion.identity);
+        _spawnedPoint.GetComponent<GlowingPoint>().fingerType = _fingerType;
     }
 }

@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.IO.Ports;
 using UnityEngine;
@@ -13,8 +12,6 @@ public class ExerciseSettingsUI : MonoBehaviour
     private Dropdown _COMPortDropdown;
     [SerializeField]
     private Text _timerText;
-    //[SerializeField]
-    //private Text _bestTimeText;
     [SerializeField]
     private Dropdown _mirrorDropdown;
     [SerializeField]
@@ -45,14 +42,13 @@ public class ExerciseSettingsUI : MonoBehaviour
         _currentExerciseText.text = "Текущее упражнение: " + SceneManager.GetActiveScene().name;
         LoadCOMPorts();
         LoadExerciseList();
-        //LoadBestTime();
         SceneManager.sceneLoaded += OnSceneLoaded;
         _userIDInputField.onEndEdit.AddListener(delegate { OnUserChange(_userIDInputField); });
     }
 
     private void Update()
     {
-        _timerText.text = "Таймер: " + ProgressSystem.Instance.Timer;
+        _timerText.text = "Таймер: " + ProgressSystem.Instance.Timer.ToString("f2");
     }
 
     private void OnUserChange(InputField input)
@@ -67,7 +63,6 @@ public class ExerciseSettingsUI : MonoBehaviour
         // TODO: Rewrite
         _serialController = FindObjectOfType<SerialController>();
         _serialController.ChangeCOM(_COMPortDropdown.options[_COMPortDropdown.value].text);
-        //LoadBestTime();
     }
 
     public void RestartExercise()

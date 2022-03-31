@@ -1,4 +1,3 @@
-using System.Collections;
 using System.IO;
 using System.Linq;
 using UnityEngine;
@@ -49,6 +48,10 @@ public class ProgressSystem : MonoBehaviour
         if (_startTime > 0f)
         {
             Timer = Time.time - _startTime;
+        }
+        else
+        {
+            StartTimer(); // Remark: For test, remove later
         }
     }
 
