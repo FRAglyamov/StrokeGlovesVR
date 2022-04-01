@@ -3,6 +3,9 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+/// <summary>
+/// Singleton class. Responsible for saving current results or loading others from JSON.
+/// </summary>
 public class ProgressSystem : MonoBehaviour
 {
     [SerializeField]
@@ -62,6 +65,10 @@ public class ProgressSystem : MonoBehaviour
         Timer = 0f;
     }
 
+    /// <summary>
+    /// Get and update list FileInfo in save directory.
+    /// </summary>
+    /// <param name="savePath"></param>
     public void FilesInfoUpdate(string savePath = "none")
     {
         if(savePath == "none")
@@ -76,16 +83,6 @@ public class ProgressSystem : MonoBehaviour
     {
         _startTime = Time.time;
     }
-
-    //public void EndTimer()
-    //{
-    //    if (_startTime < 0f)
-    //    {
-    //        Debug.LogError("Timer didn't start!");
-    //        return;
-    //    }
-    //    _timer = Time.time - _startTime;
-    //}
 
     public void SaveResultIntoJSON()
     {
@@ -124,7 +121,6 @@ public class ProgressSystem : MonoBehaviour
     //{
     //    StartTimer();
     //    yield return new WaitForSeconds(time);
-    //    EndTimer();
     //    SaveResultIntoJSON();
     //}
 

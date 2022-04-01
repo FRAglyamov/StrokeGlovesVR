@@ -3,23 +3,28 @@ using System.IO.Ports;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.XR.Interaction.Toolkit;
 
+/// <summary>
+/// Singleton class, which contains methods and references to assistant menu ui.
+/// </summary>
 public class ExerciseSettingsUI : MonoBehaviour
 {
     [SerializeField]
-    private Text _currentExerciseText;
+    private Text currentExerciseText;
     [SerializeField]
-    private Dropdown _COMPortDropdown;
+    private Dropdown COMPortDropdown;
     [SerializeField]
-    private Text _timerText;
+    private Text timerText;
     [SerializeField]
-    private Dropdown _mirrorDropdown;
+    private Dropdown mirrorDropdown;
     [SerializeField]
-    private Dropdown _exerciseSelectionDropdown;
+    private Dropdown exerciseSelectionDropdown;
     [SerializeField]
-    private InputField _userIDInputField;
+    private InputField userIDInputField;
     [SerializeField]
-    private SerialController _serialController;
+    private SerialController serialController;
+    private TeleportationProvider _teleportationProvider;
 
     // Singleton
     public static ExerciseSettingsUI Instance { get; private set; }
@@ -39,16 +44,16 @@ public class ExerciseSettingsUI : MonoBehaviour
 
     private void Initialize()
     {
-        _currentExerciseText.text = "Текущее упражнение: " + SceneManager.GetActiveScene().name;
+        currentExerciseText.text = "Текущее упражнение: " + SceneManager.GetActiveScene().name;
         LoadCOMPorts();
         LoadExerciseList();
         SceneManager.sceneLoaded += OnSceneLoaded;
-        _userIDInputField.onEndEdit.AddListener(delegate { OnUserChange(_userIDInputField); });
+        userIDInputField.onEndEdit.AddListener(delegate { OnUserChange(userIDInputField); });
     }
 
     private void Update()
     {
-        _timerText.text = "Таймер: " + ProgressSystem.Instance.Timer.ToString("f2");
+        timerText.text = "Таймер: " + ProgressSystem.Instance.Timer.ToString("f2");
     }
 
     private void OnUserChange(InputField input)
@@ -58,39 +63,66 @@ public class ExerciseSettingsUI : MonoBehaviour
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        _currentExerciseText.text = "Текущее упражнение: " + scene.name;
-        
-        // TODO: Rewrite
-        _serialController = FindObjectOfType<SerialController>();
-        _serialController.ChangeCOM(_COMPortDropdown.options[_COMPortDropdown.value].text);
+        currentExerciseText.text = "Текущее упражнение: " + scene.name;
+        _teleportationProvider = FindObjectOfType<TeleportationProvider>();
+
+        // TODO: Rewrite.
+        serialController = FindObjectOfType<SerialController>();
+        serialController.ChangeCOM(COMPortDropdown.options[COMPortDropdown.value].text);
     }
 
+    /// <summary>
+    /// Reset VR centering via teleport system.
+    /// </summary>
+    public void Recenter()
+    {
+        var teleportRequest = new TeleportRequest();
+        teleportRequest.destinationPosition = Vector3.zero;
+        teleportRequest.destinationRotation = Quaternion.identity;
+        _teleportationProvider.QueueTeleportRequest(teleportRequest);
+    }
+
+    /// <summary>
+    /// Reload current scene.
+    /// </summary>
     public void RestartExercise()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
+    /// <summary>
+    /// Load scene based on selected in dropdown.
+    /// </summary>
     public void ChangeExercise()
     {
-        SceneManager.LoadScene(_exerciseSelectionDropdown.options[_exerciseSelectionDropdown.value].text);
+        SceneManager.LoadScene(exerciseSelectionDropdown.options[exerciseSelectionDropdown.value].text);
     }
 
+    /// <summary>
+    /// Load connected COM ports and refresh dropdown.
+    /// </summary>
     public void LoadCOMPorts()
     {
         string[] ports = SerialPort.GetPortNames();
-        _COMPortDropdown.ClearOptions();
+        COMPortDropdown.ClearOptions();
         foreach (string p in ports)
         {
-            _COMPortDropdown.options.Add(new Dropdown.OptionData() { text = p });
+            COMPortDropdown.options.Add(new Dropdown.OptionData() { text = p });
         }
-        _COMPortDropdown.onValueChanged.AddListener(delegate { DropdownItemSelected(); });
+        COMPortDropdown.onValueChanged.AddListener(delegate { DropdownItemSelected(); });
     }
 
+    /// <summary>
+    /// Change SerialController port, when changing it in dropdown.
+    /// </summary>
     private void DropdownItemSelected()
     {
-        _serialController.portName = _COMPortDropdown.options[_COMPortDropdown.value].text;
+        serialController.portName = COMPortDropdown.options[COMPortDropdown.value].text;
     }
 
+    /// <summary>
+    /// Load all builded scenes and display it in dropdown.
+    /// </summary>
     private void LoadExerciseList()
     {
         var optionDataList = new List<Dropdown.OptionData>();
@@ -101,7 +133,7 @@ public class ExerciseSettingsUI : MonoBehaviour
             optionDataList.Add(new Dropdown.OptionData(name));
         }
 
-        _exerciseSelectionDropdown.ClearOptions();
-        _exerciseSelectionDropdown.AddOptions(optionDataList);
+        exerciseSelectionDropdown.ClearOptions();
+        exerciseSelectionDropdown.AddOptions(optionDataList);
     }
 }

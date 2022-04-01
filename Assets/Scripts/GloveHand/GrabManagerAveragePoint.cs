@@ -25,6 +25,8 @@ public class GrabManagerAveragePoint : MonoBehaviour
     [SerializeField]
     private GloveListenerArticulation gloveListener;
 
+    private FixedJoint _joint; // Joint, attached to grabbed object.
+
     private void Start()
     {
         for (int i = 0; i < lastPhalanges.Length; i++)
@@ -168,17 +170,21 @@ public class GrabManagerAveragePoint : MonoBehaviour
             grabbedObject = grabbedObject.GetComponentInParent<Rigidbody>().gameObject;
         }
 
-        if (grabbedObject.GetComponent<Joint>() == null)
-        {
-            var joint = grabbedObject.AddComponent<FixedJoint>();
-            joint.connectedArticulationBody = this.gameObject.GetComponent<ArticulationBody>();
-        }
+        //if (grabbedObject.GetComponent<Joint>() == null)
+        //{
+        //    var joint = grabbedObject.AddComponent<FixedJoint>();
+        //    joint.connectedArticulationBody = this.gameObject.GetComponent<ArticulationBody>();
+        //}
+        _joint = grabbedObject.AddComponent<FixedJoint>();
+        _joint.connectedArticulationBody = this.gameObject.GetComponent<ArticulationBody>();
+
         _isGrab = true;
     }
 
     private void UnGrab()
     {
-        Destroy(grabbedObject.GetComponent<Joint>());
+        //Destroy(grabbedObject.GetComponent<Joint>());
+        Destroy(_joint);
         grabbedObject = null;
         _isGrab = false;
     }

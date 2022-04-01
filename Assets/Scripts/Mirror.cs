@@ -3,6 +3,7 @@ using UnityEngine;
 public class Mirror : MonoBehaviour
 {
     // Remark: Maybe easier just leave On and Off option and just mirror the original hand (not 2 hand)?
+    // Can be problems with some exercises. And if need to move hand to opposite side.
     public enum MirrorMode
     {
         None,
@@ -13,9 +14,13 @@ public class Mirror : MonoBehaviour
     public MirrorMode mirrorMode;
 
     [SerializeField]
-    private Transform _originTransform;
+    private Transform originTransform;
     [SerializeField]
-    private Transform _mirorredTransform;
+    private Transform mirroredTransform;
+    [SerializeField]
+    private GameObject originHand;
+    [SerializeField]
+    private GameObject mirroredHand;
 
     private void Update()
     {
@@ -23,7 +28,7 @@ public class Mirror : MonoBehaviour
         {
             return;
         }
-        _mirorredTransform.position.Set(-_originTransform.position.x, _originTransform.position.y, _originTransform.position.z);
+        mirroredTransform.position.Set(-originTransform.position.x, originTransform.position.y, originTransform.position.z);
     }
 
     public void ChangeMirrorMode(MirrorMode mirrorMode)
@@ -31,21 +36,16 @@ public class Mirror : MonoBehaviour
         switch (mirrorMode)
         {
             case MirrorMode.None:
-                // Disable opposite hand object
-                _mirorredTransform.gameObject.SetActive(false);
-                // Enable origin hand object
-                _originTransform.gameObject.SetActive(true);
+                mirroredHand.SetActive(false);
+                originHand.SetActive(true);
                 break;
             case MirrorMode.Both:
-                // Enable both hand objects
-                _mirorredTransform.gameObject.SetActive(true);
-                _originTransform.gameObject.SetActive(true);
+                mirroredHand.SetActive(true);
+                originHand.SetActive(true);
                 break;
             case MirrorMode.Opposite:
-                // Enable opposite hand object
-                _mirorredTransform.gameObject.SetActive(true);
-                // Disable origin hand object
-                _originTransform.gameObject.SetActive(false);
+                mirroredHand.SetActive(true);
+                originHand.SetActive(false);
                 break;
             default:
                 break;
