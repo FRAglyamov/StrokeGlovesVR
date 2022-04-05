@@ -46,6 +46,7 @@ public class WindowGraph : MonoBehaviour
         List<DateTime> dateList;
         LoadExerciseData(out timeList, out dateList);
 
+        // Remark: Remove?
         //graphContainer ??= transform.Find("Graph Container").GetComponent<RectTransform>();
         //dotTemplate ??= graphContainer.Find("Dot Template").GetComponent<RectTransform>();
         //barTemplate ??= graphContainer.Find("Bar Template").GetComponent<RectTransform>();
@@ -207,6 +208,7 @@ public class WindowGraph : MonoBehaviour
         }
 
     }
+
     /// <summary>
     /// Create  RectTransform element, put it under graphContainer and add reference to list (if we need to delete it, when rerendering).
     /// </summary>

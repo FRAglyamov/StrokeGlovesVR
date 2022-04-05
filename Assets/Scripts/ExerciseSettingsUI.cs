@@ -44,7 +44,7 @@ public class ExerciseSettingsUI : MonoBehaviour
 
     private void Initialize()
     {
-        currentExerciseText.text = "Текущее упражнение: " + SceneManager.GetActiveScene().name;
+        //currentExerciseText.text = "Текущее упражнение: " + SceneManager.GetActiveScene().name;
         LoadCOMPorts();
         LoadExerciseList();
         SceneManager.sceneLoaded += OnSceneLoaded;
@@ -59,6 +59,7 @@ public class ExerciseSettingsUI : MonoBehaviour
     private void OnUserChange(InputField input)
     {
         ProgressSystem.Instance.userID = input.text;
+        ProgressSystem.Instance.UpdateSavePath();
     }
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)

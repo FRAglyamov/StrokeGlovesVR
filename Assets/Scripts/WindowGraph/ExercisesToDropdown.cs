@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -26,8 +27,11 @@ public class ExercisesToDropdown : MonoBehaviour
         _dropdown.ClearOptions();
         foreach (DirectoryInfo f in info)
         {
-            _dropdown.options.Add(new Dropdown.OptionData() { text = f.Name });
-            _nameFullPath.Add(f.Name, f.FullName);
+            if (f.EnumerateFiles().Any())
+            {
+                _dropdown.options.Add(new Dropdown.OptionData() { text = f.Name });
+                _nameFullPath.Add(f.Name, f.FullName);
+            }
         }
         _dropdown.onValueChanged.AddListener(delegate { DropdownItemSelected(); });
     }

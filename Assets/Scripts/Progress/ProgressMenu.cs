@@ -2,7 +2,10 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(ProgressSystem))]
+//[RequireComponent(typeof(ProgressSystem))]
+/// <summary>
+/// Menu of recent saved results of current exercise.
+/// </summary>
 public class ProgressMenu : MonoBehaviour
 {
     public enum PageChange
@@ -22,7 +25,8 @@ public class ProgressMenu : MonoBehaviour
 
     private void Start()
     {
-        _system = GetComponent<ProgressSystem>();
+        //_system = GetComponent<ProgressSystem>();
+        _system = ProgressSystem.Instance;
         _elementsText = resultsPanel.GetComponentsInChildren<Text>();
         _resultAmount = _elementsText.Length;
         ChangeResultsPage(0);

@@ -36,13 +36,8 @@ public class ProgressSystem : MonoBehaviour
 
     private void Initialize()
     {
-        // Application.persistentDataPath = C:\Users\дмл\AppData\LocalLow\DML\StrokeVR
-        SavePath = Path.Combine(Application.persistentDataPath, "progress_saves", exerciseName);
-        //SavePath = Path.Combine(Application.persistentDataPath, "progress_saves", userID, exerciseName);
-        if (!Directory.Exists(SavePath))
-        {
-            Directory.CreateDirectory(SavePath);
-        }
+        //exerciseName = SceneManager.GetActiveScene().name;
+        //UpdateSavePath();
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
@@ -63,6 +58,22 @@ public class ProgressSystem : MonoBehaviour
         exerciseName = scene.name;
         _startTime = -1f;
         Timer = 0f;
+        UpdateSavePath();
+    }
+
+    /// <summary>
+    /// Update path of progress saves (if userID or exercise name was changed).
+    /// </summary>
+    public void UpdateSavePath()
+    {
+        // Application.persistentDataPath = C:\Users\дмл\AppData\LocalLow\DML\StrokeVR
+        //SavePath = Path.Combine(Application.persistentDataPath, "progress_saves", exerciseName);
+        SavePath = Path.Combine(Application.persistentDataPath, "progress_saves", userID, exerciseName);
+        Debug.Log("SavePath: " + SavePath);
+        if (!Directory.Exists(SavePath))
+        {
+            Directory.CreateDirectory(SavePath);
+        }
     }
 
     /// <summary>
