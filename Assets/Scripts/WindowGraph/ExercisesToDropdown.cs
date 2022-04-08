@@ -19,6 +19,7 @@ public class ExercisesToDropdown : MonoBehaviour
     private void Start()
     {
         _dropdown = GetComponent<Dropdown>();
+        // TODO: Integration with Assistant System, VR. Or make as standalone scene?
         var SavePath = Path.Combine(Application.persistentDataPath, "progress_saves");
 
         DirectoryInfo dir = new DirectoryInfo(SavePath);

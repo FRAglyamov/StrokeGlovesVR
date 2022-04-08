@@ -11,6 +11,33 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Exercises/MovingObjects.unity
     guid: 462a5ac7266ade946b2f878e2f697fb6
+  - enabled: 1
+    path: Assets/Scenes/Exercises/Selection Menu.unity
+    guid: fc24dace116836f4d8e378ecc1150fa3
+  - enabled: 1
+    path: Assets/Scenes/Exercises/Jar.unity
+    guid: e7d4bb2a5213a194aa474cfd2f88ee82
+  - enabled: 1
+    path: Assets/Scenes/Exercises/GlowingPoints.unity
+    guid: df151f5e79074204b9ce59c4c573b47d
+  - enabled: 1
+    path: Assets/Scenes/Exercises/FlexWrist.unity
+    guid: df9e361ce13a5ab4a9ece1b7c87f351f
+  - enabled: 1
+    path: Assets/Scenes/Exercises/FlexFingers.unity
+    guid: ad70bcadfbef65247806ddea18a2f003
+  - enabled: 1
+    path: Assets/Scenes/Exercises/Door.unity
+    guid: cbd2302ba3851fd4b885320c4abfedd2
+  - enabled: 1
+    path: Assets/Scenes/Exercises/Cubes.unity
+    guid: 36037a01cbaae3344872777ede4ebaf7
+  - enabled: 1
+    path: Assets/Scenes/Exercises/BallTossing.unity
+    guid: 3daee5627ffb4f54fa4413a56b5b4b9f
+  - enabled: 1
+    path: Assets/Scenes/Exercises/BallAndGlass.unity
+    guid: d2f29b1424ad43d479a0b86b47a89043
   m_configObjects:
     Unity.XR.OpenVR.Settings: {fileID: 11400000, guid: 9fd75e4978f456744b028bbfb46634c1, type: 2}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 86fb634d25ace4b459c995f3e8a65a0b, type: 2}

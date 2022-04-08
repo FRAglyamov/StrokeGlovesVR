@@ -38,13 +38,12 @@ public class ExerciseSettingsUI : MonoBehaviour
         }
         Instance = this;
 
-        DontDestroyOnLoad(gameObject);
+        //DontDestroyOnLoad(gameObject);
         Initialize();
     }
 
     private void Initialize()
     {
-        //currentExerciseText.text = "Текущее упражнение: " + SceneManager.GetActiveScene().name;
         LoadCOMPorts();
         LoadExerciseList();
         SceneManager.sceneLoaded += OnSceneLoaded;
@@ -67,9 +66,12 @@ public class ExerciseSettingsUI : MonoBehaviour
         currentExerciseText.text = "Текущее упражнение: " + scene.name;
         _teleportationProvider = FindObjectOfType<TeleportationProvider>();
 
-        // TODO: Rewrite.
+        // TODO: Rewrite, not quite efficient?
         serialController = FindObjectOfType<SerialController>();
-        serialController.ChangeCOM(COMPortDropdown.options[COMPortDropdown.value].text);
+        if (COMPortDropdown.options.Count > 0)
+        {
+            serialController.ChangeCOM(COMPortDropdown.options[COMPortDropdown.value].text);
+        }
     }
 
     /// <summary>

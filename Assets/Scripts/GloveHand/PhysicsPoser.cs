@@ -35,7 +35,7 @@ public class PhysicsPoser : MonoBehaviour
 
     private Vector3 _targetPosition = Vector3.zero;
     private Quaternion _targetRotation = Quaternion.identity;
-    private Vector3 _rotationAdjustment = new Vector3(90f, 0f, 0f);
+    private Vector3 _rotationAdjustment = new Vector3(90f, 0f, 0f); // Adjustment of rotation for vive tracker
 
     private void Awake()
     {
@@ -64,7 +64,8 @@ public class PhysicsPoser : MonoBehaviour
         // Or we can just get pos, rot of controller game object
         _targetPosition = controllerTransform.position;
         _targetRotation = controllerTransform.rotation;
-        _targetRotation *= Quaternion.Euler(_rotationAdjustment);
+        // Adjustment for vive tracker. Comment, when using controller for development convenience.
+        //_targetRotation *= Quaternion.Euler(_rotationAdjustment);
     }
 
     private void CheckShowingGhostHand()

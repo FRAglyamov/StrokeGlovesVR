@@ -30,14 +30,12 @@ public class ProgressSystem : MonoBehaviour
         }
         Instance = this;
 
-        DontDestroyOnLoad(gameObject);
+        //DontDestroyOnLoad(gameObject);
         Initialize();
     }
 
     private void Initialize()
     {
-        //exerciseName = SceneManager.GetActiveScene().name;
-        //UpdateSavePath();
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
@@ -49,7 +47,7 @@ public class ProgressSystem : MonoBehaviour
         }
         else
         {
-            StartTimer(); // Remark: For test, remove later
+            StartTimer(); // Remark: For test, remove later. (need to start timer on button or smth)
         }
     }
 

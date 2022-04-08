@@ -6689,7 +6689,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1158385813
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7141,7 +7141,7 @@ GameObject:
   m_Icon: {fileID: 4162164826716764455, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1216169958
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11936,42 +11936,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1144941150627702683, guid: 40e8d320c69246c4f8dbf708f83382e4, type: 3}
-      propertyPath: m_XDrive.damping
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 1144941150803760639, guid: 40e8d320c69246c4f8dbf708f83382e4, type: 3}
-      propertyPath: m_XDrive.damping
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 1144941150829590953, guid: 40e8d320c69246c4f8dbf708f83382e4, type: 3}
-      propertyPath: m_XDrive.damping
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 1144941150851564221, guid: 40e8d320c69246c4f8dbf708f83382e4, type: 3}
-      propertyPath: m_XDrive.damping
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 1144941150954111069, guid: 40e8d320c69246c4f8dbf708f83382e4, type: 3}
-      propertyPath: m_XDrive.damping
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 1144941151152194332, guid: 40e8d320c69246c4f8dbf708f83382e4, type: 3}
-      propertyPath: m_XDrive.damping
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 1144941151532930445, guid: 40e8d320c69246c4f8dbf708f83382e4, type: 3}
-      propertyPath: m_XDrive.damping
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 1144941151948683304, guid: 40e8d320c69246c4f8dbf708f83382e4, type: 3}
-      propertyPath: m_XDrive.damping
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 1144941151982632170, guid: 40e8d320c69246c4f8dbf708f83382e4, type: 3}
-      propertyPath: m_XDrive.damping
-      value: 100
-      objectReference: {fileID: 0}
+    - target: {fileID: 1144941150701631422, guid: 40e8d320c69246c4f8dbf708f83382e4, type: 3}
+      propertyPath: handGhostModel
+      value: 
+      objectReference: {fileID: 7023670722066483980}
+    - target: {fileID: 1144941150701631422, guid: 40e8d320c69246c4f8dbf708f83382e4, type: 3}
+      propertyPath: controllerTransform
+      value: 
+      objectReference: {fileID: 2120748608530793237}
     - target: {fileID: 1144941152095534780, guid: 40e8d320c69246c4f8dbf708f83382e4, type: 3}
       propertyPath: m_RootOrder
       value: 5
@@ -12016,18 +11988,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -90
       objectReference: {fileID: 0}
-    - target: {fileID: 1144941152095534913, guid: 40e8d320c69246c4f8dbf708f83382e4, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1144941152095534913, guid: 40e8d320c69246c4f8dbf708f83382e4, type: 3}
-      propertyPath: handGhostModel
-      value: 
-      objectReference: {fileID: 7023670722066483980}
-    - target: {fileID: 1144941152095534913, guid: 40e8d320c69246c4f8dbf708f83382e4, type: 3}
-      propertyPath: trackedTransform
-      value: 
-      objectReference: {fileID: 2120748608530793237}
     - target: {fileID: 1144941152095534918, guid: 40e8d320c69246c4f8dbf708f83382e4, type: 3}
       propertyPath: m_Name
       value: Right Hand Model (articulation; grab system; average point)
@@ -12036,56 +11996,16 @@ PrefabInstance:
       propertyPath: gloveListener
       value: 
       objectReference: {fileID: 1624246047}
-    - target: {fileID: 1144941152133336325, guid: 40e8d320c69246c4f8dbf708f83382e4, type: 3}
-      propertyPath: m_XDrive.damping
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 1144941152162045347, guid: 40e8d320c69246c4f8dbf708f83382e4, type: 3}
-      propertyPath: m_XDrive.damping
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 1144941152211208380, guid: 40e8d320c69246c4f8dbf708f83382e4, type: 3}
-      propertyPath: m_XDrive.damping
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 1144941152322071916, guid: 40e8d320c69246c4f8dbf708f83382e4, type: 3}
-      propertyPath: m_XDrive.damping
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 1144941152434766597, guid: 40e8d320c69246c4f8dbf708f83382e4, type: 3}
-      propertyPath: m_XDrive.damping
-      value: 100
-      objectReference: {fileID: 0}
+    - target: {fileID: 5048794188758642212, guid: 40e8d320c69246c4f8dbf708f83382e4, type: 3}
+      propertyPath: hmdCameraTransform
+      value: 
+      objectReference: {fileID: 2120748609917689958}
+    - target: {fileID: 5048794188758642236, guid: 40e8d320c69246c4f8dbf708f83382e4, type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 2120748609917689953}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 40e8d320c69246c4f8dbf708f83382e4, type: 3}
---- !u!1 &1144941150701631421 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1144941152095534918, guid: 40e8d320c69246c4f8dbf708f83382e4, type: 3}
-  m_PrefabInstance: {fileID: 1144941150701631420}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1144941150701631422
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1144941150701631421}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0c67505600ecc59489b6667f15083a34, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  physicsRange: 0.5
-  physicsMask:
-    serializedVersion: 2
-    m_Bits: 1
-  slowDownVelocity: 0.8
-  slowDownAngularVelocity: 0.8
-  maxPositionChange: 75
-  maxRotationChange: 75
-  controllerTransform: {fileID: 1158385817}
-  handGhostModel: {fileID: 960069737}
-  showDistance: 0.1
 --- !u!1 &2120748608530793236
 GameObject:
   m_ObjectHideFlags: 0
@@ -12104,7 +12024,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2120748608530793237
 Transform:
   m_ObjectHideFlags: 0
@@ -12852,6 +12772,7 @@ GameObject:
   - component: {fileID: 2120748609917689953}
   - component: {fileID: 2120748609917689952}
   - component: {fileID: 2120748609917689955}
+  - component: {fileID: 2120748609917689956}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -12905,6 +12826,22 @@ MonoBehaviour:
       m_Groups: 
       m_Action: Main Camera - TPD - Rotation
       m_Flags: 0
+--- !u!114 &2120748609917689956
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2120748609917689954}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34d7e0f9104b0fc469ba8ea98d1c774b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UIMask:
+    serializedVersion: 2
+    m_Bits: 32
+  loadingPrefab: {fileID: 4808463145205232435, guid: a23bb0f54d0fa934c9e651f3ab9d7703, type: 3}
 --- !u!4 &2120748609917689958
 Transform:
   m_ObjectHideFlags: 0

@@ -1,8 +1,8 @@
 using System;
+using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 
-//[RequireComponent(typeof(ProgressSystem))]
 /// <summary>
 /// Menu of recent saved results of current exercise.
 /// </summary>
@@ -15,18 +15,15 @@ public class ProgressMenu : MonoBehaviour
         Right,
     }
 
-    private bool _isDirInit = false;
     private int _curFromResult = 0;
-    private int _resultAmount;
-    private ProgressSystem _system;
+    private int _resultAmount; // Amount of progress results to show on menu.
+    private int _filesAmount; // Amount of files in directory (based on user, exercise).
     [SerializeField]
     private GameObject resultsPanel;
     private Text[] _elementsText;
 
     private void Start()
     {
-        //_system = GetComponent<ProgressSystem>();
-        _system = ProgressSystem.Instance;
         _elementsText = resultsPanel.GetComponentsInChildren<Text>();
         _resultAmount = _elementsText.Length;
         ChangeResultsPage(0);
@@ -48,18 +45,16 @@ public class ProgressMenu : MonoBehaviour
 
     private void ShowResultsInMenu(int fromResult, int toResult)
     {
-        if (!_isDirInit)
-        {
-            _system.FilesInfoUpdate();
-            _isDirInit = true;
-        }
+        // Remark: Now it's very unefficient. Link to Assistant System and make reference?
+        ProgressSystem.Instance.FilesInfoUpdate();
+        _filesAmount = ProgressSystem.Instance.Files.Length;
 
         CheckResultsOnLeft(ref fromResult, ref toResult);
         CheckResultsOnRight(ref fromResult, ref toResult);
 
         for (int i = fromResult; i < toResult; i++)
         {
-            ExerciseResult tmpResult = _system.LoadResultFromJSON(_system.Files[i].FullName);
+            ExerciseResult tmpResult = ProgressSystem.Instance.LoadResultFromJSON(ProgressSystem.Instance.Files[i].FullName);
             _elementsText[i % _resultAmount].text = tmpResult.date + " - " + tmpResult.time;
         }
     }
@@ -68,7 +63,7 @@ public class ProgressMenu : MonoBehaviour
     {
         if (fromResult < 0)
         {
-            _curFromResult = fromResult = (int)(_system.Files.Length / _resultAmount) * _resultAmount;
+            _curFromResult = fromResult = (int)(_filesAmount / _resultAmount) * _resultAmount;
             toResult = fromResult + _resultAmount;
 
             CheckFilesEnd(ref toResult);
@@ -77,7 +72,7 @@ public class ProgressMenu : MonoBehaviour
 
     private void CheckResultsOnRight(ref int fromResult, ref int toResult)
     {
-        if (fromResult > _system.Files.Length)
+        if (fromResult > _filesAmount)
         {
             _curFromResult = fromResult = 0;
             toResult = _resultAmount;
@@ -88,13 +83,13 @@ public class ProgressMenu : MonoBehaviour
 
     private void CheckFilesEnd(ref int toResult)
     {
-        if (toResult > _system.Files.Length)
+        if (toResult > _filesAmount)
         {
-            for (int i = _system.Files.Length; i < toResult; i++)
+            for (int i = _filesAmount; i < toResult; i++)
             {
                 _elementsText[i % _resultAmount].text = "";
             }
-            toResult = _system.Files.Length;
+            toResult = _filesAmount;
         }
     }
 }
