@@ -52,7 +52,7 @@ public class ExerciseSettingsUI : MonoBehaviour
 
     private void Update()
     {
-        timerText.text = "Таймер: " + ProgressSystem.Instance.Timer.ToString("f2");
+        timerText.text = "Timer: " + ProgressSystem.Instance.Timer.ToString("f2");
     }
 
     private void OnUserChange(InputField input)
@@ -63,7 +63,7 @@ public class ExerciseSettingsUI : MonoBehaviour
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        currentExerciseText.text = "Текущее упражнение: " + scene.name;
+        currentExerciseText.text = "Exercise: " + scene.name;
         _teleportationProvider = FindObjectOfType<TeleportationProvider>();
 
         // TODO: Rewrite, not quite efficient?
