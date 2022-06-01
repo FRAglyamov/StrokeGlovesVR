@@ -27,7 +27,7 @@ public class WindowGraph : MonoBehaviour
     private RectTransform dashTemplateY = null;
     private List<GameObject> _gameObjectList = new List<GameObject>();
 
-    private ProgressSystem _system;
+    private ProgressSystem _progressSystem;
     private int _visibleElementsAmount = -1;
 
     // Cached values
@@ -38,9 +38,9 @@ public class WindowGraph : MonoBehaviour
 
     private void Start()
     {
-        _system = GetComponent<ProgressSystem>();
-        _system.FilesInfoUpdate();
-        _visibleElementsAmount = _system.Files.Length;
+        _progressSystem = GetComponent<ProgressSystem>();
+        _progressSystem.FilesInfoUpdate();
+        _visibleElementsAmount = _progressSystem.Files.Length;
         List<float> timeList;
         List<DateTime> dateList;
         LoadExerciseData(out timeList, out dateList);
@@ -70,7 +70,7 @@ public class WindowGraph : MonoBehaviour
         // Remark: Make several dots in one day? Or leave only the best?
         for (int i = 0; i < _visibleElementsAmount; i++)
         {
-            ExerciseResult tmpResult = _system.LoadResultFromJSON(_system.Files[i].FullName);
+            ExerciseResult tmpResult = _progressSystem.LoadResultFromJSON(_progressSystem.Files[i].FullName);
             if (tmpResult == null)
             {
                 Debug.LogWarning("No ExersiceResult files to load");
@@ -228,11 +228,18 @@ public class WindowGraph : MonoBehaviour
     /// <param name="savePath"></param>
     public void ChangeExercise(string savePath)
     {
-        _system.FilesInfoUpdate(savePath);
-        _visibleElementsAmount = _system.Files.Length;
+        _progressSystem.FilesInfoUpdate(savePath);
+        _visibleElementsAmount = _progressSystem.Files.Length;
         List<float> timeList;
         List<DateTime> dateList;
         LoadExerciseData(out timeList, out dateList);
         ShowGraph(timeList, _graphVisual, (int _i) => dateList[_i].ToString("dd\nMM\nyy"), _getAxisLabelY);
+    }
+
+    public void OnUserChange(string text)
+    {
+        _progressSystem.userID = text;
+        _progressSystem.UpdateSavePath();
+        FindObjectOfType<ExercisesToDropdown>().UpdateDropdown();
     }
 }

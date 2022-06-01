@@ -10,22 +10,27 @@ using UnityEngine.UI;
 /// </summary>
 public class ExercisesToDropdown : MonoBehaviour
 {
-    [SerializeField]
-    private WindowGraph windowGraph = null;
 
     private Dropdown _dropdown = null;
     private Dictionary<string, string> _nameFullPath = new Dictionary<string, string>();
+    [SerializeField]
+    private WindowGraph windowGraph;
 
     private void Start()
     {
         _dropdown = GetComponent<Dropdown>();
         // TODO: Integration with Assistant System, VR. Or make as standalone scene?
-        var SavePath = Path.Combine(Application.persistentDataPath, "progress_saves");
+        UpdateDropdown();
+    }
 
+    public void UpdateDropdown()
+    {
+        var SavePath = Path.Combine(Application.persistentDataPath, "progress_saves", ProgressSystem.Instance.userID);
         DirectoryInfo dir = new DirectoryInfo(SavePath);
         DirectoryInfo[] info = dir.GetDirectories();
 
         _dropdown.ClearOptions();
+        _nameFullPath.Clear();
         foreach (DirectoryInfo f in info)
         {
             if (f.EnumerateFiles().Any())
@@ -35,6 +40,10 @@ public class ExercisesToDropdown : MonoBehaviour
             }
         }
         _dropdown.onValueChanged.AddListener(delegate { DropdownItemSelected(); });
+        
+        _dropdown.captionText.text = _dropdown.options[0].text;
+        string firstOptionPath = _nameFullPath[_dropdown.options[0].text];
+        windowGraph.ChangeExercise(firstOptionPath);
     }
 
     void DropdownItemSelected()

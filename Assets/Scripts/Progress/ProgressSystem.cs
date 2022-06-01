@@ -75,7 +75,7 @@ public class ProgressSystem : MonoBehaviour
     }
 
     /// <summary>
-    /// Get and update list FileInfo in save directory.
+    /// Get and update a list of "FileInfo"s in save directory.
     /// </summary>
     /// <param name="savePath"></param>
     public void FilesInfoUpdate(string savePath = "none")
