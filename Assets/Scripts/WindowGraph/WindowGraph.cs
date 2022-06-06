@@ -41,9 +41,7 @@ public class WindowGraph : MonoBehaviour
         _progressSystem = GetComponent<ProgressSystem>();
         _progressSystem.FilesInfoUpdate();
         _visibleElementsAmount = _progressSystem.Files.Length;
-        List<float> timeList;
-        List<DateTime> dateList;
-        LoadExerciseData(out timeList, out dateList);
+        LoadExerciseData(out List<float> timeList, out List<DateTime> dateList);
 
         // Remark: Remove?
         //graphContainer ??= transform.Find("Graph Container").GetComponent<RectTransform>();
@@ -55,7 +53,7 @@ public class WindowGraph : MonoBehaviour
         //dashTemplateY ??= graphContainer.Find("Dash Template Y").GetComponent<RectTransform>();
 
         LineGraphVisual lineGraphVisual = new LineGraphVisual(this, Color.green, new Color(1, 1, 1, 0.5f));
-        ShowGraph(timeList, lineGraphVisual, (int _i) => dateList[_i].ToString("dd\nMM\nyy"), (float _f) => $"{_f.ToString("f2")}");
+        ShowGraph(timeList, lineGraphVisual, (int _i) => dateList[_i].ToString("dd\nMM\nyy"), (float _f) => $"{_f:f2}");
     }
 
     private void LoadExerciseData(out List<float> timeList, out List<DateTime> dateList)
@@ -67,7 +65,8 @@ public class WindowGraph : MonoBehaviour
         {
             Debug.LogWarning("0 files, nothing to load");
         }
-        // Remark: Make several dots in one day? Or leave only the best?
+        // Remark: Make several dots in one day? Or leave only the best? 
+        // Maybe should be a choice from different options: best, average, worst, etc.?
         for (int i = 0; i < _visibleElementsAmount; i++)
         {
             ExerciseResult tmpResult = _progressSystem.LoadResultFromJSON(_progressSystem.Files[i].FullName);
@@ -230,9 +229,7 @@ public class WindowGraph : MonoBehaviour
     {
         _progressSystem.FilesInfoUpdate(savePath);
         _visibleElementsAmount = _progressSystem.Files.Length;
-        List<float> timeList;
-        List<DateTime> dateList;
-        LoadExerciseData(out timeList, out dateList);
+        LoadExerciseData(out List<float> timeList, out List<DateTime> dateList);
         ShowGraph(timeList, _graphVisual, (int _i) => dateList[_i].ToString("dd\nMM\nyy"), _getAxisLabelY);
     }
 

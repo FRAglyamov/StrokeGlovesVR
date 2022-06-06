@@ -3,7 +3,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 /// <summary>
-/// Class for selection/"clicking" UI elements when view/ray from camera hovering them for a certain time
+/// Class for selection/"clicking" UI elements when the view/ray from a camera hovering them for a certain time
 /// </summary>
 public class HoverUISelection : MonoBehaviour
 {
@@ -29,10 +29,9 @@ public class HoverUISelection : MonoBehaviour
     private void FixedUpdate()
     {
         Ray ray = _cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
-        RaycastHit hit;
 
         //if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, _maxHitDistance, UIMask))
-        if (Physics.Raycast(ray, out hit, _maxHitDistance, UIMask))
+        if (Physics.Raycast(ray, out RaycastHit hit, _maxHitDistance, UIMask))
         {
             //Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hit.distance, Color.blue);
             Debug.DrawRay(ray.origin, ray.direction * hit.distance, Color.blue);
@@ -65,6 +64,10 @@ public class HoverUISelection : MonoBehaviour
         DestroyLoadingImage();
     }
 
+    /// <summary>
+    /// Reset the time and loading image if the hovering object was changed.
+    /// </summary>
+    /// <param name="hit"></param>
     private void CheckHoverChange(ref RaycastHit hit)
     {
         if (_hittedObject == null || _hittedObject != hit.transform.gameObject)

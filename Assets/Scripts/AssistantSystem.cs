@@ -3,6 +3,9 @@ using UnityEngine;
 public class AssistantSystem : MonoBehaviour
 {
     public static AssistantSystem Instance { get; private set; }
+    public ProgressSystem progressSystem;
+    public ExerciseSettingsUI exerciseSettingUI;
+    public SerialController serialController;
 
     // Singleton
     private void Awake()

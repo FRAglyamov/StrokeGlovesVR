@@ -18,24 +18,20 @@ public class ProgressSystem : MonoBehaviour
     public string userID = "";
 
     // Singleton
-    public static ProgressSystem Instance { get; private set; }
+    //public static ProgressSystem Instance { get; private set; }
 
     private void Awake()
     {
         // If there is an instance, and it's not me, delete myself.
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
-        Instance = this;
+        //if (Instance != null && Instance != this)
+        //{
+        //    Destroy(gameObject);
+        //    return;
+        //}
+        //Instance = this;
 
         //DontDestroyOnLoad(gameObject);
-        Initialize();
-    }
 
-    private void Initialize()
-    {
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
@@ -47,7 +43,7 @@ public class ProgressSystem : MonoBehaviour
         }
         else
         {
-            StartTimer(); // Remark: For test, remove later. (need to start timer on button or smth)
+            StartTimer(); // Remark: Temporary, for testing, remove later. (need to start timer on button or smth)
         }
     }
 
@@ -65,7 +61,6 @@ public class ProgressSystem : MonoBehaviour
     public void UpdateSavePath()
     {
         // Application.persistentDataPath = C:\Users\дмл\AppData\LocalLow\DML\StrokeVR
-        //SavePath = Path.Combine(Application.persistentDataPath, "progress_saves", exerciseName);
         SavePath = Path.Combine(Application.persistentDataPath, "progress_saves", userID, exerciseName);
         Debug.Log("SavePath: " + SavePath);
         if (!Directory.Exists(SavePath))
@@ -120,6 +115,9 @@ public class ProgressSystem : MonoBehaviour
             return null;
         }
     }
+
+
+    // Remark: This part of the commented code is for testing purpose just to make some data.
 
     //private void Start()
     //{

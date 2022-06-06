@@ -16,17 +16,19 @@ public class ProgressMenu : MonoBehaviour
     }
 
     private int _curFromResult = 0;
-    private int _resultAmount; // Amount of progress results to show on menu.
-    private int _filesAmount; // Amount of files in directory (based on user, exercise).
+    private int _resultAmount; // Amount of progress results to show on the menu.
+    private int _filesAmount; // Amount of files in the directory (based on user, exercise).
     [SerializeField]
     private GameObject resultsPanel;
     private Text[] _elementsText;
+    private ProgressSystem _progressSystem;
 
     private void Start()
     {
         _elementsText = resultsPanel.GetComponentsInChildren<Text>();
         _resultAmount = _elementsText.Length;
         ChangeResultsPage(0);
+        _progressSystem = AssistantSystem.Instance.progressSystem;
     }
 
     public void ChangeResultsPage(int pageChange)
@@ -46,15 +48,15 @@ public class ProgressMenu : MonoBehaviour
     private void ShowResultsInMenu(int fromResult, int toResult)
     {
         // Remark: Now it's very unefficient. Link to Assistant System and make reference?
-        ProgressSystem.Instance.FilesInfoUpdate();
-        _filesAmount = ProgressSystem.Instance.Files.Length;
+        _progressSystem.FilesInfoUpdate();
+        _filesAmount = _progressSystem.Files.Length;
 
         CheckResultsOnLeft(ref fromResult, ref toResult);
         CheckResultsOnRight(ref fromResult, ref toResult);
 
         for (int i = fromResult; i < toResult; i++)
         {
-            ExerciseResult tmpResult = ProgressSystem.Instance.LoadResultFromJSON(ProgressSystem.Instance.Files[i].FullName);
+            ExerciseResult tmpResult = _progressSystem.LoadResultFromJSON(_progressSystem.Files[i].FullName);
             _elementsText[i % _resultAmount].text = tmpResult.date + " - " + tmpResult.time;
         }
     }

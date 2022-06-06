@@ -25,7 +25,7 @@ public class GrabManagerAveragePoint : MonoBehaviour
     [SerializeField]
     private GloveListenerArticulation gloveListener;
 
-    private FixedJoint _joint; // Joint, attached to grabbed object.
+    private FixedJoint _joint; // Joint, attached to the grabbed object.
 
     private void Start()
     {
@@ -56,7 +56,7 @@ public class GrabManagerAveragePoint : MonoBehaviour
     }
 
     /// <summary>
-    /// Update state of finger groups. Set true, if at least one phalange in group touching the enviroment's GameObject.
+    /// Update the state of finger groups. Set true, if at least one phalange in group touching the enviroment's GameObject.
     /// </summary>
     private void UpdateGroupsDetection()
     {
@@ -93,7 +93,7 @@ public class GrabManagerAveragePoint : MonoBehaviour
     }
 
     /// <summary>
-    /// Return GameObject based on the average point of fingers which touch the environment's GameObject.
+    /// Return a GameObject based on the average point of fingers which touch the environment's GameObject.
     /// </summary>
     /// <returns></returns>
     private GameObject GetObjectOnAveragePoint()
@@ -152,7 +152,7 @@ public class GrabManagerAveragePoint : MonoBehaviour
     }
 
     /// <summary>
-    /// Connect grabbed object to hand, if it is not null.
+    /// Connect the grabbed object to the hand, if it is not null.
     /// </summary>
     private void Grab()
     {

@@ -8,14 +8,14 @@ using UnityEngine.XR.Interaction.Toolkit;
 /// Class responsible for fingers' flex and updating fingers' target flex based on values from GloveDevice
 /// (or on controller.selectAction in case of testing with standart controller)
 /// </summary>
-[RequireComponent(typeof(SerialController))]
+//[RequireComponent(typeof(SerialController))]
 public class GloveListenerArticulation : MonoBehaviour
 {
     [SerializeField]
     private ActionBasedController _controller;
 
     [SerializeField, Tooltip("From thumb to pinky")]
-    private GameObject[] fingers1 = new GameObject[5];
+    private GameObject[] fingers1 = new GameObject[5]; // phalanges with 1 at the end of the name in a hierarchy, closest to the palm
 
     private ArticulationBody[,] _articulations = new ArticulationBody[5, 3];
 
@@ -33,9 +33,15 @@ public class GloveListenerArticulation : MonoBehaviour
             SetFlexByControllers();
         }
 
-        _serialController = GetComponent<SerialController>();
+        //_serialController = GetComponent<SerialController>();
+        //_serialController = FindObjectOfType<SerialController>();
+        _serialController = AssistantSystem.Instance.serialController;
+        _serialController.messageListener = this.gameObject;
     }
 
+    /// <summary>
+    /// Assign ArticulationBody component references of phalanges to the list.
+    /// </summary>
     private void AssignAriculationBodyReferences()
     {
         for (int i = 0; i < fingers1.Length; i++)
@@ -111,7 +117,7 @@ public class GloveListenerArticulation : MonoBehaviour
         string[] fingersFlexing = tmp[0].Split(' ');
         //string[] rotation = tmp[1].Split(' ');
 
-        // Set target (rotation) for articulation bodies of all phalanges
+        // Set the target (rotation) for articulation bodies of all phalanges
         for (int i = 0; i < _articulations.GetLength(0); i++)
         {
             for (int j = 0; j < _articulations.GetLength(1); j++)
@@ -122,6 +128,7 @@ public class GloveListenerArticulation : MonoBehaviour
             }
         }
 
+        // Remark: Code was used for IMU sensor. Now it isn't using. Remove?
         //state.deviceRotation = Quaternion.Euler(
         //   float.Parse(rotation[1], CultureInfo.InvariantCulture),
         //   float.Parse(rotation[0], CultureInfo.InvariantCulture),
@@ -136,9 +143,13 @@ public class GloveListenerArticulation : MonoBehaviour
         InputSystem.QueueStateEvent(GloveDevice.current, state);
     }
 
+    /// <summary>
+    /// Add GloveDevice to InputSystem if we don't have it and set isConnected as true.
+    /// Remark: This version is for one glove.
+    /// </summary>
     private void InitGloveDeviceOnFirstMessage()
     {
-        if (!_serialController.isConnected && InputSystem.GetDevice("GloveDevice") == null) // Later need to change for supporting 2 gloves (now for 1)
+        if (!_serialController.isConnected && InputSystem.GetDevice("GloveDevice") == null)
         {
             InputSystem.AddDevice(new InputDeviceDescription
             {
@@ -156,6 +167,7 @@ public class GloveListenerArticulation : MonoBehaviour
     {
         //Debug.Log(success ? "Device connected" : "Device disconnected");
     }
+
     private float Remap(float value, float from1, float to1, float from2, float to2)
     {
         return (value - from1) / (to1 - from1) * (to2 - from2) + from2;

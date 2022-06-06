@@ -35,7 +35,7 @@ public class PhysicsPoser : MonoBehaviour
 
     private Vector3 _targetPosition = Vector3.zero;
     private Quaternion _targetRotation = Quaternion.identity;
-    private Vector3 _rotationAdjustment = new Vector3(90f, 0f, 0f); // Adjustment of rotation for vive tracker
+    private Vector3 _rotationAdjustment = new Vector3(90f, 0f, 0f); // Adjustment of a rotation for a ViveTracker
 
     private void Awake()
     {
@@ -61,17 +61,17 @@ public class PhysicsPoser : MonoBehaviour
         //targetPosition = controller.positionAction.action.ReadValue<Vector3>();
         //targetRotation = controller.rotationAction.action.ReadValue<Quaternion>();
 
-        // Or we can just get pos, rot of controller game object
+        // Or we can just get the position and rotation of the controller game object.
         _targetPosition = controllerTransform.position;
         _targetRotation = controllerTransform.rotation;
-        // Adjustment for vive tracker. Comment, when using controller for development convenience.
+        // Adjustment for ViveTracker. Comment, when using a controller for the development convenience.
         //_targetRotation *= Quaternion.Euler(_rotationAdjustment);
     }
 
     private void CheckShowingGhostHand()
     {
         var distance = Vector3.Distance(_targetPosition, transform.position);
-        bool isShow = distance > showDistance ? true : false;
+        bool isShow = distance > showDistance;
         handGhostModel.SetActive(isShow);
     }
 
@@ -114,7 +114,7 @@ public class PhysicsPoser : MonoBehaviour
 
     private bool IsCloseToController(float closeDistance)
     {
-        return Vector3.Distance(_targetPosition, transform.position) < closeDistance ? true : false;
+        return Vector3.Distance(_targetPosition, transform.position) < closeDistance;
     }
 
     private void MoveUsingPhysics()
@@ -153,7 +153,7 @@ public class PhysicsPoser : MonoBehaviour
     }
 
     /// <summary>
-    /// Get target velocity  (with estimated time).
+    /// Get the target velocity  (with estimated time).
     /// </summary>
     /// <returns></returns>
     private Vector3 FindNewAngularVelocity()

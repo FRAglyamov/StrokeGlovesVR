@@ -17,12 +17,14 @@ public class HandMenu : MonoBehaviour
     [SerializeField]
     private GameObject handMenuPanel;
     private float _dotProduct; // Dot product between hand menu canvas and camera
+    private ExerciseSettingsUI _exerciseSettings;
 
-    private void Awake()
+    private void Start()
     {
-        recenterBtn.onClick.AddListener(ExerciseSettingsUI.Instance.Recenter);
-        restartBtn.onClick.AddListener(ExerciseSettingsUI.Instance.RestartExercise);
-        //menuBtn.onClick.AddListener();
+        _exerciseSettings = AssistantSystem.Instance.exerciseSettingUI;
+        recenterBtn.onClick.AddListener(_exerciseSettings.Recenter);
+        restartBtn.onClick.AddListener(_exerciseSettings.RestartExercise);
+        //menuBtn.onClick.AddListener(); // TODO: Add pop-up menu with latest results of the current exercise.
         exercisesBtn.onClick.AddListener(() => SceneManager.LoadScene("Selection Menu"));
     }
 
