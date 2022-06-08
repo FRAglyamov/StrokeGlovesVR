@@ -14,12 +14,14 @@ public class WristFlexMeter : MonoBehaviour
     [SerializeField]
     private Transform hand;
 
+    //[SerializeField]
+    //private Text currentMeasurmentDirectionText;
+    //[SerializeField]
+    //private Text currentMeasureValueText;
+    //[SerializeField]
+    //private Text flexCountText;
     [SerializeField]
-    private Text currentMeasurmentDirectionText;
-    [SerializeField]
-    private Text currentMeasureValueText;
-    [SerializeField]
-    private Text flexCountText;
+    private Text hintText;
 
     [SerializeField]
     private float requiredDownFlex = 60f, requiredUpFlex = 45f, requiredSideFlex = 15f;
@@ -49,86 +51,100 @@ public class WristFlexMeter : MonoBehaviour
                 {
                     _isFlexed = true;
                     _currentFlexesAmount++;
-                    UpdateFlexCountText();
+                    //UpdateFlexCountText();
                 }
                 else if (_isFlexed && _currentRotation.x <= _defaultRotation.x + requiredDownFlex / 2)
                 {
                     _isFlexed = false;
                 }
-                ChangeMeasurmentDirectionText("Вниз");
-                ChangeMeasureValueText(_currentRotation.x - _defaultRotation.x);
+                UpdateHintText("Вниз", _currentRotation.x - _defaultRotation.x);
+                //ChangeMeasurmentDirectionText("Вниз");
+                //ChangeMeasureValueText(_currentRotation.x - _defaultRotation.x);
                 break;
             case MeasurementWristDirection.Up:
                 if (!_isFlexed && _currentRotation.x <= _defaultRotation.x - requiredUpFlex)
                 {
                     _isFlexed = true;
                     _currentFlexesAmount++;
-                    UpdateFlexCountText();
+                    //UpdateFlexCountText();
                 }
                 else if (_isFlexed && _currentRotation.x >= _defaultRotation.x - requiredDownFlex / 2)
                 {
                     _isFlexed = false;
                 }
-                ChangeMeasurmentDirectionText("Вверх");
-                ChangeMeasureValueText(_currentRotation.x - _defaultRotation.x);
+                UpdateHintText("Вверх", _currentRotation.x - _defaultRotation.x);
+                //ChangeMeasurmentDirectionText("Вверх");
+                //ChangeMeasureValueText(_currentRotation.x - _defaultRotation.x);
                 break;
             case MeasurementWristDirection.Left:
                 if (!_isFlexed && _currentRotation.y <= _defaultRotation.y - requiredSideFlex)
                 {
                     _isFlexed = true;
                     _currentFlexesAmount++;
-                    UpdateFlexCountText();
+                    //UpdateFlexCountText();
                 }
                 else if (_isFlexed && _currentRotation.y >= _defaultRotation.y - requiredSideFlex / 2)
                 {
                     _isFlexed = false;
                 }
-                ChangeMeasurmentDirectionText("Влево");
-                ChangeMeasureValueText(_currentRotation.y - _defaultRotation.y);
+                UpdateHintText("Влево", _currentRotation.y - _defaultRotation.y);
+                //ChangeMeasurmentDirectionText("Влево");
+                //ChangeMeasureValueText(_currentRotation.y - _defaultRotation.y);
                 break;
             case MeasurementWristDirection.Right:
                 if (!_isFlexed && _currentRotation.y >= _defaultRotation.y + requiredSideFlex)
                 {
                     _isFlexed = true;
                     _currentFlexesAmount++;
-                    UpdateFlexCountText();
+                    //UpdateFlexCountText();
                 }
                 else if (_isFlexed && _currentRotation.y <= _defaultRotation.y + requiredSideFlex / 2)
                 {
                     _isFlexed = false;
                 }
-                ChangeMeasurmentDirectionText("Вправо");
-                ChangeMeasureValueText(_currentRotation.y - _defaultRotation.y);
+                UpdateHintText("Вправо", _currentRotation.y - _defaultRotation.y);
+                //ChangeMeasurmentDirectionText("Вправо");
+                //ChangeMeasureValueText(_currentRotation.y - _defaultRotation.y);
                 break;
             default:
-                ChangeMeasurmentDirectionText("None");
-                flexCountText.text = "";
-                currentMeasureValueText.text = "Сгибы: \n" + (_currentRotation.x - _defaultRotation.x) + "\n" + (_currentRotation.y - _defaultRotation.y);
+                hintText.text = 
+                    "Текущее измеряемое направление: None \n" +
+                    "Сгибы: \n" + 
+                    (_currentRotation.x - _defaultRotation.x) + "\n" + 
+                    (_currentRotation.y - _defaultRotation.y) + "\n" +
+                    "Количество сгибаний: None";
                 break;
         }
         if (_currentFlexesAmount >= requiredFlexesAmount)
         {
             _measureDirection++;
             _currentFlexesAmount = 0;
-            UpdateFlexCountText();
+            //UpdateFlexCountText();
             // TODO: Сделать "Конец упражнения"
         }
     }
 
-    private void ChangeMeasurmentDirectionText(string directionName)
+    private void UpdateHintText(string directionName, float value)
     {
-        currentMeasurmentDirectionText.text = "Текущее измеряемое направление: " + directionName;
+        hintText.text = "Текущее измеряемое направление: " + directionName + "\n";
+        hintText.text += "Текущее значение сгиба: " + value.ToString() + "\n";
+        hintText.text += "Количество сгибаний: " + _currentFlexesAmount + " из " + requiredFlexesAmount;
     }
 
-    private void ChangeMeasureValueText(float value)
-    {
-        currentMeasureValueText.text = "Текущее значение сгиба: " + value.ToString();
-    }
+    //private void ChangeMeasurmentDirectionText(string directionName)
+    //{
+    //    currentMeasurmentDirectionText.text = "Текущее измеряемое направление: " + directionName;
+    //}
 
-    private void UpdateFlexCountText()
-    {
-        flexCountText.text = "Количество сгибаний: " + _currentFlexesAmount + " из " + requiredFlexesAmount;
-    }
+    //private void ChangeMeasureValueText(float value)
+    //{
+    //    currentMeasureValueText.text = "Текущее значение сгиба: " + value.ToString();
+    //}
+
+    //private void UpdateFlexCountText()
+    //{
+    //    flexCountText.text = "Количество сгибаний: " + _currentFlexesAmount + " из " + requiredFlexesAmount;
+    //}
 
     private Vector3 GetInspectorLikeRotation()
     {

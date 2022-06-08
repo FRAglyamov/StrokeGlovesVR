@@ -13,12 +13,14 @@ public class FingerFlexMeter : MonoBehaviour
         All
     }
 
-    [SerializeField] 
-    private Text currentMeasurmentObjectText;
-    [SerializeField] 
-    private Text currentMeasureValueText;
-    [SerializeField] 
-    private Text flexCountText;
+    //[SerializeField] 
+    //private Text currentMeasurmentObjectText;
+    //[SerializeField] 
+    //private Text currentMeasureValueText;
+    //[SerializeField] 
+    //private Text flexCountText;
+    [SerializeField]
+    private Text hintText;
 
     [SerializeField, Range(0f,1f)]
     private float requiredFlexPercentage = 0.8f;
@@ -80,25 +82,32 @@ public class FingerFlexMeter : MonoBehaviour
             _currentFlexesAmount = 0;
         }
 
-        ChangeMeasurmentObjectText(fingerName);
-        ChangeMeasureValueText(flexValue);
-        UpdateFlexCountText();
+        UpdateHintText(fingerName, flexValue);
+        //ChangeMeasurmentObjectText(fingerName);
+        //ChangeMeasureValueText(flexValue);
+        //UpdateFlexCountText();
     }
 
-    private void ChangeMeasurmentObjectText(string fingerName)
+    private void UpdateHintText(string fingerName, float value)
     {
-        currentMeasurmentObjectText.text = "Текущий измеряемый палец: " + fingerName;
+        hintText.text = "Текущий измеряемый палец: " + fingerName + "\n";
+        hintText.text += "Текущее значение сгиба: " + value.ToString();
+        hintText.text += "Количество сгибаний: " + _currentFlexesAmount + " из " + requiredFlexesAmount;
     }
+    //private void ChangeMeasurmentObjectText(string fingerName)
+    //{
+    //    currentMeasurmentObjectText.text = "Текущий измеряемый палец: " + fingerName;
+    //}
 
-    private void ChangeMeasureValueText(float value)
-    {
-        currentMeasureValueText.text = "Текущее значение сгиба: " + value.ToString();
-    }
+    //private void ChangeMeasureValueText(float value)
+    //{
+    //    currentMeasureValueText.text = "Текущее значение сгиба: " + value.ToString();
+    //}
 
-    private void UpdateFlexCountText()
-    {
-        flexCountText.text = "Количество сгибаний: " + _currentFlexesAmount + " из " + requiredFlexesAmount;
-    }
+    //private void UpdateFlexCountText()
+    //{
+    //    flexCountText.text = "Количество сгибаний: " + _currentFlexesAmount + " из " + requiredFlexesAmount;
+    //}
 
     private void UpdateMeasureInfoAllFingers(GloveDevice glove)
     {
@@ -118,14 +127,23 @@ public class FingerFlexMeter : MonoBehaviour
             // TODO: Переделать в "Конец упражнения"
         }
 
-        currentMeasurmentObjectText.text = "Текущий измеряемый палец: Все";
-        currentMeasureValueText.text = "Текущее значение сгибов: \n"
+        hintText.text = "Текущий измеряемый палец: Все \n";
+        hintText.text += "Текущее значение сгибов: \n"
             + "Большой - " + glove.thumb.ReadValue() + "\n"
             + "Указательный - " + glove.index.ReadValue() + "\n"
             + "Средний - " + glove.middle.ReadValue() + "\n"
             + "Безымянный - " + glove.ring.ReadValue() + "\n"
             + "Мизинец - " + glove.pinky.ReadValue();
-        UpdateFlexCountText();
+        hintText.text += "Количество сгибаний: " + _currentFlexesAmount + " из " + requiredFlexesAmount;
+
+        //currentMeasurmentObjectText.text = "Текущий измеряемый палец: Все";
+        //currentMeasureValueText.text = "Текущее значение сгибов: \n"
+        //    + "Большой - " + glove.thumb.ReadValue() + "\n"
+        //    + "Указательный - " + glove.index.ReadValue() + "\n"
+        //    + "Средний - " + glove.middle.ReadValue() + "\n"
+        //    + "Безымянный - " + glove.ring.ReadValue() + "\n"
+        //    + "Мизинец - " + glove.pinky.ReadValue();
+        //UpdateFlexCountText();
     }
 
     private bool IsAllFingersFlexed(GloveDevice glove)

@@ -5,10 +5,9 @@ using UnityEngine.InputSystem.Layouts;
 using UnityEngine.XR.Interaction.Toolkit;
 
 /// <summary>
-/// Class responsible for fingers' flex and updating fingers' target flex based on values from GloveDevice
+/// Class responsible for fingers' flex and updating fingers' target flex based on values from SerialController (Glove).
 /// (or on controller.selectAction in case of testing with standart controller)
 /// </summary>
-//[RequireComponent(typeof(SerialController))]
 public class GloveListenerArticulation : MonoBehaviour
 {
     [SerializeField]
@@ -33,14 +32,12 @@ public class GloveListenerArticulation : MonoBehaviour
             SetFlexByControllers();
         }
 
-        //_serialController = GetComponent<SerialController>();
-        //_serialController = FindObjectOfType<SerialController>();
         _serialController = AssistantSystem.Instance.serialController;
         _serialController.messageListener = this.gameObject;
     }
 
     /// <summary>
-    /// Assign ArticulationBody component references of phalanges to the list.
+    /// Assign ArticulationBody components references of phalanges to the list.
     /// </summary>
     private void AssignAriculationBodyReferences()
     {
@@ -87,7 +84,7 @@ public class GloveListenerArticulation : MonoBehaviour
     }
 
     /// <summary>
-    /// True - if at least one of the fingers flexes for the required angle.
+    /// True - if at least one of the fingers is flexing for the required angle.
     /// Needed as a threshold for grabbing.
     /// </summary>
     /// <param name="requiredFlex"></param>

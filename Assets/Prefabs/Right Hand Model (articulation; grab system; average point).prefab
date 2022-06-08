@@ -146,6 +146,57 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 75, y: 75, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &1686815409
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1686968701}
+  - component: {fileID: 1686845235}
+  m_Layer: 0
+  m_Name: GloveDevice Listener
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1686968701
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1686815409}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1144941152095534780}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1686845235
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1686815409}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ad3e5c3054d6c44b8da849eb97f6c24, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _controller: {fileID: 0}
+  fingers1:
+  - {fileID: 1144941150851564355}
+  - {fileID: 1144941152133336331}
+  - {fileID: 1144941150803760637}
+  - {fileID: 1144941150829590959}
+  - {fileID: 1144941151982632168}
+  targetFlex: 20
 --- !u!1 &1144941150627702680
 GameObject:
   m_ObjectHideFlags: 0
@@ -1662,6 +1713,7 @@ Transform:
   - {fileID: 1144941152252832274}
   - {fileID: 1144941150872412842}
   - {fileID: 5048794188758642237}
+  - {fileID: 1686968701}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
@@ -1748,7 +1800,7 @@ MonoBehaviour:
   excludingHandsMask:
     serializedVersion: 2
     m_Bits: 55
-  gloveListener: {fileID: 0}
+  gloveListener: {fileID: 1686845235}
 --- !u!114 &1144941150701631422
 MonoBehaviour:
   m_ObjectHideFlags: 0

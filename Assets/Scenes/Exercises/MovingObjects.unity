@@ -6336,7 +6336,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 7030406488637668880, guid: 46341eb2780a63c46ade98a1208991a4, type: 3}
       propertyPath: m_RootOrder
-      value: 12
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 7030406488637668880, guid: 46341eb2780a63c46ade98a1208991a4, type: 3}
       propertyPath: m_LocalPosition.x
@@ -7503,7 +7503,7 @@ Transform:
   - {fileID: 1624246052}
   - {fileID: 620758336}
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1273176397
 GameObject:
@@ -9133,57 +9133,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 405068, guid: a65acf0cbf56b80419f74ebf0bc845f4, type: 3}
   m_PrefabInstance: {fileID: 1624246045}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1686815409
+--- !u!1 &1686815409 stripped
 GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 1686815409, guid: 40e8d320c69246c4f8dbf708f83382e4, type: 3}
+  m_PrefabInstance: {fileID: 1144941150701631420}
   m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1686968701}
-  - component: {fileID: 1686845235}
-  m_Layer: 0
-  m_Name: GloveDevice Listener
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1686845235
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1686815409}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8ad3e5c3054d6c44b8da849eb97f6c24, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _controller: {fileID: 2120748608530793257}
-  fingers1:
-  - {fileID: 158348543}
-  - {fileID: 1978563255}
-  - {fileID: 103719489}
-  - {fileID: 127962643}
-  - {fileID: 1290439508}
-  targetFlex: 20
---- !u!4 &1686968701
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1686815409}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 10
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1693703432
 GameObject:
   m_ObjectHideFlags: 0
@@ -11999,6 +11953,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1686845235, guid: 40e8d320c69246c4f8dbf708f83382e4, type: 3}
+      propertyPath: _controller
+      value: 
+      objectReference: {fileID: 2120748608530793257}
     - target: {fileID: 1144941150701631422, guid: 40e8d320c69246c4f8dbf708f83382e4, type: 3}
       propertyPath: handGhostModel
       value: 
@@ -12055,14 +12013,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Right Hand Model (articulation; grab system; average point)
       objectReference: {fileID: 0}
-    - target: {fileID: 1144941152095534918, guid: 40e8d320c69246c4f8dbf708f83382e4, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1144941152095534919, guid: 40e8d320c69246c4f8dbf708f83382e4, type: 3}
-      propertyPath: gloveListener
-      value: 
-      objectReference: {fileID: 1686845235}
     - target: {fileID: 5048794188758642212, guid: 40e8d320c69246c4f8dbf708f83382e4, type: 3}
       propertyPath: hmdCameraTransform
       value: 
