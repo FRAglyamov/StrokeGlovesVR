@@ -29,8 +29,11 @@ public class SpawnPoints : MonoBehaviour
 
     private ExerciseMode _exerciseMode = ExerciseMode.Amount;
 
+    // TODO: Make selection (in UI, and somehow in VR?).
+    // Also, need to save it differently for different fingers.
+    // Or maybe change finger after each point?
     [SerializeField]
-    private FingerType _fingerType = FingerType.Index; // TODO: Make selection (in UI, and somehow in VR?)
+    private FingerType _fingerType = FingerType.Index;
 
     private void Start()
     {

@@ -1,5 +1,4 @@
 using System;
-using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -47,7 +46,6 @@ public class ProgressMenu : MonoBehaviour
 
     private void ShowResultsInMenu(int fromResult, int toResult)
     {
-        // Remark: Now it's very unefficient. Link to Assistant System and make reference?
         _progressSystem.FilesInfoUpdate();
         _filesAmount = _progressSystem.Files.Length;
 
