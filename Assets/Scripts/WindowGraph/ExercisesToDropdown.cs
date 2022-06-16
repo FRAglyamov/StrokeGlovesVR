@@ -15,6 +15,7 @@ public class ExercisesToDropdown : MonoBehaviour
     private Dictionary<string, string> _nameFullPath = new Dictionary<string, string>();
     [SerializeField]
     private WindowGraph windowGraph;
+    [SerializeField]
     private ProgressSystem _progressSystem;
 
     private void Start()
@@ -22,7 +23,7 @@ public class ExercisesToDropdown : MonoBehaviour
         _dropdown = GetComponent<Dropdown>();
         // TODO: Integration with Assistant System, VR. Or make as standalone scene?
         UpdateDropdown();
-        _progressSystem = AssistantSystem.Instance.progressSystem;
+        //_progressSystem = AssistantSystem.Instance.progressSystem;
     }
 
     public void UpdateDropdown()

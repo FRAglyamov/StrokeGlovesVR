@@ -2223,6 +2223,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   windowGraph: {fileID: 662174473}
+  _progressSystem: {fileID: 662174474}
 --- !u!1 &1564233461
 GameObject:
   m_ObjectHideFlags: 0
