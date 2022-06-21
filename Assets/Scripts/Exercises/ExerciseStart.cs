@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // Remark: May be better to start on UI button click? Or physical button?
-[RequireComponent(typeof(ProgressSystem))]
 public class ExerciseStart : MonoBehaviour
 {
     [SerializeField]
@@ -11,7 +10,7 @@ public class ExerciseStart : MonoBehaviour
 
     private void Start()
     {
-        _progressSystem = GetComponent<ProgressSystem>();
+        _progressSystem = AssistantSystem.Instance.progressSystem;
     }
 
     public void StartExercise()
