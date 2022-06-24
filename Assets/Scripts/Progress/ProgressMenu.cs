@@ -26,8 +26,8 @@ public class ProgressMenu : MonoBehaviour
     {
         _elementsText = resultsPanel.GetComponentsInChildren<Text>();
         _resultAmount = _elementsText.Length;
-        ChangeResultsPage(0);
         _progressSystem = AssistantSystem.Instance.progressSystem;
+        ChangeResultsPage(0);
     }
 
     public void ChangeResultsPage(int pageChange)

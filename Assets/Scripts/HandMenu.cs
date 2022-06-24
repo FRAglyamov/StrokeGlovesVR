@@ -16,6 +16,8 @@ public class HandMenu : MonoBehaviour
     private Transform hmdCameraTransform;
     [SerializeField]
     private GameObject handMenuPanel;
+    [SerializeField]
+    private GameObject progressMenuPanel;
     private float _dotProduct; // Dot product between hand menu canvas and camera
     private ExerciseSettingsUI _exerciseSettings;
 
@@ -24,7 +26,9 @@ public class HandMenu : MonoBehaviour
         _exerciseSettings = AssistantSystem.Instance.exerciseSettingUI;
         recenterBtn.onClick.AddListener(_exerciseSettings.Recenter);
         restartBtn.onClick.AddListener(_exerciseSettings.RestartExercise);
-        //menuBtn.onClick.AddListener(); // TODO: Add pop-up menu with latest results of the current exercise.
+        // TODO: Add pop-up menu with latest results of the current exercise.
+        menuBtn.onClick.AddListener(delegate { progressMenuPanel.SetActive(true); });
+        //menuBtn.onClick.AddListener(delegate { progressMenuPanel.SetActive(!progressMenuPanel.activeInHierarchy); });
         exercisesBtn.onClick.AddListener(() => SceneManager.LoadScene("Selection Menu"));
     }
 
@@ -38,6 +42,7 @@ public class HandMenu : MonoBehaviour
         else
         {
             handMenuPanel.SetActive(false);
+            progressMenuPanel.SetActive(false);
         }
 
     }

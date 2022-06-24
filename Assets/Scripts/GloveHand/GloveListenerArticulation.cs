@@ -120,12 +120,13 @@ public class GloveListenerArticulation : MonoBehaviour
             for (int j = 0; j < _articulations.GetLength(1); j++)
             {
                 var tmpXDrive = _articulations[i, j].xDrive;
+                // Remark: Maybe Remap not to contant -10, 80 values? Get min, max from ArticulationBody.
                 tmpXDrive.target = Remap(float.Parse(fingersFlexing[i]), 0f, 100f, -10f, 80f);
                 _articulations[i, j].xDrive = tmpXDrive;
             }
         }
 
-        // Remark: Code was used for IMU sensor. Now it isn't using. Remove?
+        // Remark: Code was used for IMU sensor. Now it isn't used. Remove?
         //state.deviceRotation = Quaternion.Euler(
         //   float.Parse(rotation[1], CultureInfo.InvariantCulture),
         //   float.Parse(rotation[0], CultureInfo.InvariantCulture),

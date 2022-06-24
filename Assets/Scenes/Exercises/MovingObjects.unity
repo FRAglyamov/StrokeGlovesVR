@@ -8401,6 +8401,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Right Hand Model (articulation; grab system; average point)
       objectReference: {fileID: 0}
+    - target: {fileID: 5048794188255465456, guid: 40e8d320c69246c4f8dbf708f83382e4, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5048794188758642212, guid: 40e8d320c69246c4f8dbf708f83382e4, type: 3}
       propertyPath: hmdCameraTransform
       value: 

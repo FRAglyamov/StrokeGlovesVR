@@ -190,6 +190,27 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 6753142629285447246, guid: f973aa8a15fcdf04baeb1477a1428f24, type: 3}
   m_PrefabInstance: {fileID: 260600090}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &260600093 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2423083530222497060, guid: f973aa8a15fcdf04baeb1477a1428f24, type: 3}
+  m_PrefabInstance: {fileID: 260600090}
+  m_PrefabAsset: {fileID: 0}
+--- !u!20 &260600094 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 2423083530222497059, guid: f973aa8a15fcdf04baeb1477a1428f24, type: 3}
+  m_PrefabInstance: {fileID: 260600090}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &260600095 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2423083528568639083, guid: f973aa8a15fcdf04baeb1477a1428f24, type: 3}
+  m_PrefabInstance: {fileID: 260600090}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: caff514de9b15ad48ab85dcff5508221, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &277507854
 GameObject:
   m_ObjectHideFlags: 0
@@ -317,6 +338,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1686845235, guid: 40e8d320c69246c4f8dbf708f83382e4, type: 3}
+      propertyPath: _controller
+      value: 
+      objectReference: {fileID: 260600095}
     - target: {fileID: 1144941150701631422, guid: 40e8d320c69246c4f8dbf708f83382e4, type: 3}
       propertyPath: handGhostModel
       value: 
@@ -373,6 +398,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Right Hand Model (articulation; grab system; average point)
       objectReference: {fileID: 0}
+    - target: {fileID: 5048794188255465456, guid: 40e8d320c69246c4f8dbf708f83382e4, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5048794188758642212, guid: 40e8d320c69246c4f8dbf708f83382e4, type: 3}
+      propertyPath: hmdCameraTransform
+      value: 
+      objectReference: {fileID: 260600093}
+    - target: {fileID: 5048794188758642236, guid: 40e8d320c69246c4f8dbf708f83382e4, type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 260600094}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 40e8d320c69246c4f8dbf708f83382e4, type: 3}
 --- !u!1 &346433671 stripped

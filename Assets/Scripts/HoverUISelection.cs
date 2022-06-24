@@ -14,8 +14,8 @@ public class HoverUISelection : MonoBehaviour
     private GameObject loadingPrefab;
     private Image _loadingImage;
 
-    private float _requiredTime = 2f;
-    private float _hitTime = -1f;
+    private float _requiredTime = 1f; // Seconds, required for selection.
+    private float _hitTime = -1f; // How long we already hitting the same GO.
     private GameObject _hittedObject;
     private float _maxHitDistance = 20f;
 
