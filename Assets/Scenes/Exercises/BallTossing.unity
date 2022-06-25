@@ -336,9 +336,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -186.456
       objectReference: {fileID: 0}
+    - target: {fileID: 1144941152095534915, guid: 40e8d320c69246c4f8dbf708f83382e4, type: 3}
+      propertyPath: m_Immovable
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1144941152095534918, guid: 40e8d320c69246c4f8dbf708f83382e4, type: 3}
       propertyPath: m_Name
       value: Right Hand Model (articulation; grab system; average point)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1144941152095534919, guid: 40e8d320c69246c4f8dbf708f83382e4, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5048794188255465456, guid: 40e8d320c69246c4f8dbf708f83382e4, type: 3}
       propertyPath: m_IsActive
@@ -1207,7 +1215,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2170466005988973749, guid: 33bcd11c1a33fcf4e8c58fedb75767df, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0.13306236
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2170466005988973749, guid: 33bcd11c1a33fcf4e8c58fedb75767df, type: 3}
       propertyPath: m_AnchoredPosition.y

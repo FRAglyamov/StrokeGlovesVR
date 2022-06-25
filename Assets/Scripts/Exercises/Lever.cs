@@ -7,7 +7,7 @@ public class Lever : MonoBehaviour
     private Text hintText;
 
     private float _startAngle = 0f;
-    private float _endAngle = -90f;
+    private float _endAngle = -80f;
     [SerializeField]
     private float startDamp = 0f;
     [SerializeField]
@@ -25,18 +25,28 @@ public class Lever : MonoBehaviour
         _joint = GetComponent<HingeJoint>();
         _startAngle = _joint.angle;
         _rb = GetComponent<Rigidbody>();
+        hintText.text = "Потяните рычаг";
+        AssistantSystem.Instance.progressSystem.StartTimer();
     }
 
     private void FixedUpdate()
     {
+        // Closer to end - tighter.
         var spring = _joint.spring;
         spring.damper = Remap(_joint.angle, _startAngle, _endAngle, startDamp, endDamp);
         _joint.spring = spring;
         _rb.mass = Remap(_joint.angle, _startAngle, _endAngle, startMass, endMass);
 
-        if (_joint.angle >= _endAngle)
+        float leverAngle = Mathf.Abs(_joint.angle);
+        float requiredAngle = Mathf.Abs(_endAngle);
+        hintText.text = $"Угол рычага: {leverAngle:f1} из {requiredAngle}";
+
+        if (leverAngle >= requiredAngle)
         {
-            hintText.text = "Упражнение завершено";
+            hintText.text = "Упражнение завершено!";
+            AssistantSystem.Instance.progressSystem.SaveResultIntoJSON();
+            this.enabled = false;
+            return;
         }
     }
 

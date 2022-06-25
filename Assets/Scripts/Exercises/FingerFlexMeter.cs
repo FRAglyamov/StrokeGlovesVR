@@ -80,9 +80,9 @@ public class FingerFlexMeter : MonoBehaviour
 
     private void UpdateHintText(string fingerName, float value)
     {
-        hintText.text = "Текущий измеряемый палец: " + fingerName + "\n";
-        hintText.text += "Текущее значение сгиба: " + value.ToString() + "\n";
-        hintText.text += "Количество сгибаний: " + _currentFlexesAmount + " из " + requiredFlexesAmount;
+        hintText.text = $"Текущий измеряемый палец: {fingerName}\n";
+        hintText.text += $"Текущее значение сгиба: {value:f1}\n";
+        hintText.text += $"Количество сгибаний: {_currentFlexesAmount} из {requiredFlexesAmount}";
     }
 
     private void UpdateMeasureInfoAllFingers(GloveDevice glove)
@@ -108,12 +108,12 @@ public class FingerFlexMeter : MonoBehaviour
 
         hintText.text = "Текущий измеряемый палец: Все \n";
         hintText.text += "Текущее значение сгибов: \n"
-            + "Большой - " + glove.thumb.ReadValue() + "\n"
-            + "Указательный - " + glove.index.ReadValue() + "\n"
-            + "Средний - " + glove.middle.ReadValue() + "\n"
-            + "Безымянный - " + glove.ring.ReadValue() + "\n"
-            + "Мизинец - " + glove.pinky.ReadValue() + "\n";
-        hintText.text += "Количество сгибаний: " + _currentFlexesAmount + " из " + requiredFlexesAmount;
+            + $"Большой - {glove.thumb.ReadValue()}\n"
+            + $"Указательный - {glove.index.ReadValue()}\n"
+            + $"Средний - {glove.middle.ReadValue()}\n"
+            + $"Безымянный - {glove.ring.ReadValue()}\n"
+            + $"Мизинец - {glove.pinky.ReadValue()}\n";
+        hintText.text += $"Количество сгибаний: {_currentFlexesAmount} из {requiredFlexesAmount}";
     }
 
     private bool IsAllFingersFlexed(GloveDevice glove)

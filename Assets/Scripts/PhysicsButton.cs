@@ -46,12 +46,14 @@ public class PhysicsButton : MonoBehaviour
     private void Pressed()
     {
         _isPressed = true;
+        Debug.Log("Button pressed");
         onPressed.Invoke();
     }
 
     private void Released()
     {
         _isPressed = false;
+        Debug.Log("Button released");
         onReleased.Invoke();
     }
 }

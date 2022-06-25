@@ -13,8 +13,8 @@ public class SpawnPoints : MonoBehaviour
     private Text hintText;
 
     [SerializeField]
-    private int requiredAmount = 5;
-    private int _currentAmount = 0;
+    private int requiredAmount = 10;
+    public int currentAmount = 0;
 
     [SerializeField]
     private float exerciseTimeAmount = 60f;
@@ -55,6 +55,7 @@ public class SpawnPoints : MonoBehaviour
                 else if (count == 2) // Start timer after destroying first point
                 {
                     _exerciseStartTime = Time.time;
+                    AssistantSystem.Instance.progressSystem.StartTimer();
                 }
             }
         }
@@ -62,13 +63,16 @@ public class SpawnPoints : MonoBehaviour
         switch (_exerciseMode)
         {
             case ExerciseMode.Amount:
-                if (_currentAmount < requiredAmount)
+                if (currentAmount < requiredAmount)
                 {
-                    hintText.text = $"Количество задетых точек: {_currentAmount} из {requiredAmount}";
+                    hintText.text = $"Количество задетых точек: {currentAmount} из {requiredAmount}";
                 }
                 else
                 {
                     hintText.text = "Упражнение завершено \n";
+                    AssistantSystem.Instance.progressSystem.SaveResultIntoJSON();
+                    this.enabled = false;
+                    return;
                 }
                 break;
             case ExerciseMode.Time:
@@ -79,12 +83,15 @@ public class SpawnPoints : MonoBehaviour
                 if (_exerciseStartTime < exerciseTimeAmount)
                 {
                     hintText.text = $"Оставшееся время: {exerciseTimeAmount - (Time.time - _exerciseStartTime)} \n";
-                    hintText.text += $"Количество задетых точек: {_currentAmount}";
+                    hintText.text += $"Количество задетых точек: {currentAmount}";
                 }
                 else
                 {
                     hintText.text = "Упражнение завершено \n";
-                    hintText.text += $"Количество задетых точек: {_currentAmount}";
+                    hintText.text += $"Количество задетых точек: {currentAmount}";
+                    //AssistantSystem.Instance.progressSystem.SaveResultIntoJSON();
+                    this.enabled = false;
+                    return;
                 }
                 break;
             default:
@@ -102,5 +109,6 @@ public class SpawnPoints : MonoBehaviour
         var randomZ = Random.Range(min.z, max.z);
         _spawnedPoint = Instantiate(pointPrefab, new Vector3(randomX, randomY, randomZ), Quaternion.identity);
         _spawnedPoint.GetComponent<GlowingPoint>().fingerType = _fingerType;
+        _spawnedPoint.GetComponent<GlowingPoint>().spawnPoints = this;
     }
 }
